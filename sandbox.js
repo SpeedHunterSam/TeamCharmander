@@ -1,4 +1,4 @@
-// Given input1(Start) input2(End) input 3(Artist) input4(Track)
+// Given input1(Start) input2(End) input 3(Track) input4(Artist)
 
 // Given submit button(submitBtn)
 
@@ -7,8 +7,8 @@
 
 startLocation = document.getElementById(input1).value
 endLocation = document.getElementById(input2).value
-artistName = document.getElementById(input3).value
-trackName = document.getElementById(input4).value
+trackName = document.getElementById(input3).value
+artistName = document.getElementById(input4).value
 
 // If re-formatting of input is necessary to be concatenated--do it below
 // toLowerCase()    ???
