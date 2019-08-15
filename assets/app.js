@@ -17,22 +17,37 @@ function getTrackLength(artist, track) {
         return response.json()
     }).then(function (responseJson) {
         console.log(responseJson);  // console log json to check integrity
-    });
+
+        const songLength = parseInt(responseJson.track.duration) / 1000;
+        console.log("song length:", songLength);
+})
 
 }
 
-getTrackLength("cher", "believe");
+getTrackLength("pavement", "spit on a stranger");
 
 function getDirectionInfo(fromLocation, toLocation) {
     const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
 
-    const queryURL = "http://open.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromLocation + "&to=" + toLocation + "&unit=m";
+    const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromLocation + "&to=" + toLocation + "&unit=m";
+
+    console.log(queryURL);
 
     fetch(queryURL).then(function (response) {
         return response.json();
     }).then(function (responseJson) {
         console.log(responseJson);
+
+        distanceInMiles = responseJson.route.distance;
+        distanceInKm = distanceInMiles * 1.609344;
+        driveTime = responseJson.route.time;
+
+        console.log("drive time: ", driveTime);
+        console.log("distance in miles: ", distanceInMiles);
+        console.log("distance in km: ", distanceInKm);
+
+
     })
 }
 
-getDirectionInfo("1605 Minnehaha Ave W, Saint Paul, MN, 55104", "11367 Fowlers Mill Rd, Chardon, OH 44024");
+getDirectionInfo("1890 Buford Ave, Saint Paul, MN", "11367 Fowlers Mill Rd, Chardon, OH 44024");
