@@ -5,10 +5,10 @@
 // Take text from each input upon button click
 // Store each in a variable
 
-startLocation = document.getElementById(input1).value
-endLocation = document.getElementById(input2).value
-trackName = document.getElementById(input3).value
-artistName = document.getElementById(input4).value
+const startLocation = document.getElementById(input1).value
+const endLocation = document.getElementById(input2).value
+const trackName = document.getElementById(input3).value
+const artistName = document.getElementById(input4).value
 
 // If re-formatting of input is necessary to be concatenated--do it below
 // toLowerCase()    ???
