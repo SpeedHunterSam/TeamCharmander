@@ -1,16 +1,63 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Document</title>
 
-<h1>Shane's App</h1>
-<h1>Eli's app</h1>
-<h1>Jackson's App</h1>
-<h1>Brian's App</h1>
+      <!-- Compiled and minified CSS -->
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      />
 
-</body>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row">
+            <form class="col s12">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <input
+                        placeholder="Starting Location"
+                        id="starting-location"
+                        type="text"
+                        class="validate"
+                     />
+                     <label for="starting-location">Starting Location</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <input
+                        placeholder="Ending Location"
+                        id="ending-location"
+                        type="text"
+                        class="validate"
+                     />
+                     <label for="ending-location">Ending Location</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <input
+                        placeholder="Song"
+                        id="song-title"
+                        type="text"
+                        class="validate"
+                     />
+                     <label for="song-title">Song</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <input
+                        placeholder="Artist"
+                        id="artist-name"
+                        type="text"
+                        class="validate"
+                     />
+                     <label for="artist-name">Artist</label>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </body>
 </html>
