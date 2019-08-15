@@ -11,6 +11,7 @@ artistName = document.getElementById(input3).value
 trackName = document.getElementById(input4).value
 
 // If re-formatting of input is necessary to be concatenated--do it below
+// toLowerCase()    ???
 
 //Take variable value and concatenate into respective, provided queryURLs
 
