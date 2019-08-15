@@ -45,8 +45,6 @@ function getDirectionInfo(fromLocation, toLocation) {
         console.log("drive time: ", driveTime);
         console.log("distance in miles: ", distanceInMiles);
         console.log("distance in km: ", distanceInKm);
-
-
     })
 }
 
