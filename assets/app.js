@@ -23,8 +23,8 @@ let trackTreckNum; //track lenght @ global scope for easy reference
 
 submitButton.addEventListener("click", function () {
 
-    const startLocation = document.getElementById("starting-location").value;
-    const endLocation = document.getElementById("ending-location").value;
+    const startLocation = document.getElementById("starting-city").value;
+    const endLocation = document.getElementById("ending-city").value;
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
