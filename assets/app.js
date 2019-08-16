@@ -47,11 +47,11 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json()
         }).then(function (responseJson) {
-            console.log(responseJson);  // console log json to check integrity
+            console.log(responseJson); // console log json to check integrity
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
-            document.getElementById("output").innerHTML = "You will listen to " + responseJson.track.name + " " + trackTreckNum + " times!";
+            document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
         })
     }
 
@@ -78,6 +78,3 @@ submitButton.addEventListener("click", function () {
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
-
-
-
