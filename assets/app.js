@@ -62,7 +62,7 @@ submitButton.addEventListener("click", function () {
 
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
-        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
+        const queryURL = "https://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
         console.log(queryURL);
         fetch(queryURL).then(function (response) {
             return response.json();
