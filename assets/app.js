@@ -19,6 +19,7 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 const submitButton = document.getElementById("submit-btn");
 const outputDisplayP = document.getElementById("output");
+let trackTreckNum; //track lenght @ global scope for easy reference 
 
 submitButton.addEventListener("click", function () {
 
@@ -31,8 +32,8 @@ submitButton.addEventListener("click", function () {
 
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
-        const convertedTrackTime = trackTime/1000;
-        const trackTreckNum = Math.ceil(convertedDistanceTime/convertedTrackTime);
+        const convertedTrackTime = trackTime / 1000;
+        trackTreckNum = Math.ceil(convertedDistanceTime / convertedTrackTime);
         console.log("This is the number of " + trackName + ": " + trackTreckNum);
         return trackTreckNum;
     }
@@ -50,13 +51,14 @@ submitButton.addEventListener("click", function () {
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
+            document.getElementById("output").innerHTML = "You will listen to " + responseJson.track.name + " " + trackTreckNum + " times!";
         })
     }
 
 
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
-        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", "+ fromState + "&to=" + toCity + ", " + toState + "&unit=m";
+        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
         console.log(queryURL);
         fetch(queryURL).then(function (response) {
             return response.json();
@@ -76,4 +78,6 @@ submitButton.addEventListener("click", function () {
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
+
+
 
