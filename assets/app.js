@@ -51,7 +51,6 @@ submitButton.addEventListener("click", function () {
             convertTrecktoTrack(distanceTime, songLength);
 document.getElementById("output").innerHTML = "You will listen to " + responseJson.track.name + " " + trackTreckNum + " times!";
         })
-
     }
 
 
