@@ -74,14 +74,11 @@ submitButton.addEventListener("click", function () {
     getDirectionInfo(startLocation, endLocation); //runs the get direction info
 
     function resetForms() {
-        document.querySelectorAll("starting-location").reset;
-        document.querySelectorAll("ending-location").reset;
-        document.querySelectorAll("song-title").reset;
-        document.querySelectorAll("artist-name").reset;
+    document.querySelectorAll("input-field").reset;
     };
 
+
+
     resetForms();
-
-
 
 })
