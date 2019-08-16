@@ -55,7 +55,7 @@ submitButton.addEventListener("click", function () {
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
             driveTime = responseJson.route.time; //returns drive time in minutes
-            console.log("drive time in hours: ", driveTimeHrs);
+            console.log("drive: ", driveTime);
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
