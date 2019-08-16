@@ -46,6 +46,7 @@ submitButton.addEventListener("click", function () {
             console.log("song length:", songLength);
         })
 
+        //return songLength;
     }
 
     getTrackLength(artistName, trackName);
