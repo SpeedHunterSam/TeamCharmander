@@ -30,8 +30,8 @@ submitButton.addEventListener("click", function () {
 
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
-        const convertedTrackTime = trackTime/1000;
-        trackTreckNum = Math.ceil(convertedDistanceTime/convertedTrackTime);
+        const convertedTrackTime = trackTime / 1000;
+        trackTreckNum = Math.ceil(convertedDistanceTime / convertedTrackTime);
         console.log("This is the number of " + trackName + ": " + trackTreckNum);
         return trackTreckNum;
     }
@@ -45,11 +45,11 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json()
         }).then(function (responseJson) {
-            console.log(responseJson);  // console log json to check integrity
+            console.log(responseJson); // console log json to check integrity
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
-document.getElementById("output").innerHTML = "You will listen to " + responseJson.track.name + " " + trackTreckNum + " times!";
+            document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
         })
     }
 
@@ -74,9 +74,6 @@ document.getElementById("output").innerHTML = "You will listen to " + responseJs
     }
 
     getDirectionInfo(startLocation, endLocation); //runs the get direction info
-    
+
 
 })
-
-
-
