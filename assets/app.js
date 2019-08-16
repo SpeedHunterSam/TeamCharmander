@@ -78,7 +78,3 @@ submitButton.addEventListener("click", function () {
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
-
-
-
-})
