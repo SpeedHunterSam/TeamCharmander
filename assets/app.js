@@ -19,18 +19,21 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 const submitButton = document.getElementById("submit-btn");
 const outputDisplayP = document.getElementById("output");
+let trackTreckNum; //track lenght @ global scope for easy reference 
 
 submitButton.addEventListener("click", function () {
 
-    const startLocation = document.getElementById("starting-location").value;
-    const endLocation = document.getElementById("ending-location").value;
+    const startState = document.getElementById("starting-state").value;
+    const startCity = document.getElementById("starting-city").value;
+    const endState = document.getElementById("ending-state").value;
+    const endCity = document.getElementById("ending-city").value;
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
-        const convertedTrackTime = trackTime/1000;
-        const trackTreckNum = Math.ceil(convertedDistanceTime/convertedTrackTime);
+        const convertedTrackTime = trackTime / 1000;
+        trackTreckNum = Math.ceil(convertedDistanceTime / convertedTrackTime);
         console.log("This is the number of " + trackName + ": " + trackTreckNum);
         return trackTreckNum;
     }
@@ -44,19 +47,18 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json()
         }).then(function (responseJson) {
-            console.log(responseJson);  // console log json to check integrity
+            console.log(responseJson); // console log json to check integrity
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
+            document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
         })
-
-        //return songLength;
     }
 
 
-    function getDirectionInfo(fromLocation, toLocation) {
+    function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
-        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromLocation + "&to=" + toLocation + "&unit=m";
+        const queryURL = "https://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
         console.log(queryURL);
         fetch(queryURL).then(function (response) {
             return response.json();
@@ -73,7 +75,6 @@ submitButton.addEventListener("click", function () {
         })
     }
 
-    getDirectionInfo(startLocation, endLocation); //runs the get direction info
+    getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
-
