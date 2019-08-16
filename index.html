@@ -1,26 +1,64 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">   
-            
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TracTreck</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 
 <body>
-<header>
-    <!-- this header will be changed and improved in the design/CSS fase -->
-    <!-- maybe something more dynamic -->
-    <div class="card-panel blue lighten-5">This is a card panel with a teal lighten-2 class
-        <div class="card-panel hoverable"> Hoverable Card Panel</div>
+
+    <header>
+        <!-- this header will be changed and improved in the design/CSS fase -->
+        <!-- maybe something more dynamic -->
+        <div class="card-panel blue lighten-5">This is a card panel with a teal lighten-2 class
+            <div class="card-panel hoverable"> Hoverable Card Panel</div>
+        </div>
+
+    </header>
+    <div class="container">
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Starting Location" id="starting-location" type="text" class="validate" />
+                        <label for="starting-location">Starting Location</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input placeholder="Ending Location" id="ending-location" type="text" class="validate" />
+                        <label for="ending-location">Ending Location</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input placeholder="Song" id="song-title" type="text" class="validate" />
+                        <label for="song-title">Song</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input placeholder="Artist" id="artist-name" type="text" class="validate" />
+                        <label for="artist-name">Artist</label>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title center-align">Track Amount</span>
+                        <p id="output">Here's where the track amounts go!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-            
-    
-</header>
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/app.js"></script>
 </body>
+
 </html>
