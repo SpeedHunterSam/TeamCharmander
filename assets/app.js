@@ -40,10 +40,18 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json()
         }).then(function (responseJson) {
-            console.log(responseJson);  // console log json to check integrity
+            console.log(responseJson); // console log json to check integrity
 
-            const songLength = parseInt(responseJson.track.duration) / 1000;
+            const songLength = parseInt(responseJson.track.duration) / 1000; //output in seconds
             console.log("song length:", songLength);
+
+            function displayResults() {
+                document.getElementById("output").innerHTML = responseJson.track.name + " will play " + Number + " of times!";
+            };
+
+
+
+            displayResults();
         })
 
     }
@@ -74,5 +82,16 @@ submitButton.addEventListener("click", function () {
     }
 
     getDirectionInfo(startLocation, endLocation);
+
+    function resetForms() {
+        document.querySelectorAll("starting-location").reset;
+        document.querySelectorAll("ending-location").reset;
+        document.querySelectorAll("song-title").reset;
+        document.querySelectorAll("artist-name").reset;
+    };
+
+    resetForms();
+
+
 
 })
