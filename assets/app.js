@@ -22,8 +22,10 @@ const outputDisplayP = document.getElementById("output");
 
 submitButton.addEventListener("click", function () {
 
-    const startLocation = document.getElementById("starting-location").value;
-    const endLocation = document.getElementById("ending-location").value;
+    const startState = document.getElementById("starting-state").value;
+    const startCity = documnet.getElementById("starting-city").value;
+    const endState = document.getElementById("ending-state").value;
+    const endCity = document.getElementById("ending-city").value;
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
@@ -53,9 +55,9 @@ submitButton.addEventListener("click", function () {
     }
 
 
-    function getDirectionInfo(fromLocation, toLocation) {
+    function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
-        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromLocation + "&to=" + toLocation + "&unit=m";
+        const queryURL = "http://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", "+ fromState + "&to=" + toCity + ", " + toState + "&unit=m";
         console.log(queryURL);
         fetch(queryURL).then(function (response) {
             return response.json();
@@ -72,7 +74,7 @@ submitButton.addEventListener("click", function () {
         })
     }
 
-    getDirectionInfo(startLocation, endLocation); //runs the get direction info
+    getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
 
