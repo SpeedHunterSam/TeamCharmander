@@ -17,7 +17,8 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 //Take variable value and concatenate into respective, provided queryURLs
 
-const submitButton = document.getElementById("submit-btn")
+const submitButton = document.getElementById("submit-btn");
+const displayDiv = document.getElementById("output");
 
 submitButton.addEventListener("click", function () {
 
@@ -26,7 +27,10 @@ submitButton.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
-
+    function convertTrektoTrack(distance, trackLength) {
+        const trackTrekNum = Math.ceil(trackLength/distance);
+        console.log("This is the number of " + trackName + ": " + trackTrekNum);
+    }
 
     function getTrackLength(artist, track) {
 
@@ -76,3 +80,4 @@ submitButton.addEventListener("click", function () {
     getDirectionInfo(startLocation, endLocation);
 
 })
+
