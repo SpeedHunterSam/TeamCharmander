@@ -17,7 +17,8 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 //Take variable value and concatenate into respective, provided queryURLs
 
-const submitButton = document.getElementById("submit-btn")
+const submitButton = document.getElementById("submit-btn");
+const outputDisplayP = document.getElementById("output");
 
 submitButton.addEventListener("click", function () {
 
@@ -26,9 +27,16 @@ submitButton.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
+    function convertTrecktoTrack(distanceTime, trackTime) {
+        const convertedDistanceTime = distanceTime;
+        const convertedTrackTime = trackTime/1000;
+        const trackTreckNum = Math.ceil(convertedDistanceTime/convertedTrackTime);
+        console.log("This is the number of " + trackName + ": " + trackTreckNum);
+        return trackTreckNum;
+    }
 
     //sets up the function to get track length
-    function getTrackLength(artist, track) {
+    function getTrackLength(artist, track, distanceTime) {
 
         const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
 
@@ -39,14 +47,7 @@ submitButton.addEventListener("click", function () {
             console.log(responseJson);  // console log json to check integrity
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
-
-            function displayResults() {
-                document.getElementById("output").innerHTML = responseJson.track.name + " will play " + Number + " of times!";
-            };
-
-
-
-            displayResults();
+            convertTrecktoTrack(distanceTime, songLength);
         })
 
     }
@@ -63,22 +64,15 @@ submitButton.addEventListener("click", function () {
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
             driveTime = responseJson.route.time; //returns drive time in minutes
-            console.log("drive time in hours: ", driveTimeHrs);
+            console.log("drive time: ", driveTime);
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
-            getTrackLength(artistName, trackName); //runs the trackLength function
+            getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
         })
     }
 
     getDirectionInfo(startLocation, endLocation); //runs the get direction info
 
-    function resetForms() {
-    document.querySelectorAll("input-field").reset;
-    };
-
-
-
-    resetForms();
-
 })
+
