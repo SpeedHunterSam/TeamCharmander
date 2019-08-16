@@ -29,13 +29,14 @@ submitButton.addEventListener("click", function () {
 
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
-        const convertedTrackTime = trackTime;
-        const trackTreckNum = Math.ceil(distanceTime/trackTime);
-        console.log("This is the number of " + trackName + ": " + trackTrekNum);
+        const convertedTrackTime = trackTime/1000;
+        const trackTreckNum = Math.ceil(convertedDistanceTime/convertedTrackTime);
+        console.log("This is the number of " + trackName + ": " + trackTreckNum);
+        return trackTreckNum;
     }
 
     //sets up the function to get track length
-    function getTrackLength(artist, track) {
+    function getTrackLength(artist, track, distanceTime) {
 
         const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
 
@@ -46,6 +47,7 @@ submitButton.addEventListener("click", function () {
             console.log(responseJson);  // console log json to check integrity
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
+            convertTrecktoTrack(distanceTime, songLength);
         })
 
     }
@@ -62,11 +64,11 @@ submitButton.addEventListener("click", function () {
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
             driveTime = responseJson.route.time; //returns drive time in minutes
-            console.log("drive time in hours: ", driveTimeHrs);
+            console.log("drive time: ", driveTime);
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
-            getTrackLength(artistName, trackName); //runs the trackLength function
+            getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
         })
     }
 
