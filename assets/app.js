@@ -30,6 +30,10 @@ submitButton.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
+    function checkValues(startState, startCity, endState, endCity, trackName, artistName){
+        return false;
+    }
+
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
         const convertedTrackTime = trackTime / 1000;
@@ -74,7 +78,7 @@ submitButton.addEventListener("click", function () {
             getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
         })
     }
-
+    
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
