@@ -23,7 +23,7 @@ const outputDisplayP = document.getElementById("output");
 submitButton.addEventListener("click", function () {
 
     const startState = document.getElementById("starting-state").value;
-    const startCity = documnet.getElementById("starting-city").value;
+    const startCity = document.getElementById("starting-city").value;
     const endState = document.getElementById("ending-state").value;
     const endCity = document.getElementById("ending-city").value;
     const trackName = document.getElementById("song-title").value;
