@@ -19,7 +19,7 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 const submitButton = document.getElementById("submit-btn");
 const outputDisplayP = document.getElementById("output");
-let trackTreckNum; //track lenght @ global scope for easy reference 
+let trackTreckNum; //track length @ global scope for easy reference 
 
 submitButton.addEventListener("click", function () {
 
@@ -72,23 +72,6 @@ submitButton.addEventListener("click", function () {
         })
     }
 
-    function getMovieLength(movieTitle) {
-        const apiKey = "d2c81adc"
-        const queryURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle;
-        console.log(queryURL);
-        fetch(queryURL).then(function (response) {
-            return response.json();
-        }).then(function (responseJson) {
-            console.log(responseJson);
-            const convertedMovieLength = ((responseJson.runtime) * 60);
-            // convert output (minutes) to seconds
-            trackTreckNum = Math.ceil(convertedDistanceTime / convertedMovieLength)
-            console.log("running time: ", convertedMovieLength);
-            getMovieLength(movieTitle); //still need to output somewhere!!
-            document.getElementById("output").innerHTML = fromCity + " is " + trackTreckNum + " " + responseJson.title + "'s away from " + toCity + "!";
-        })
-    }
-
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
         const queryURL = "https://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
@@ -107,12 +90,15 @@ submitButton.addEventListener("click", function () {
             console.log("distance in km: ", distanceInKm);
 
             getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+<<<<<<< HEAD
+=======
            
     */
             // Adding the new paragraph to the viewport in HTML
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
+>>>>>>> 47612fa36de826357434b30bb5adddde566a7368
         })
     }
 
