@@ -43,7 +43,7 @@ submitButton.addEventListener("click", function () {
     }
 
     function checkValues(artist, track) {
-        if (artist.indexOf("#") !== -1|| track.indexOf("#") !== -1) {
+        if (artist.indexOf("#") !== -1 || track.indexOf("#") !== -1) {
             return false;
         }
         else {
@@ -103,6 +103,7 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
+<<<<<<< HEAD
             if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
                 console.log("Stop breaking our crap John.");
             }
@@ -120,6 +121,30 @@ submitButton.addEventListener("click", function () {
                 document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
             }
             // getMovieLength(movieTitle)
+=======
+if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
+    console.log("Stop breaking our crap John.");
+}
+else {
+
+console.log(responseJson);
+            distanceInMiles = Math.floor(responseJson.route.distance);            ;
+            distanceInKm = Math.floor(distanceInMiles * 1.609344);
+            driveTime = responseJson.route.time; //returns drive time in Seconds
+            driveTimeMin = Math.floor(driveTime / 60); //converting drive time to minutes from seconds
+
+            console.log("drive time in minutes: ", driveTime);
+            console.log("distance in miles: ", distanceInMiles);
+            console.log("distance in km: ", distanceInKm);
+
+            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+
+
+            // Adding the new paragraph to the viewport in HTML
+            document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+}
+
+>>>>>>> 965dec06a9879c8b3727fbc31ed9ca5e9ab9e87a
         })
     }
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
