@@ -12,8 +12,15 @@ function getTrackLength(artist, album) {
 
         let trackTimes = [];
 
+        answerDiv = document.getElementById("answer")
         for (i = 0; i < albumArray.length; i++) {
             console.log(albumArray[i].name);
+            answerUL = document.createElement("Ul");
+            answerLI = document.createElement("li");
+            answerLI.innerText = albumArray[i].name;
+            answerUL.append(answerLI);
+            answerDiv.append(answerUL);
+
             trackTimes.push(parseInt(albumArray[i].duration));
         }
         console.log(trackTimes);
@@ -21,4 +28,12 @@ function getTrackLength(artist, album) {
     })
 }
 
-getTrackLength("cher", "believe");
+
+document.getElementById("submit").addEventListener("click", function () {
+    const artistInput = document.getElementById("artist").value;
+    const albumInput = document.getElementById("album").value;
+    console.log(artistInput);
+    console.log(albumInput);
+
+    getTrackLength(artistInput, albumInput);
+})
