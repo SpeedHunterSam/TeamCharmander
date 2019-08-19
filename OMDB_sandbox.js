@@ -1,4 +1,4 @@
-const movieTitle = document.getElementById("movie-title").value
+const movieTitle = document.getElementById("movie-name").value
 // Still need to create these divs!
 
 // const movieYear = document.getElementById("movie-year").value
