@@ -6,15 +6,16 @@ const movieTitle = document.getElementById("movie-title").value
 
 function getMovieLength(movieTitle) {
     const apiKey = "d2c81adc"
-    const queryURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle;
+    const queryURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle + "&type=movie";
     // If adding year specificity append the following==>| + "&y=" + movieYear|
+    // Adding default specificity for movies only, can search shows, etc. by removing 'type' from queryURL
     console.log(queryURL);
     fetch(queryURL).then(function (response) {
         return response.json();
     }).then(function (responseJson) {
         console.log(responseJson);
-        const convertedMovieLength = ((responseJson.runtime) * 60);
-        // convert output (minutes) to seconds
+        const convertedMovieLength = ((parseInt(responseJson.Runtime))* 60);
+        // convert string output to integer then convert from minutes to seconds
         flicTrekNum = Math.ceil(convertedDistanceTime / convertedMovieLength);
         console.log("running time: ", convertedMovieLength);
         // getMovieLength(movieTitle); //still need to output somewhere!! (but not here)
