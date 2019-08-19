@@ -30,10 +30,6 @@ submitButton.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
-    function checkValues(startState, startCity, endState, endCity, trackName, artistName){
-        return false;
-    }
-
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
         const convertedTrackTime = trackTime / 1000;
@@ -51,11 +47,18 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json()
         }).then(function (responseJson) {
-            console.log(responseJson); // console log json to check integrity
-            const songLength = responseJson.track.duration; //this returns the song length
-            console.log("song length:", songLength);
-            convertTrecktoTrack(distanceTime, songLength);
-            document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
+            if (responseJson.track.duration === "0") {
+                console.log("Stop breaking our crap John.");
+            }
+            else {
+                console.log(responseJson); // console log json to check integrity
+                const songLength = responseJson.track.duration; //this returns the song length
+                console.log("song length:", songLength);
+                convertTrecktoTrack(distanceTime, songLength);
+                document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
+            }
+        }).catch(function (error) {
+            console.log(error);
         })
     }
 
@@ -67,18 +70,23 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
-            console.log(responseJson);
-            distanceInMiles = responseJson.route.distance;
-            distanceInKm = distanceInMiles * 1.609344;
-            driveTime = responseJson.route.time; //returns drive time in minutes
-            console.log("drive time: ", driveTime);
-            console.log("distance in miles: ", distanceInMiles);
-            console.log("distance in km: ", distanceInKm);
-
-            getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
+            if (!responseJson.route.distance) {
+                console.log("Stop breaking our crap John.");
+            }
+            else {
+                console.log(responseJson);
+                distanceInMiles = responseJson.route.distance;
+                distanceInKm = distanceInMiles * 1.609344;
+                driveTime = responseJson.route.time; //returns drive time in minutes
+                console.log("drive time: ", driveTime);
+                console.log("distance in miles: ", distanceInMiles);
+                console.log("distance in km: ", distanceInKm);
+                getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
+            }
+        }).catch(function (error) {
+            console.log(error);
         })
     }
-    
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
