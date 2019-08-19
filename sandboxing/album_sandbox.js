@@ -1,3 +1,4 @@
+//gets top album from an artist
 function searchAlbums(artist) {
     let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
@@ -15,6 +16,7 @@ function searchAlbums(artist) {
         answerUL = document.createElement("Ul");
         answerDiv.append(answerUL);
 
+        //displays the list of albums
         for (i = 0; i < albumArray.length; i++) {
             if (albumArray[i].name !== "(null)") {
                 answerLI = document.createElement("li");
@@ -25,6 +27,7 @@ function searchAlbums(artist) {
                 answerUL.append(answerLI);
                 answerLI.addEventListener("click", function (event) {
                     albumSearch = event.target.getAttribute("data-album");
+                    //runs the get track length function
                     getTrackLength(artist, albumSearch);
                 })
             }
@@ -32,7 +35,7 @@ function searchAlbums(artist) {
     })
 }
 
-
+//gets list of tracks in an album and their lengths
 function getTrackLength(artist, album) {
 
     let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
@@ -52,7 +55,7 @@ function getTrackLength(artist, album) {
         answerUL = document.createElement("ul");
         answerDiv.append(answerUL);
 
-
+        //displays the info on the page
         for (i = 0; i < trackArray.length; i++) {
             console.log(trackArray[i].name);
             answerLI = document.createElement("li");
