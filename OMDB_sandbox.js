@@ -1,8 +1,11 @@
 const movieTitle = document.getElementById("movie-title").value
+// Still need to create these divs!
 
 // const movieYear = document.getElementById("movie-year").value
 
 // If we need movie specificity==> Year would probably be easier to input for user vs. director, releaseDay, etc.
+
+let flicTrekNum; //movie length at global scope for easy reference
 
 function getMovieLength(movieTitle) {
     const apiKey = "d2c81adc"

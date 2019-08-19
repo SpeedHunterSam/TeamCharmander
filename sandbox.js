@@ -4,16 +4,8 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 */
 
-// Given input1(Start) input2(End) input 3(Track) input4(Artist)
-
-// Given submit button(submitBtn)
-
 // Take text from each input upon button click
 // Store each in a variable
-
-
-// If re-formatting of input is necessary to be concatenated--do it below
-// toLowerCase()    ???
 
 //Take variable value and concatenate into respective, provided queryURLs
 
