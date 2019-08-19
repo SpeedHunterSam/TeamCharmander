@@ -19,7 +19,11 @@ https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8
 
 const submitButton = document.getElementById("submit-btn");
 const outputDisplayP = document.getElementById("output");
-let trackTreckNum; //track lenght @ global scope for easy reference 
+let trackTreckNum; //track length @ global scope for easy reference 
+
+M.Tabs.init(document.querySelector('.tabs'))
+
+
 
 submitButton.addEventListener("click", function () {
 
@@ -92,23 +96,6 @@ submitButton.addEventListener("click", function () {
         }
     }
 
-    function getMovieLength(movieTitle) {
-        const apiKey = "d2c81adc"
-        const queryURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle;
-        console.log(queryURL);
-        fetch(queryURL).then(function (response) {
-            return response.json();
-        }).then(function (responseJson) {
-            console.log(responseJson);
-            const convertedMovieLength = ((responseJson.runtime) * 60);
-            // convert output (minutes) to seconds
-            trackTreckNum = Math.ceil(convertedDistanceTime / convertedMovieLength)
-            console.log("running time: ", convertedMovieLength);
-            getMovieLength(movieTitle); //still need to output somewhere!!
-            document.getElementById("output").innerHTML = fromCity + " is " + trackTreckNum + " " + responseJson.title + "'s away from " + toCity + "!";
-        })
-    }
-
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
         const queryURL = "https://www.mapquestapi.com/directions/v2/route?key=" + apiKey + "&from=" + fromCity + ", " + fromState + "&to=" + toCity + ", " + toState + "&unit=m";
@@ -116,6 +103,7 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
+<<<<<<< HEAD
             if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
                 console.log("Stop breaking our crap John.");
             }
@@ -133,6 +121,25 @@ submitButton.addEventListener("click", function () {
                 document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
             }
             // getMovieLength(movieTitle)
+=======
+            console.log(responseJson);
+            distanceInMiles = responseJson.route.distance;
+            distanceInKm = distanceInMiles * 1.609344;
+            driveTime = responseJson.route.time; //returns drive time in Seconds
+            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+
+            console.log("drive time in minutes: ", driveTime);
+            console.log("distance in miles: ", distanceInMiles);
+            console.log("distance in km: ", distanceInKm);
+
+            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+           
+    
+            // Adding the new paragraph to the viewport in HTML
+            document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+
+
+>>>>>>> e331a7c598bfe7944cfc48709b89c5faa2ccd1ad
         })
     }
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
