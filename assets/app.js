@@ -42,38 +42,58 @@ submitButton.addEventListener("click", function () {
         return trackTreckNum;
     }
 
+    function checkValues(artist, track) {
+        if (artist.indexOf("#") !== -1|| track.indexOf("#") !== -1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     //sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
         const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
 
         const queryURL = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo" + "&api_key=" + apiKey + "&artist=" + artist + "&track=" + track + "&format=json"; // queryURL to be used in fetch 
-        fetch(queryURL).then(function (response) {
-            return response.json()
-        }).then(function (responseJson) {
-            console.log(responseJson); // console log json to check integrity
-            const songLength = responseJson.track.duration; //this returns the song length
-            console.log("song length:", songLength);
-            convertTrecktoTrack(distanceTime, songLength);
-            document.getElementById("output").innerHTML = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
+        if (checkValues(artist, track)) {
+            fetch(queryURL).then(function (response) {
+                return response.json()
+            }).then(function (responseJson) {
+                if (responseJson.error || responseJson.track.duration === "0") {
+                    console.log("Stop breaking our crap John.");
+                    console.log(responseJson);
+                }
+                else {
+                    console.log(responseJson); // console log json to check integrity
+                    const songLength = responseJson.track.duration; //this returns the song length
+                    console.log("song length:", songLength);
+                    convertTrecktoTrack(distanceTime, songLength);
+                    document.getElementById("output").innerHTML = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
 
 
-            //Get Album art url and save it to a variable
-            const aArtURL = responseJson.track.album.image[1]["#text"];
+                    //Get Album art url and save it to a variable
+                    const aArtURL = responseJson.track.album.image[1]["#text"];
 
-            console.log(aArtURL);
+                    console.log(aArtURL);
 
-            //Print album art img to screen
+                    //Print album art img to screen
 
-            const image = document.createElement("img");  //creaing image elements
-            image.setAttribute('id', 'aArt');
+                    const image = document.createElement("img");  //creaing image elements
+                    image.setAttribute('id', 'aArt');
 
-            document.getElementById("output").prepend(image); //writing new element to the DOM
+                    document.getElementById("output").prepend(image); //writing new element to the DOM
 
-            //adding attributes to the img tag on the DOM
-            const aARtImg = document.getElementById("aArt");
-            aARtImg.setAttribute("src", aArtURL);
-        })
+                    //adding attributes to the img tag on the DOM
+                    const aARtImg = document.getElementById("aArt");
+                    aARtImg.setAttribute("src", aArtURL);
+                }
+            })
+        }
+        else {
+            console.log("Stop breaking our crap John.");
+        }
     }
 
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
@@ -83,6 +103,25 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
+<<<<<<< HEAD
+            if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
+                console.log("Stop breaking our crap John.");
+            }
+            else {
+                console.log(responseJson);
+                distanceInMiles = responseJson.route.distance;
+                distanceInKm = distanceInMiles * 1.609344;
+                driveTime = responseJson.route.time; //returns drive time in minutes
+                driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+
+                console.log("drive time: ", driveTime);
+                console.log("distance in miles: ", distanceInMiles);
+                console.log("distance in km: ", distanceInKm);
+                getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+                document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+            }
+            // getMovieLength(movieTitle)
+=======
             console.log(responseJson);
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
@@ -100,9 +139,9 @@ submitButton.addEventListener("click", function () {
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
+>>>>>>> e331a7c598bfe7944cfc48709b89c5faa2ccd1ad
         })
     }
-
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 
 })
