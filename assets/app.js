@@ -99,13 +99,28 @@ submitButton.addEventListener("click", function () {
             console.log(responseJson);
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
-            driveTime = responseJson.route.time; //returns drive time in minutes
-            console.log("drive time: ", driveTime);
+            driveTime = responseJson.route.time; //returns drive time in Seconds
+            driveTime = driveTime / 60; //converting drive time to minutes from seconds
+
+            console.log("drive time in minutes: ", driveTime);
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
             getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
             // getMovieLength(movieTitle)
+
+            //Display Drive time in minutes, miles and km to bottom of the page
+/*
+            const p = document.createElement("p");
+            // Adding a class
+            // Creating the txt to put in paragraph tag
+            p.innerHTML = "Drive Time in Minutes: " + driveTime + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+            p.setAttribute("class", "timeAndDistance");
+    */
+            // Adding the new paragraph to the viewport in HTML
+            document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTime + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+
+
         })
     }
 
