@@ -93,6 +93,7 @@ function getTrackLength(artist, album) {
     })
 }
 
+
 document.getElementById("submit").addEventListener("click", function () {
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
