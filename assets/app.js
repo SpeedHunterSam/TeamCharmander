@@ -52,6 +52,23 @@ submitButton.addEventListener("click", function () {
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
             document.getElementById("output").innerHTML = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
+
+
+            //Get Album art url and save it to a variable
+            const aArtURL = responseJson.track.album.image[1]["#text"];
+
+            console.log(aArtURL);
+
+            //Print album art img to screen
+
+            const image = document.createElement("img");  //creaing image elements
+            image.setAttribute('id', 'aArt');
+
+            document.getElementById("output").prepend(image); //writing new element to the DOM
+
+            //adding attributes to the img tag on the DOM
+            const aARtImg = document.getElementById("aArt");
+            aARtImg.setAttribute("src", aArtURL);
         })
     }
 
