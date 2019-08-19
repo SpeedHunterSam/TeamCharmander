@@ -39,7 +39,7 @@ submitButton.addEventListener("click", function () {
     }
 
     //sets up the function to get track length
-    function getTrackLength(artist, track, distanceTime) {
+    function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
         const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
 
@@ -51,10 +51,26 @@ submitButton.addEventListener("click", function () {
             const songLength = responseJson.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
-            document.getElementById("output").innerHTML = "You will listen to " + "'" + responseJson.track.name + "' " + trackTreckNum + " times!";
+            document.getElementById("output").innerHTML = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
         })
     }
 
+    function getMovieLength(movieTitle) {
+        const apiKey = "d2c81adc"
+        const queryURL = "https://www.omdbapi.com/?apikey=" + apiKey + "&t=" + movieTitle;
+        console.log(queryURL);
+        fetch(queryURL).then(function (response) {
+            return response.json();
+        }).then(function (responseJson) {
+            console.log(responseJson);
+            const convertedMovieLength = ((responseJson.runtime) * 60);
+            // convert output (minutes) to seconds
+            trackTreckNum = Math.ceil(convertedDistanceTime / convertedMovieLength)
+            console.log("running time: ", convertedMovieLength);
+            getMovieLength(movieTitle); //still need to output somewhere!!
+            document.getElementById("output").innerHTML = fromCity + " is " + trackTreckNum + " " + responseJson.title + "'s away from " + toCity + "!";
+        })
+    }
 
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
         const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a"
@@ -71,7 +87,8 @@ submitButton.addEventListener("click", function () {
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
-            getTrackLength(artistName, trackName, driveTime); //runs the trackLength function
+            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+            // getMovieLength(movieTitle)
         })
     }
 
