@@ -90,15 +90,12 @@ submitButton.addEventListener("click", function () {
             console.log("distance in km: ", distanceInKm);
 
             getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-<<<<<<< HEAD
-=======
            
     
             // Adding the new paragraph to the viewport in HTML
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
->>>>>>> 47612fa36de826357434b30bb5adddde566a7368
         })
     }
 
