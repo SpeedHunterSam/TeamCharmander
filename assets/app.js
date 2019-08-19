@@ -21,6 +21,10 @@ const submitButton = document.getElementById("submit-btn");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
+M.Tabs.init(document.querySelector('.tabs'))
+
+
+
 submitButton.addEventListener("click", function () {
 
     const startState = document.getElementById("starting-state").value;

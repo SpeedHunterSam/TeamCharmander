@@ -18,18 +18,111 @@
 <body>
     <div class="row">
         <div class="col s12">
-          <ul class="tabs">
-            <li class="tab col s3"><a href="#test1">Test 1</a></li>
-            <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
-            <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
-            <li class="tab col s3"><a href="#test4">Test 4</a></li>
-          </ul>
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#song-tab">Search By Song</a></li>
+                <li class="tab col s3"><a href="#movie-tab">Search By Movie</a></li>
+            </ul>
         </div>
-        <div id="test1" class="col s12">Test 1</div>
-        <div id="test2" class="col s12">Test 2</div>
-        <div id="test3" class="col s12">Test 3</div>
-        <div id="test4" class="col s12">Test 4</div>
-      </div>
+        <div id="song-tab" class="col s12">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                            <input id="starting-city" type="text" class="validate" required />
+                            <label for="starting-city">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                            <input id="starting-state" type="text" class="validate" required />
+                            <label for="starting-state">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                            <input id="ending-city" type="text" class="validate" required />
+                            <label for="ending-city">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                            <input id="ending-state" type="text" class="validate" required />
+                            <label for="ending-state">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                            <input id="artist-name" type="text" class="validate" required />
+                            <label for="artist-name">Artist</label>
+                        </div>
+                        <!-- song -->
+                        <div class="input-field col s12">
+                            <input id="song-title" type="text" class="validate" required />
+                            <label for="song-title">Song</label>
+                        </div>
+
+                        <div class="col s6">
+                            <button id="submit-btn"
+                                class="btn btn-large waves-effect waves-light green lighten-1 center-align"
+                                type="button" name="action">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Insert html of current inputs here -->
+        <div id="movie-tab" class="col s12">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                            <input id="starting-city2" type="text" class="validate" required />
+                            <label for="starting-city2">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                            <input id="starting-state2" type="text" class="validate" required />
+                            <label for="starting-state2">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                            <input id="ending-city2" type="text" class="validate" required />
+                            <label for="ending-city2">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                            <input id="ending-state2" type="text" class="validate" required />
+                            <label for="ending-state2">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                            <input id="movie-name2" type="text" class="validate" required />
+                            <label for="movie-name2">Movie</label>
+                        </div>
+                        <!-- year? -->
+                        <!-- <div class="input-field col s12">
+                     <input
+                        id="movie-year"
+                        type="text"
+                        class="validate"
+                        required
+                     />
+                     <label for="movie-year">Year</label>
+                  </div> -->
+
+                        <div class="col s6">
+                            <button id="submit-btn"
+                                class="btn btn-large waves-effect waves-light green lighten-1 center-align"
+                                type="button" name="action">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Create html for taking in movie input(s) -->
+    </div>
     <script src="./assets/app.js"></script>
 </body>
 
