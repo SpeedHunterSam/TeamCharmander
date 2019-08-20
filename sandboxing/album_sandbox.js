@@ -13,22 +13,33 @@ function searchAlbums(artist) {
 
         const answerDiv = document.getElementById("answer");
         answerDiv.innerHTML = "";
-        answerUL = document.createElement("Ul");
+        answerUL = document.createElement("ul");
+        answerArea = document.createElement("div");
         answerDiv.append(answerUL);
+        answerDiv.append(answerArea);
 
+        //sets up function to displays the list of albums
         let indexNum = 0;
-        //displays the list of albums
         function displayAlbums(index) {
-            j = index + 9
+            //displays the i + 4 albums
+            j = index + 4
             for (i = index; i < j; i++) {
                 if (albumArray[i].name !== "(null)") {
-                    answerLI = document.createElement("li");
-                    answerLI.innerText = albumArray[i].name;
-                    answerLI.setAttribute("data-album", albumArray[i].name);
-                    answerLI.setAttribute("data-artist", artist);
-                    answerLI.classList.add("album")
-                    answerUL.append(answerLI);
-                    answerLI.addEventListener("click", function (event) {
+                    // answerLI = document.createElement("li");
+                    answerImg = document.createElement("img");
+
+                    answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
+                    answerImg.setAttribute("data-album", albumArray[i].name);
+                    answerImg.setAttribute("data-artist", artist);
+                    answerImg.classList.add("col", "s6");
+                    answerArea.append(answerImg);
+
+                    // answerLI.innerText = albumArray[i].name;
+                    // answerLI.setAttribute("data-album", albumArray[i].name);
+                    // answerLI.setAttribute("data-artist", artist);
+                    // answerLI.classList.add("album")
+                    // answerUL.append(answerLI);
+                    answerImg.addEventListener("click", function (event) {
                         albumSearch = event.target.getAttribute("data-album");
                         //runs the get track length function
                         getTrackLength(artist, albumSearch);
@@ -39,24 +50,27 @@ function searchAlbums(artist) {
         displayAlbums(indexNum);
         const nextBtn = document.createElement("button");
         const prevBtn = document.createElement("button");
+        const btnArea = document.createElement("div");
+        btnArea.classList.add("col", "s12");
         nextBtn.innerText = ">";
-        prevBtn.innerText = "<"
+        prevBtn.innerText = "<";
         nextBtn.addEventListener("click", function () {
             if (indexNum < 40) {
-                indexNum = indexNum + 10;
-                answerUL.innerHTML = "";
+                indexNum = indexNum + 5;
+                answerArea.innerHTML = "";
                 displayAlbums(indexNum);
             }
         })
         prevBtn.addEventListener("click", function () {
             if (indexNum > 0) {
-                indexNum = indexNum - 10;
-                answerUL.innerHTML = "";
+                indexNum = indexNum - 5;
+                answerArea.innerHTML = "";
                 displayAlbums(indexNum);
             }
         })
-        answerDiv.append(prevBtn);
-        answerDiv.append(nextBtn);
+        answerDiv.append(btnArea);
+        btnArea.append(prevBtn)
+        btnArea.append(nextBtn);
     })
 }
 
@@ -80,11 +94,11 @@ function getTrackLength(artist, album) {
         answerUL = document.createElement("ul");
         answerDiv.append(answerUL);
 
-        //displays the info on the page
+        //displays the tracks on the page
         for (i = 0; i < trackArray.length; i++) {
             console.log(trackArray[i].name);
             answerLI = document.createElement("li");
-            answerLI.innerText = trackArray[i].name + " : " + trackArray[i].duration;
+            answerLI.innerText = trackArray[i].name + " - " + convertTime(trackArray[i].duration);
             answerUL.append(answerLI);
             trackTimes.push(parseInt(trackArray[i].duration));
         }
@@ -93,8 +107,21 @@ function getTrackLength(artist, album) {
     })
 }
 
+function convertTime(time) {
+    const hr = ~~(time / 3600);
+    const min = ~~((time % 3600) / 60);
+    const sec = time % 60;
+    let sec_min = "";
+    if (hr > 0) {
+        sec_min += "" + hrs + ":" + (min < 10 ? "0" : "");
+    }
+    sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+    sec_min += "" + sec;
+    return sec_min;
+}
 
-document.getElementById("submit").addEventListener("click", function () {
+//triggers the search
+document.getElementById("submit-btn-artist").addEventListener("click", function () {
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
 

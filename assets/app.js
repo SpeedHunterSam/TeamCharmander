@@ -43,7 +43,7 @@ submitButton.addEventListener("click", function () {
     }
 
     function checkValues(artist, track) {
-        if (artist.indexOf("#") !== -1|| track.indexOf("#") !== -1) {
+        if (artist.indexOf("#") !== -1 || track.indexOf("#") !== -1) {
             return false;
         }
         else {
@@ -54,7 +54,7 @@ submitButton.addEventListener("click", function () {
     //sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
-        const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
+        const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // api key for last.fm audioscrobbler
 
         const queryURL = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo" + "&api_key=" + apiKey + "&artist=" + artist + "&track=" + track + "&format=json"; // queryURL to be used in fetch 
         if (checkValues(artist, track)) {
@@ -133,8 +133,8 @@ submitButton.addEventListener("click", function () {
             console.log("distance in km: ", distanceInKm);
 
             getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-           
-    
+
+
             // Adding the new paragraph to the viewport in HTML
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
