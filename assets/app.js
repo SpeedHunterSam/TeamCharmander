@@ -103,7 +103,6 @@ submitButton.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
-<<<<<<< HEAD
             if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
                 console.log("Stop breaking our crap John.");
             }
@@ -121,7 +120,6 @@ submitButton.addEventListener("click", function () {
                 document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
             }
             // getMovieLength(movieTitle)
-=======
             console.log(responseJson);
             distanceInMiles = responseJson.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
@@ -139,7 +137,8 @@ submitButton.addEventListener("click", function () {
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
->>>>>>> e331a7c598bfe7944cfc48709b89c5faa2ccd1ad
+=======
+>>>>>>> afd05f782c94d72e93182114643d439d0d2dd126
         })
     }
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
