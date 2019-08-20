@@ -137,8 +137,6 @@ submitButton.addEventListener("click", function () {
             document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
-=======
->>>>>>> afd05f782c94d72e93182114643d439d0d2dd126
         })
     }
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
