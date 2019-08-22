@@ -1,32 +1,14 @@
-/*
+//-------------------------------------------------------------------------------------- basic search functionality
 
-https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c7c92f78a10b96b8086988432a4f4cf5&artist=cher&track=believe&format=json
-
-*/
-
-// Given input1(Start) input2(End) input 3(Track) input4(Artist)
-
-// Given submit button(submitBtn)
-
-// Take text from each input upon button click
-// Store each in a variable
-
-
-// If re-formatting of input is necessary to be concatenated--do it below
-// toLowerCase()    ???
-
-//Take variable value and concatenate into respective, provided queryURLs
-
-const submitButton = document.getElementById("submit-btn");
+const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
-M.Tabs.init(document.querySelector('.tabs'))
 
+//click submit button on song tab
+submitButtonSong.addEventListener("click", function () {
 
-
-submitButton.addEventListener("click", function () {
-
+    //get values of inputs
     const startState = document.getElementById("starting-state").value;
     const startCity = document.getElementById("starting-city").value;
     const endState = document.getElementById("ending-state").value;
@@ -34,6 +16,7 @@ submitButton.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
+    // converts distance into number of songs
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
         const convertedTrackTime = trackTime / 1000;
@@ -54,7 +37,7 @@ submitButton.addEventListener("click", function () {
     //sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
-        const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // my api key for last.fm audioscrobbler
+        const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // api key for last.fm audioscrobbler
 
         const queryURL = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo" + "&api_key=" + apiKey + "&artist=" + artist + "&track=" + track + "&format=json"; // queryURL to be used in fetch 
         if (checkValues(artist, track)) {
@@ -70,21 +53,20 @@ submitButton.addEventListener("click", function () {
                     const songLength = responseJson.track.duration; //this returns the song length
                     console.log("song length:", songLength);
                     convertTrecktoTrack(distanceTime, songLength);
-                    document.getElementById("output").innerHTML = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
-
+                    //writes the answer to output
+                    const output = document.getElementById("output");
+                    const outputDiv = document.createElement("div");
+                    outputDiv.classList.add("col", "s12");
+                    output.append(outputDiv);
+                    outputDiv.innerText = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
 
                     //Get Album art url and save it to a variable
                     const aArtURL = responseJson.track.album.image[1]["#text"];
-
                     console.log(aArtURL);
-
                     //Print album art img to screen
-
                     const image = document.createElement("img");  //creaing image elements
                     image.setAttribute('id', 'aArt');
-
-                    document.getElementById("output").prepend(image); //writing new element to the DOM
-
+                    outputDiv.prepend(image); //writing new element to the DOM
                     //adding attributes to the img tag on the DOM
                     const aARtImg = document.getElementById("aArt");
                     aARtImg.setAttribute("src", aArtURL);
@@ -117,11 +99,160 @@ submitButton.addEventListener("click", function () {
                 console.log("distance in miles: ", distanceInMiles);
                 console.log("distance in km: ", distanceInKm);
                 getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-                document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+                const driveAndTime = document.getElementById("driveAndTime")
+                driveAndTime.classList.add("col", "s12");
+                driveAndTime.innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
             }
             // getMovieLength(movieTitle)
+            console.log(responseJson);
+            distanceInMiles = responseJson.route.distance;
+            distanceInKm = distanceInMiles * 1.609344;
+            driveTime = responseJson.route.time; //returns drive time in Seconds
+            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+
+            console.log("drive time in minutes: ", driveTime);
+            console.log("distance in miles: ", distanceInMiles);
+            console.log("distance in km: ", distanceInKm);
+
+            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+
+
+            // Adding the new paragraph to the viewport in HTML
+            document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+
+
         })
     }
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
-
 })
+
+//gets top album from an artist
+function searchAlbums(artist) {
+    let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
+
+    let queryURL = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" + apiKey + "&artist=" + artist + "&format=json";
+
+    fetch(queryURL).then(function (response) {
+        return response.json();
+    }).then(function (responseJson) {
+        console.log(responseJson);
+
+        const albumArray = responseJson.topalbums.album;
+
+        const answerDiv = document.getElementById("answer");
+        answerDiv.innerHTML = "";
+        answerUL = document.createElement("ul");
+        answerArea = document.createElement("div");
+        answerDiv.append(answerUL);
+        answerDiv.append(answerArea);
+
+        //sets up function to displays the list of albums
+        let indexNum = 0;
+        function displayAlbums(index) {
+            //displays the i + 4 albums
+            j = index + 4
+            for (i = index; i < j; i++) {
+                if (albumArray[i].name !== "(null)") {
+                    // answerLI = document.createElement("li");
+                    answerImg = document.createElement("img");
+
+                    answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
+                    answerImg.setAttribute("data-album", albumArray[i].name);
+                    answerImg.setAttribute("data-artist", artist);
+                    answerImg.classList.add("col", "s6");
+                    answerArea.append(answerImg);
+
+                    // answerLI.innerText = albumArray[i].name;
+                    // answerLI.setAttribute("data-album", albumArray[i].name);
+                    // answerLI.setAttribute("data-artist", artist);
+                    // answerLI.classList.add("album")
+                    // answerUL.append(answerLI);
+                    answerImg.addEventListener("click", function (event) {
+                        albumSearch = event.target.getAttribute("data-album");
+                        //runs the get track length function
+                        getTrackLength(artist, albumSearch);
+                    })
+                }
+            }
+        }
+        displayAlbums(indexNum);
+        const nextBtn = document.createElement("button");
+        const prevBtn = document.createElement("button");
+        const btnArea = document.createElement("div");
+        btnArea.classList.add("col", "s12");
+        nextBtn.innerText = ">";
+        prevBtn.innerText = "<";
+        nextBtn.addEventListener("click", function () {
+            if (indexNum < 40) {
+                indexNum = indexNum + 5;
+                answerArea.innerHTML = "";
+                displayAlbums(indexNum);
+            }
+        })
+        prevBtn.addEventListener("click", function () {
+            if (indexNum > 0) {
+                indexNum = indexNum - 5;
+                answerArea.innerHTML = "";
+                displayAlbums(indexNum);
+            }
+        })
+        answerDiv.append(btnArea);
+        btnArea.append(prevBtn)
+        btnArea.append(nextBtn);
+    })
+}
+
+//gets list of tracks in an album and their lengths
+function getTrackLength(artist, album) {
+
+    let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
+
+    let queryURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + apiKey + "&artist=" + artist + "&album=" + album + "&format=json";
+
+    fetch(queryURL).then(function (response) {
+        return response.json();
+    }).then(function (responseJson) {
+        console.log(responseJson);
+        let trackArray = responseJson.album.tracks.track;
+
+        let trackTimes = [];
+
+        const answerDiv = document.getElementById("answer")
+        answerDiv.innerHTML = "";
+        answerUL = document.createElement("ul");
+        answerDiv.append(answerUL);
+
+        //displays the tracks on the page
+        for (i = 0; i < trackArray.length; i++) {
+            console.log(trackArray[i].name);
+            answerLI = document.createElement("li");
+            answerLI.innerText = trackArray[i].name + " - " + convertTime(trackArray[i].duration);
+            answerUL.append(answerLI);
+            trackTimes.push(parseInt(trackArray[i].duration));
+        }
+        console.log(trackTimes);
+        console.log(trackTimes.reduce((a, b) => a + b, 0));
+    })
+}
+
+function convertTime(time) {
+    const hr = ~~(time / 3600);
+    const min = ~~((time % 3600) / 60);
+    const sec = time % 60;
+    let sec_min = "";
+    if (hr > 0) {
+        sec_min += "" + hrs + ":" + (min < 10 ? "0" : "");
+    }
+    sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+    sec_min += "" + sec;
+    return sec_min;
+}
+
+//triggers the search for search by artist
+document.getElementById("submit-btn-artist").addEventListener("click", function () {
+    const artistInput = document.getElementById("artist").value;
+    console.log(artistInput);
+
+    searchAlbums(artistInput);
+})
+

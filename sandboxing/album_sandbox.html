@@ -1,19 +1,190 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <title>Document</title>
+      <title>ALBUM SANDBOX</title>
+      <meta name="viewport" content="width = device-width, initial-scale = 1" />
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"
+      />
+      <script
+         type="text/javascript"
+         src="https://code.jquery.com/jquery-2.1.1.min.js"
+      ></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
    </head>
    <body>
-      <div id="input">
-         <form>
-            <input type="text" placeholder="artist" name="artist" id="artist" />
-         </form>
-         <button id="submit">Submit</button>
-      </div>
-      <div id="answer"></div>
+      <div class="container">
+         <div class="row">
+            <div class="col s12">
+               <ul class="tabs">
+                  <li class="tab col s3">
+                     <a class="active" href="#song-tab">Search By Song</a>
+                  </li>
+                  <li class="tab col s3">
+                     <a href="#playlist-tab">Build a Playlist</a>
+                  </li>
+               </ul>
+            </div>
+            <!-- song tab -->
+            <div id="song-tab" class="col s12">
+               <div class="row">
+                  <form class="col s12">
+                     <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="starting-city"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="starting-city">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="starting-state"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="starting-state">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="ending-city"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="ending-city">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="ending-state"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="ending-state">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                           <input
+                              id="artist-name"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="artist-name">Artist</label>
+                        </div>
+                        <!-- song -->
+                        <div class="input-field col s12">
+                           <input
+                              id="song-title"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="song-title">Song</label>
+                        </div>
 
+                        <div class="col s6">
+                           <button
+                              id="submit-btn-song"
+                              class="btn btn-large waves-effect waves-light green lighten-1 center-align"
+                              type="button"
+                              name="action"
+                           >
+                              Submit
+                           </button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+               <div class="row">
+                  <div id="output"></div>
+               </div>
+               <div class="row">
+                  <div id="driveAndTime"></div>
+               </div>
+            </div>
+            <!-- playlist -->
+            <div id="playlist-tab" class="col s12">
+               <div class="row">
+                  <form class="col s12">
+                     <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="starting-city2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="starting-city2">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="starting-state2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="starting-state2">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="ending-city2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="ending-city2">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="ending-state2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="ending-state2">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                           <input
+                              id="artist"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="artist">Artist</label>
+                        </div>
+                        <div class="col s6">
+                           <button
+                              id="submit-btn-artist"
+                              class="btn waves-effect waves-light green lighten-1 center-align"
+                              type="button"
+                              name="action"
+                           >
+                              Submit
+                           </button>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div id="answer"></div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <!-- Create html for taking in movie input(s) -->
+         </div>
+      </div>
       <script src="./album_sandbox.js"></script>
    </body>
 </html>
