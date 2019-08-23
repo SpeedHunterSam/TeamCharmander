@@ -179,9 +179,16 @@ function searchAlbums(artist) {
         const nextBtn = document.createElement("button");
         const prevBtn = document.createElement("button");
         const btnArea = document.createElement("div");
-        btnArea.classList.add("col", "s12");
+        btnArea.classList.add("col", "s6");
         nextBtn.innerText = ">";
+        nextBtn.classList.add("btn", "btn-small");
+        nextBtn.setAttribute("type", "button");
+        nextBtn.setAttribute("name", "nextAction");
         prevBtn.innerText = "<";
+        prevBtn.classList.add("btn", "btn-small");
+        prevBtn.setAttribute("type", "button");
+        prevBtn.setAttribute("name", "prevAction");
+
         nextBtn.addEventListener("click", function () {
             if (indexNum < 40) {
                 indexNum = indexNum + 5;
@@ -196,7 +203,7 @@ function searchAlbums(artist) {
                 displayAlbums(indexNum);
             }
         })
-        answerDiv.append(btnArea);
+        document.getElementById("buttons").append(btnArea);
         btnArea.append(prevBtn)
         btnArea.append(nextBtn);
     })
@@ -205,17 +212,17 @@ function searchAlbums(artist) {
 //gets list of tracks in an album and their lengths
 function getTrackLength(artist, album) {
 
-    let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
+    const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
-    let queryURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + apiKey + "&artist=" + artist + "&album=" + album + "&format=json";
+    const queryURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + apiKey + "&artist=" + artist + "&album=" + album + "&format=json";
 
     fetch(queryURL).then(function (response) {
         return response.json();
     }).then(function (responseJson) {
         console.log(responseJson);
-        let trackArray = responseJson.album.tracks.track;
+        const trackArray = responseJson.album.tracks.track;
 
-        let trackTimes = [];
+        const trackTimes = [];
 
         const answerDiv = document.getElementById("answer")
         answerDiv.innerHTML = "";
