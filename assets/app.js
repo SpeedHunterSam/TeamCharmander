@@ -45,9 +45,6 @@ submitButtonSong.addEventListener("click", function () {
         }
     }
 
-    function checkAlbum(artist) {
-
-    }
 
     //sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
@@ -130,84 +127,89 @@ submitButtonSong.addEventListener("click", function () {
 
 //gets top album from an artist
 function searchAlbums(artist) {
+
     let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
     let queryURL = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" + apiKey + "&artist=" + artist + "&format=json";
+    if (checkAlbum(artist)) {
+        fetch(queryURL).then(function (response) {
+            return response.json();
+        }).then(function (responseJson) {
+            if (responseJson.error || !responseJson.album) {
+                console.log("Stop breaking our crap John.");
+                console.log(responseJson);
+            }
+            else {
+                console.log(responseJson);
 
-    fetch(queryURL).then(function (response) {
-        return response.json();
-    }).then(function (responseJson) {
-        if (responseJson.error) {
-            console.log("Stop breaking our crap John.");
-            console.log(responseJson);
-        }
-        else {
-            console.log(responseJson);
+                const albumArray = responseJson.topalbums.album;
 
-            const albumArray = responseJson.topalbums.album;
+                const answerDiv = document.getElementById("answer");
+                answerDiv.innerHTML = "";
+                answerUL = document.createElement("ul");
+                answerArea = document.createElement("div");
+                answerDiv.append(answerUL);
+                answerDiv.append(answerArea);
 
-            const answerDiv = document.getElementById("answer");
-            answerDiv.innerHTML = "";
-            answerUL = document.createElement("ul");
-            answerArea = document.createElement("div");
-            answerDiv.append(answerUL);
-            answerDiv.append(answerArea);
+                //sets up function to displays the list of albums
+                let indexNum = 0;
+                function displayAlbums(index) {
+                    //displays the i + 4 albums
+                    j = index + 4
+                    for (i = index; i < j; i++) {
+                        if (albumArray[i].name !== "(null)") {
+                            // answerLI = document.createElement("li");
+                            answerImg = document.createElement("img");
 
-            //sets up function to displays the list of albums
-            let indexNum = 0;
-            function displayAlbums(index) {
-                //displays the i + 4 albums
-                j = index + 4
-                for (i = index; i < j; i++) {
-                    if (albumArray[i].name !== "(null)") {
-                        // answerLI = document.createElement("li");
-                        answerImg = document.createElement("img");
+                            answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
+                            answerImg.setAttribute("data-album", albumArray[i].name);
+                            answerImg.setAttribute("data-artist", artist);
+                            answerImg.classList.add("col", "s6");
+                            answerArea.append(answerImg);
 
-                        answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
-                        answerImg.setAttribute("data-album", albumArray[i].name);
-                        answerImg.setAttribute("data-artist", artist);
-                        answerImg.classList.add("col", "s6");
-                        answerArea.append(answerImg);
-
-                        // answerLI.innerText = albumArray[i].name;
-                        // answerLI.setAttribute("data-album", albumArray[i].name);
-                        // answerLI.setAttribute("data-artist", artist);
-                        // answerLI.classList.add("album")
-                        // answerUL.append(answerLI);
-                        answerImg.addEventListener("click", function (event) {
-                            albumSearch = event.target.getAttribute("data-album");
-                            //runs the get track length function
-                            getTrackLength(artist, albumSearch);
-                        })
+                            // answerLI.innerText = albumArray[i].name;
+                            // answerLI.setAttribute("data-album", albumArray[i].name);
+                            // answerLI.setAttribute("data-artist", artist);
+                            // answerLI.classList.add("album")
+                            // answerUL.append(answerLI);
+                            answerImg.addEventListener("click", function (event) {
+                                albumSearch = event.target.getAttribute("data-album");
+                                //runs the get track length function
+                                getTrackLength(artist, albumSearch);
+                            })
+                        }
                     }
                 }
+                displayAlbums(indexNum);
+                const nextBtn = document.createElement("button");
+                const prevBtn = document.createElement("button");
+                const btnArea = document.createElement("div");
+                btnArea.classList.add("col", "s12");
+                nextBtn.innerText = ">";
+                prevBtn.innerText = "<";
+                nextBtn.addEventListener("click", function () {
+                    if (indexNum < 40) {
+                        indexNum = indexNum + 5;
+                        answerArea.innerHTML = "";
+                        displayAlbums(indexNum);
+                    }
+                })
+                prevBtn.addEventListener("click", function () {
+                    if (indexNum > 0) {
+                        indexNum = indexNum - 5;
+                        answerArea.innerHTML = "";
+                        displayAlbums(indexNum);
+                    }
+                })
+                answerDiv.append(btnArea);
+                btnArea.append(prevBtn)
+                btnArea.append(nextBtn);
             }
-            displayAlbums(indexNum);
-            const nextBtn = document.createElement("button");
-            const prevBtn = document.createElement("button");
-            const btnArea = document.createElement("div");
-            btnArea.classList.add("col", "s12");
-            nextBtn.innerText = ">";
-            prevBtn.innerText = "<";
-            nextBtn.addEventListener("click", function () {
-                if (indexNum < 40) {
-                    indexNum = indexNum + 5;
-                    answerArea.innerHTML = "";
-                    displayAlbums(indexNum);
-                }
-            })
-            prevBtn.addEventListener("click", function () {
-                if (indexNum > 0) {
-                    indexNum = indexNum - 5;
-                    answerArea.innerHTML = "";
-                    displayAlbums(indexNum);
-                }
-            })
-            answerDiv.append(btnArea);
-            btnArea.append(prevBtn)
-            btnArea.append(nextBtn);
-        }
-    })
+        })
+    }
+    else {
+        console.log("Stop breaking our crap John");
+    }
 }
 
 //gets list of tracks in an album and their lengths
@@ -254,6 +256,15 @@ function convertTime(time) {
     sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
     sec_min += "" + sec;
     return sec_min;
+}
+
+function checkAlbum(artist) {
+    if (artist.indexOf("#") !== -1) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 //triggers the search for search by artist
