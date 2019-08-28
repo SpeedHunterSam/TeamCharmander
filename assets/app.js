@@ -45,6 +45,10 @@ submitButtonSong.addEventListener("click", function () {
         }
     }
 
+    function checkAlbum(artist) {
+
+    }
+
     //sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
@@ -97,7 +101,7 @@ submitButtonSong.addEventListener("click", function () {
             fetch(queryURL).then(function (response) {
                 return response.json();
             }).then(function (responseJson) {
-                if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
+                if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState.toUpperCase() || responseJson.route.locations[1].adminArea3 !== toState.toUpperCase() || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
                     console.log("Stop breaking our crap John.");
                 }
                 else {
@@ -117,7 +121,7 @@ submitButtonSong.addEventListener("click", function () {
                 }
             })
         }
-        else{
+        else {
             console.log("Stop breaking our crap John.");
         }
     }
