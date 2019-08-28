@@ -7,7 +7,7 @@ let trackTreckNum; //track length @ global scope for easy reference
 // M.Tabs.init(document.querySelector('.tabs'))
 //Allows materialize tabs to actually appear
 
-//click submit button on song tab
+//------------------------------------------------------------------------------------click submit button on song tab
 submitButtonSong.addEventListener("click", function () {
 
     //get values of inputs
@@ -18,7 +18,7 @@ submitButtonSong.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
-    // converts distance into number of songs
+    //------------------------------------------------------------------------converts distance into number of songs
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
         const convertedTrackTime = trackTime / 1000;
@@ -36,7 +36,7 @@ submitButtonSong.addEventListener("click", function () {
         }
     }
 
-    //sets up the function to get track length
+    //-----------------------------------------------------------------------sets up the function to get track length
     function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
 
         const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // api key for last.fm audioscrobbler
@@ -63,15 +63,16 @@ submitButtonSong.addEventListener("click", function () {
                     outputDiv.innerText = cityStart + " is " + trackTreckNum + " " + responseJson.track.name + "'s by " + artist + " away from " + cityEnd;
 
                     //Get Album art url and save it to a variable
+                    const albumArtDiv = document.createElement("div");
+                    albumArtDiv.classList.add("col", "s6");
                     const aArtURL = responseJson.track.album.image[1]["#text"];
                     console.log(aArtURL);
                     //Print album art img to screen
                     const image = document.createElement("img");  //creaing image elements
                     image.setAttribute('id', 'aArt');
-                    outputDiv.prepend(image); //writing new element to the DOM
-                    //adding attributes to the img tag on the DOM
-                    const aARtImg = document.getElementById("aArt");
-                    aARtImg.setAttribute("src", aArtURL);
+                    image.setAttribute("src", aArtURL);
+                    albumArtDiv.append(image);
+                    document.getElementById("albums").append(albumArtDiv);
                 }
             })
         }
@@ -88,6 +89,7 @@ submitButtonSong.addEventListener("click", function () {
             return response.json();
         }).then(function (responseJson) {
             if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
+                console.log(responseJson);
                 console.log("Stop breaking our crap John.");
             }
             else {
@@ -99,28 +101,14 @@ submitButtonSong.addEventListener("click", function () {
 
                 console.log("drive time: ", driveTime);
                 console.log("distance in miles: ", distanceInMiles);
-                console.log("distance in km: ", distanceInKm);
+                console.log("distance in km: ", distanceInKm.toFixed(2));
                 getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
                 const driveAndTime = document.getElementById("driveAndTime")
-                driveAndTime.classList.add("col", "s12");
-                driveAndTime.innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
+                const driveAndTimeText = document.createElement("div");
+                driveAndTimeText.classList.add("col", "s12");
+                driveAndTimeText.innerHTML = "<br/>Drive time in minutes: " + driveTimeMin + "</br>Distance in miles: " + distanceInMiles.toFixed(2) + "<br/> Distance in km: " + distanceInKm.toFixed(2);
+                driveAndTime.append(driveAndTimeText);
             }
-            // getMovieLength(movieTitle)
-            console.log(responseJson);
-            distanceInMiles = responseJson.route.distance;
-            distanceInKm = distanceInMiles * 1.609344;
-            driveTime = responseJson.route.time; //returns drive time in Seconds
-            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
-
-            console.log("drive time in minutes: ", driveTime);
-            console.log("distance in miles: ", distanceInMiles);
-            console.log("distance in km: ", distanceInKm);
-
-            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-
-
-            // Adding the new paragraph to the viewport in HTML
-            document.getElementById("driveAndTime").innerHTML = "<br/>Drive Time in Minutes: " + driveTimeMin + "</br>Distance in Miles: " + distanceInMiles + "<br/> Distance in km: " + distanceInKm;
 
 
         })
