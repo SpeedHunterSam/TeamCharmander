@@ -22,6 +22,7 @@ const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
 M.Tabs.init(document.querySelector('.tabs'))
+//Allows materialize tabs to actually appear
 
 
 
