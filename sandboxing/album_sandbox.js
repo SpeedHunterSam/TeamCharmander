@@ -4,11 +4,6 @@ const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
-<<<<<<< HEAD
-M.Tabs.init(document.querySelector('.tabs'))
-//Allows materialize tabs to actually appear
-=======
->>>>>>> 1b400b783d217e333ce8e1bdb0f7986af80450a0
 
 //click submit button on song tab
 submitButtonSong.addEventListener("click", function () {
