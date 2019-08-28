@@ -18,7 +18,6 @@ let progPercent = 0;
 // Dummy function awaiting actual variables
 function updateProg () {
 progPercent = Math.floor((trackTotal / trackTreckNum) * 100);
-// Will need to convert to percentage likely?
 document.getElementById("progBar").style.width = progPercent;
 };
 // HTML to be inserted
