@@ -113,7 +113,7 @@ submitButtonSong.addEventListener("click", function () {
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
-            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+            //getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
 
 
             // Adding the new paragraph to the viewport in HTML
