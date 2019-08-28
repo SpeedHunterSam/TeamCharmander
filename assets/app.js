@@ -4,7 +4,7 @@ const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
-M.Tabs.init(document.querySelector('.tabs'))
+// M.Tabs.init(document.querySelector('.tabs'))
 //Allows materialize tabs to actually appear
 
 //click submit button on song tab
@@ -128,7 +128,7 @@ submitButtonSong.addEventListener("click", function () {
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 })
 
-//gets top album from an artist
+//--------------------------------------------------------------------------------------gets top album from an artist
 function searchAlbums(artist) {
     let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
@@ -257,7 +257,7 @@ function convertTime(time) {
     return sec_min;
 }
 
-//triggers the search for search by artist
+//---------------------------------------------------------------------------triggers the search for search by artist
 document.getElementById("submit-btn-artist").addEventListener("click", function () {
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
