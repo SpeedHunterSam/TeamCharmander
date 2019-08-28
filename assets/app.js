@@ -107,7 +107,7 @@ submitButtonSong.addEventListener("click", function () {
                 const driveAndTime = document.getElementById("driveAndTime")
                 const driveAndTimeText = document.createElement("div");
                 driveAndTimeText.classList.add("col", "s12");
-                driveAndTimeText.innerHTML = "<br/>Drive time in minutes: " + driveTimeMin + "</br>Distance in miles: " + distanceInMiles.toFixed(2) + "<br/> Distance in km: " + distanceInKm.toFixed(2);
+                driveAndTimeText.innerHTML = "<br/>Drive time in minutes: " + driveTimeMin.toFixed(2) + "</br>Distance in miles: " + distanceInMiles.toFixed(2) + "<br/> Distance in km: " + distanceInKm.toFixed(2);
                 driveAndTime.append(driveAndTimeText);
             }
             // getMovieLength(movieTitle)
