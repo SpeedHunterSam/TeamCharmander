@@ -4,7 +4,7 @@ const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference 
 
-M.Tabs.init(document.querySelector('.tabs'))
+//M.Tabs.init(document.querySelector('.tabs'))
 //Allows materialize tabs to actually appear
 
 //click submit button on song tab
@@ -116,7 +116,7 @@ submitButtonSong.addEventListener("click", function () {
             console.log("distance in miles: ", distanceInMiles);
             console.log("distance in km: ", distanceInKm);
 
-            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+            //getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
 
 
             // Adding the new paragraph to the viewport in HTML
