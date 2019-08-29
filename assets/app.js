@@ -11,6 +11,9 @@ let trackTreckNum; //track length @ global scope for easy reference
 //click submit button on song tab
 submitButtonSong.addEventListener("click", function () {
 
+    //get form id
+    const songForm = document.getElementById("song-form");
+
     //get values of inputs
     const startState = document.getElementById("starting-state").value;
     const startCity = document.getElementById("starting-city").value;
@@ -18,6 +21,9 @@ submitButtonSong.addEventListener("click", function () {
     const endCity = document.getElementById("ending-city").value;
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
+
+    // clear form
+    songForm.reset();
 
     //------------------------------------------------------------------------converts distance into number of songs
     function convertTrecktoTrack(distanceTime, trackTime) {
@@ -251,9 +257,12 @@ function convertTime(time) {
 
 //---------------------------------------------------------------------------triggers the search for search by artist
 document.getElementById("submit-btn-artist").addEventListener("click", function () {
+    //get form ID
+    const playlistForm = document.getElementById("playlist-form");
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
 
     searchAlbums(artistInput);
+    playlistForm.reset();
 })
 
