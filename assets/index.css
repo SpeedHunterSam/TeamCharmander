@@ -10,24 +10,24 @@ body {
      color: #000;
    } */
 /* label focus color */
-.input-field input[type=text]:focus+label {
+.input-field input[type="text"]:focus + label {
   color: #000;
 }
 
 /* label underline focus color */
-.input-field input[type=text]:focus {
+.input-field input[type="text"]:focus {
   border-bottom: 1px solid #66bb6a;
   box-shadow: 0 1px 0 0 #1b5e20;
 }
 
 /* valid color */
-.input-field input[type=text].valid {
+.input-field input[type="text"].valid {
   border-bottom: 1px solid #66bb6a;
   box-shadow: 0 1px 0 0 #1b5e20;
 }
 
 /* invalid color */
-.input-field input[type=text].invalid {
+.input-field input[type="text"].invalid {
   border-bottom: 1px solid #e53935;
   box-shadow: 0 1px 0 0 #b71c1c;
 }
@@ -37,9 +37,18 @@ body {
   color: #66bb6a;
 }
 
+input[type="checkbox" i] {
+  background-color: initial;
+  cursor: default;
+  -webkit-appearance: checkbox;
+  box-sizing: border-box;
+  margin: 3px 3px 3px 4px;
+  padding: initial;
+  border: initial;
+}
+
 /* 
 #output {
   text-transform: capitalize
   Would like to see output text formatted slightly, not sure if this is the best way to go about it
-} */   
-
+} */

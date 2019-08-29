@@ -268,9 +268,14 @@ function getTrackLength(artist, album) {
       //displays the tracks on the page
       for (i = 0; i < trackArray.length; i++) {
         console.log(trackArray[i].name);
+        let checkBox = document.createElement("input");
+        checkBox.setAttribute("type", "checkbox");
+        checkBox.setAttribute("id", "0" + i);
         answerLI = document.createElement("li");
         answerLI.innerText =
           trackArray[i].name + " - " + convertTime(trackArray[i].duration);
+
+        answerUL.append(checkBox);
         answerUL.append(answerLI);
         trackTimes.push(parseInt(trackArray[i].duration));
       }
