@@ -197,7 +197,8 @@ function searchAlbums(artist) {
             }
         })
         document.getElementById("buttons").append(btnArea);
-        btnArea.append(prevBtn)
+        btnArea.innerHTML = "";
+        btnArea.append(prevBtn);
         btnArea.append(nextBtn);
     })
 }
