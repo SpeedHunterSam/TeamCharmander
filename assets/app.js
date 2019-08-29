@@ -304,11 +304,13 @@ function convertTime(time) {
 }
 
 //---------------------------------------------------------------------------triggers the search for search by artist
-document
-    .getElementById("submit-btn-artist")
-    .addEventListener("click", function () {
-        const artistInput = document.getElementById("artist").value;
-        console.log(artistInput);
+document.getElementById("submit-btn-artist").addEventListener("click", function () {
+    //get form ID
+    const playlistForm = document.getElementById("playlist-form");
+    const artistInput = document.getElementById("artist").value;
+    console.log(artistInput);
 
-        searchAlbums(artistInput);
-    });
+    searchAlbums(artistInput);
+    playlistForm.reset();
+})
+
