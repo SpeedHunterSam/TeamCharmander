@@ -232,7 +232,8 @@ function searchAlbums(artist) {
                     displayAlbums(indexNum);
                 }
             });
-            answerDiv.append(btnArea);
+            document.getElementById("prevNext").innerHTML = "";
+            document.getElementById("prevNext").append(btnArea);
             btnArea.append(prevBtn);
             btnArea.append(nextBtn);
         });
