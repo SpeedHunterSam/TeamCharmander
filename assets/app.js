@@ -17,6 +17,10 @@ submitButtonSong.addEventListener("click", function () {
     const trackName = document.getElementById("song-title").value;
     const artistName = document.getElementById("artist-name").value;
 
+    //get form id and reset
+    const songForm = document.getElementById("song-form");
+    songForm.reset();
+
     // converts distance into number of songs
     function convertTrecktoTrack(distanceTime, trackTime) {
         const convertedDistanceTime = distanceTime;
@@ -88,6 +92,7 @@ submitButtonSong.addEventListener("click", function () {
                         const image = document.createElement("img"); //creaing image elements
                         image.setAttribute("id", "aArt");
                         image.setAttribute("src", aArtURL);
+                        image.classList.add("center-align");
                         albumArtDiv.append(image);
                         document.getElementById("albums").append(albumArtDiv);
                     }
@@ -217,7 +222,9 @@ function searchAlbums(artist) {
             const btnArea = document.createElement("div");
             btnArea.classList.add("col", "s12");
             nextBtn.innerText = ">";
+            nextBtn.classList.add("btn");
             prevBtn.innerText = "<";
+            prevBtn.classList.add("btn");
             nextBtn.addEventListener("click", function () {
                 if (indexNum < 40) {
                     indexNum = indexNum + 5;
@@ -232,8 +239,10 @@ function searchAlbums(artist) {
                     displayAlbums(indexNum);
                 }
             });
-            document.getElementById("prevNext").innerHTML = "";
-            document.getElementById("prevNext").append(btnArea);
+            const prevNext = document.getElementById("prevNext");
+            prevNext.classList.add("col", "s6");
+            prevNext.innerHTML = "";
+            prevNext.append(btnArea);
             btnArea.append(prevBtn);
             btnArea.append(nextBtn);
         });
@@ -241,6 +250,10 @@ function searchAlbums(artist) {
 
 //gets list of tracks in an album and their lengths
 function getTrackLength(artist, album) {
+    //make a back button
+    const artistBtnArea = document.getElementById("artist-btn-area");
+
+    //perform the query
     const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
     const queryURL =
         "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
@@ -305,12 +318,12 @@ function convertTime(time) {
 
 //---------------------------------------------------------------------------triggers the search for search by artist
 document.getElementById("submit-btn-artist").addEventListener("click", function () {
-    //get form ID
-    const playlistForm = document.getElementById("playlist-form");
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
 
     searchAlbums(artistInput);
+    //reset the playlist form
+    const playlistForm = document.getElementById("playlist-form");
     playlistForm.reset();
 })
 
