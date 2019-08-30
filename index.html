@@ -34,7 +34,7 @@
             <!-- song tab -->
             <div id="song-tab" class="col s12">
                <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" id="song-form">
                      <div class="row">
                         <!-- starting city -->
                         <div class="input-field col s9">
@@ -116,7 +116,7 @@
             <!-- playlist -->
             <div id="playlist-tab" class="col s12">
                <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" id="playlist-form">
                      <div class="row">
                         <!-- starting city -->
                         <div class="input-field col s9">
@@ -180,10 +180,11 @@
                               </button>
                            </div>
                         </div>
+                        <div id="prevNext"></div>
                      </div>
-                     <div class="row" id="prevNext"></div>
                      <div class="row">
-                        <div id="answer"></div>
+                        <div id="answer">
+                        </div>
                      </div>
                   </form>
                </div>
@@ -191,6 +192,7 @@
             <!-- Create html for taking in movie input(s) -->
          </div>
       </div>
-      <script src="./assets/app.js"></script>
-   </body>
+    </div>
+    <script src="./assets/app.js"></script>
+  </body>
 </html>
