@@ -1,3 +1,19 @@
+// Regarding Moving Information from Checkbox to Output
+
+// Given for-loop-generated checkboxes with incrementing ID #s
+
+// Will need an 'Add' button that when clicked runs a function to check state of checkboxes
+// Function: if checkbox is active, save title and runtime to localStorage (index?)
+
+// Create a div that will either need an additional 'Display' button that will show saved items when clicked
+// OR items are constantly displayed in the HTML once added
+
+// Back-End will need to have method set up to pull runtime from each saved song and Sum those values in a new variable ("track total," see below)
+
+// Following this: begin work on output display
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+
 // ~Regarding Calculation of Total Playlist Duration Over Total Drive Time
 
 // Initial conception is a progress bar that dynamically updates as the user adds songs to their custom playlist (forthcoming)
