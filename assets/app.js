@@ -48,7 +48,7 @@ submitButtonSong.addEventListener("click", function () {
                 return response.json()
             }).then(function (responseJson) {
                 if (responseJson.error || responseJson.track.duration === "0") {
-                    console.log("Stop breaking our crap John.");
+                    console.log("Stop breaking our crap John1.");
                     console.log(responseJson);
                 }
                 else {
@@ -80,7 +80,7 @@ submitButtonSong.addEventListener("click", function () {
             })
         }
         else {
-            console.log("Stop breaking our crap John.");
+            console.log("Stop breaking our crap John2.");
         }
     }
 
@@ -91,11 +91,11 @@ submitButtonSong.addEventListener("click", function () {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
-            if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
-                console.log(responseJson);
-                console.log("Stop breaking our crap John.");
-            }
-            else {
+            // if (!responseJson.route.distance || responseJson.route.locations[0].adminArea3 !== fromState || responseJson.route.locations[1].adminArea3 !== toState || responseJson.route.locations[0].adminArea5 === "" || responseJson.route.locations[1].adminArea5 === "") {
+            //     console.log(responseJson);
+            //     console.log("Stop breaking our crap John3.");
+            // }
+            // else {
                 console.log(responseJson);
                 distanceInMiles = responseJson.route.distance;
                 distanceInKm = distanceInMiles * 1.609344;
@@ -114,8 +114,8 @@ submitButtonSong.addEventListener("click", function () {
                 driveAndTime.append(driveAndTimeText);
             }
 
-        })
-    }
+        // })
+        )}
     getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 })
 
