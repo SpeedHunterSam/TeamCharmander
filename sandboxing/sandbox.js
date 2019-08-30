@@ -4,11 +4,29 @@
 
 // Will need an 'Add' button that when clicked runs a function to check state of checkboxes
 // Function: if checkbox is active, save title and runtime to localStorage (index?)
+// !! As code is currently set up it looks like 'Add' button will need to be created & re-created each time an album is clicked (make it part of for-loop generation?)
+// IDs are reused between list items (<li>) meaning checked boxes aren't persistent between album selections (?)
+
+let songArray = [];
+
+// Should be needed for display
+const savedSongs = JSON.parse(localStorage.getItem('songs'))
+
+// Add to for-loop that creates checkboxes so that clicking box runs function
+// This should circumvent issue with persistence above ==> have function inherent to checkbox
+checkBox.setAttribute("onclick", "tracStor();");
+
+function tracStor() {
+  songArray.push(trackArray[i].name, trackArray[i].duration);
+  localStorage.setItem('songs', JSON.stringify(songArray));
+}
 
 // Create a div that will either need an additional 'Display' button that will show saved items when clicked
 // OR items are constantly displayed in the HTML once added
 
-// Back-End will need to have method set up to pull runtime from each saved song and Sum those values in a new variable ("track total," see below)
+<div class="row" id="playlistDisp"></div>
+
+// Back-End will need to have method set up to pull runtime from each saved song and Sum those values in a new variable ("trackTotal," see below)
 
 // Following this: begin work on output display
 
