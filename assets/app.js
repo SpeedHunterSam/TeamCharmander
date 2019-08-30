@@ -212,6 +212,10 @@ function searchAlbums(artist) {
                             albumSearch = event.target.getAttribute("data-album");
                             //runs the get track length function
                             getTrackLength(artist, albumSearch);
+
+                            //hide the form
+                            const playlistFormHideSelector = document.getElementById("playlist-form");
+                            playlistFormHideSelector.style.display = "none";
                         });
                     }
                 }
