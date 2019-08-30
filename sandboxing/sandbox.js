@@ -31,8 +31,8 @@ function tracStor() {
 
 // Back-End will need to have method set up to pull runtime from each saved song and Sum those values in a new variable ("trackTotal," see below)
 
-function trackSum(trackArray){
-  return trackArray.reduce(function(a,b){
+function trackSum(){
+  return trackArray[i][duration].reduce(function(a,b){
     return a + b
   }, 0);
 }
