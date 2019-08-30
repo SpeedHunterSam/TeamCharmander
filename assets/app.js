@@ -171,6 +171,7 @@ function searchAlbums(artist) {
         artist +
         "&format=json";
 
+
     fetch(queryURL)
         .then(function (response) {
             return response.json();
@@ -178,13 +179,12 @@ function searchAlbums(artist) {
         .then(function (responseJson) {
             console.log(responseJson);
 
+            const artistSave = responseJson.topalbums["@attr"].artist;
             const albumArray = responseJson.topalbums.album;
 
             const answerDiv = document.getElementById("answer");
             answerDiv.innerHTML = "";
-            answerUL = document.createElement("ul");
             answerArea = document.createElement("div");
-            answerDiv.append(answerUL);
             answerDiv.append(answerArea);
 
             //sets up function to displays the list of albums
@@ -211,7 +211,7 @@ function searchAlbums(artist) {
                         answerImg.addEventListener("click", function (event) {
                             albumSearch = event.target.getAttribute("data-album");
                             //runs the get track length function
-                            getTrackLength(artist, albumSearch);
+                            getTrackLength(artist, albumSearch, artistSave);
 
                             //hide the form
                             const playlistFormHideSelector = document.getElementById("playlist-form");
@@ -253,10 +253,8 @@ function searchAlbums(artist) {
 }
 
 //gets list of tracks in an album and their lengths
-function getTrackLength(artist, album) {
-    //make a back button
-    const artistBtnArea = document.getElementById("artist-btn-area");
-
+function getTrackLength(artist, album, artistToSave) {
+    const artistBack = artistToSave;
     //perform the query
     const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
     const queryURL =
@@ -281,6 +279,13 @@ function getTrackLength(artist, album) {
             const answerDiv = document.getElementById("answer");
             answerDiv.innerHTML = "";
 
+            //create back button
+            const backBtn = document.createElement("button");
+            backBtn.classList.add("btn");
+            backBtn.innerText = "< Back";
+            answerDiv.prepend(backBtn);
+
+
             const answerUL = document.createElement("ul");
             answerDiv.append(answerUL);
 
@@ -302,6 +307,14 @@ function getTrackLength(artist, album) {
                 answerUL.append(answerLI);
                 trackTimes.push(parseInt(trackArray[i].duration));
             }
+
+            backBtn.addEventListener("click", function () {
+                answerDiv.innerHTML = "";
+                document.getElementById("playlist-form").style.display = "block";
+                console.log(artistBack);
+                searchAlbums(artistBack);
+            })
+
             console.log(trackTimes);
             console.log(trackTimes.reduce((a, b) => a + b, 0));
         });
