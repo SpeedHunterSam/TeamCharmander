@@ -19,6 +19,7 @@ checkBox.setAttribute("onclick", "tracStor();");
 function tracStor() {
   songArray.push(trackArray[i].name, trackArray[i].duration);
   localStorage.setItem('songs', JSON.stringify(songArray));
+
 }
 
 // Create a div that will either need an additional 'Display' button that will show saved items when clicked
@@ -26,7 +27,15 @@ function tracStor() {
 
 <div class="row" id="playlistDisp"></div>
 
+  // document.getElementById("playlistDisp").innerHTML = ?
+
 // Back-End will need to have method set up to pull runtime from each saved song and Sum those values in a new variable ("trackTotal," see below)
+
+function trackSum(trackArray){
+  return trackArray.reduce(function(a,b){
+    return a + b
+  }, 0);
+}
 
 // Following this: begin work on output display
 
@@ -52,7 +61,7 @@ let progPercent = 0;
 // Dummy function awaiting actual variables
 function updateProg () {
 progPercent = Math.floor((trackTotal / trackTreckNum) * 100);
-document.getElementById("progBar").style.width = progPercent;
+document.getElementById("progBar").style.width = progPercent + "%";
 };
 // HTML to be inserted
 <div class="progress">
