@@ -45,7 +45,16 @@ submitButtonSong.addEventListener("click", function () {
     }
   }
 
-  //------------------sets up the function to get track length ___________________
+  function checkDirections(fromState, fromCity, toState, toCity) {
+    if (fromState === "" || fromCity === "" || toState === "" || toCity === "") {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  //-----------------------------------------------------------------------sets up the function to get track length
   function getTrackLength(artist, track, distanceTime, cityStart, cityEnd) {
     const apiKey = "c7c92f78a10b96b8086988432a4f4cf5"; // api key for last.fm audioscrobbler
 
@@ -104,7 +113,8 @@ submitButtonSong.addEventListener("click", function () {
             document.getElementById("albums").append(albumArtDiv);
           }
         });
-    } else {
+    }
+    else {
       console.log("Stop breaking our crap John.");
     }
   }
@@ -124,45 +134,50 @@ submitButtonSong.addEventListener("click", function () {
       toState +
       "&unit=m";
     console.log(queryURL);
-    fetch(queryURL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (responseJson) {
-        if (
-          !responseJson.route.distance ||
-          responseJson.route.locations[0].adminArea3 !== fromState ||
-          responseJson.route.locations[1].adminArea3 !== toState ||
-          responseJson.route.locations[0].adminArea5 === "" ||
-          responseJson.route.locations[1].adminArea5 === ""
-        ) {
-          console.log(responseJson);
-          console.log("Stop breaking our crap John.");
-        } else {
-          console.log(responseJson);
-          distanceInMiles = responseJson.route.distance;
-          distanceInKm = distanceInMiles * 1.609344;
-          driveTime = responseJson.route.time; //returns drive time in minutes
-          driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+    if (checkDirections(fromState, fromCity, toState, toCity)) {
+      fetch(queryURL)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (responseJson) {
+          if (
+            !responseJson.route.distance ||
+            responseJson.route.locations[0].adminArea3 !== fromState.toUpperCase() ||
+            responseJson.route.locations[1].adminArea3 !== toState.toUpperCase() ||
+            responseJson.route.locations[0].adminArea5 === "" ||
+            responseJson.route.locations[1].adminArea5 === ""
+          ) {
+            console.log(responseJson);
+            console.log("Stop breaking our crap John.");
+          } else {
+            console.log(responseJson);
+            distanceInMiles = responseJson.route.distance;
+            distanceInKm = distanceInMiles * 1.609344;
+            driveTime = responseJson.route.time; //returns drive time in minutes
+            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
-          console.log("drive time: ", driveTime);
-          console.log("distance in miles: ", distanceInMiles);
-          console.log("distance in km: ", distanceInKm.toFixed(2));
-          getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-          const driveAndTime = document.getElementById("driveAndTime");
-          driveAndTime.innerHTML = "";
-          const driveAndTimeText = document.createElement("div");
-          driveAndTimeText.classList.add("col", "s12");
-          driveAndTimeText.innerHTML =
-            "<br/>Drive time in minutes: " +
-            driveTimeMin.toFixed(2) +
-            "</br>Distance in miles: " +
-            distanceInMiles.toFixed(2) +
-            "<br/> Distance in km: " +
-            distanceInKm.toFixed(2);
-          driveAndTime.append(driveAndTimeText);
-        }
-      });
+            console.log("drive time: ", driveTime);
+            console.log("distance in miles: ", distanceInMiles);
+            console.log("distance in km: ", distanceInKm.toFixed(2));
+            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+            const driveAndTime = document.getElementById("driveAndTime");
+            driveAndTime.innerHTML = "";
+            const driveAndTimeText = document.createElement("div");
+            driveAndTimeText.classList.add("col", "s12");
+            driveAndTimeText.innerHTML =
+              "<br/>Drive time in minutes: " +
+              driveTimeMin.toFixed(2) +
+              "</br>Distance in miles: " +
+              distanceInMiles.toFixed(2) +
+              "<br/> Distance in km: " +
+              distanceInKm.toFixed(2);
+            driveAndTime.append(driveAndTimeText);
+          }
+        });
+    }
+    else {
+      console.log("Stop breaking our crap John.");
+    }
   }
   getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 });
@@ -172,91 +187,102 @@ function searchAlbums(artist) {
   let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
   let queryURL =
-    "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
+    "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
     apiKey +
     "&artist=" +
     artist +
     "&format=json";
+  if (checkAlbum(artist)) {
+    fetch(queryURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (responseJson) {
+        if (responseJson.error || responseJson.topalbums.album.length === 0) {
+          console.log("Stop breaking our crap John.");
+          console.log(responseJson);
+        }
+        else {
+          console.log(responseJson);
 
-  fetch(queryURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (responseJson) {
-      console.log(responseJson);
+          const artistSave = responseJson.topalbums["@attr"].artist;
+          const albumArray = responseJson.topalbums.album;
 
-      const artistSave = responseJson.topalbums["@attr"].artist;
-      const albumArray = responseJson.topalbums.album;
+          const answerDiv = document.getElementById("answer");
+          answerDiv.innerHTML = "";
+          answerArea = document.createElement("div");
+          answerDiv.append(answerArea);
 
-      const answerDiv = document.getElementById("answer");
-      answerDiv.innerHTML = "";
-      answerArea = document.createElement("div");
-      answerDiv.append(answerArea);
+          //sets up function to displays the list of albums
+          let indexNum = 0;
+          function displayAlbums(index) {
+            //displays the i + 4 albums
+            j = index + 4;
+            for (i = index; i < j; i++) {
+              if (albumArray[i].name !== "(null)") {
+                // answerLI = document.createElement("li");
+                answerImg = document.createElement("img");
 
-      //sets up function to displays the list of albums
-      let indexNum = 0;
-      function displayAlbums(index) {
-        //displays the i + 4 albums
-        j = index + 4;
-        for (i = index; i < j; i++) {
-          // answerLI = document.createElement("li");
-          answerImg = document.createElement("img");
+                answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
+                answerImg.setAttribute("data-album", albumArray[i].name);
+                answerImg.setAttribute("data-artist", artist);
+                answerImg.classList.add("col", "s6");
+                answerArea.append(answerImg);
 
-          answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
-          answerImg.setAttribute("data-album", albumArray[i].name);
-          answerImg.setAttribute("data-artist", artist);
-          answerImg.classList.add("col", "s6");
-          answerArea.append(answerImg);
+                // answerLI.innerText = albumArray[i].name;
+                // answerLI.setAttribute("data-album", albumArray[i].name);
+                // answerLI.setAttribute("data-artist", artist);
+                // answerLI.classList.add("album")
+                // answerUL.append(answerLI);
+                answerImg.addEventListener("click", function (event) {
+                  albumSearch = event.target.getAttribute("data-album");
+                  //runs the get track length function
+                  getTrackLength(artist, albumSearch, artistSave);
 
-          // answerLI.innerText = albumArray[i].name;
-          // answerLI.setAttribute("data-album", albumArray[i].name);
-          // answerLI.setAttribute("data-artist", artist);
-          // answerLI.classList.add("album")
-          // answerUL.append(answerLI);
-          answerImg.addEventListener("click", function (event) {
-            albumSearch = event.target.getAttribute("data-album");
-            //runs the get track length function
-            getTrackLength(artist, albumSearch, artistSave);
-
-            //hide the form
-            const playlistFormHideSelector = document.getElementById(
-              "playlist-form"
-            );
-            playlistFormHideSelector.style.display = "none";
+                  //hide the form
+                  const playlistFormHideSelector = document.getElementById(
+                    "playlist-form"
+                  );
+                  playlistFormHideSelector.style.display = "none";
+                });
+              }
+            }
+          }
+          displayAlbums(indexNum);
+          const nextBtn = document.createElement("button");
+          const prevBtn = document.createElement("button");
+          const btnArea = document.createElement("div");
+          btnArea.classList.add("col", "s12");
+          nextBtn.innerText = ">";
+          nextBtn.classList.add("btn");
+          prevBtn.innerText = "<";
+          prevBtn.classList.add("btn");
+          nextBtn.addEventListener("click", function () {
+            if (indexNum < 40) {
+              indexNum = indexNum + 5;
+              answerArea.innerHTML = "";
+              displayAlbums(indexNum);
+            }
           });
-
-        }
-      }
-      displayAlbums(indexNum);
-      const nextBtn = document.createElement("button");
-      const prevBtn = document.createElement("button");
-      const btnArea = document.createElement("div");
-      btnArea.classList.add("col", "s12");
-      nextBtn.innerText = ">";
-      nextBtn.classList.add("btn");
-      prevBtn.innerText = "<";
-      prevBtn.classList.add("btn");
-      nextBtn.addEventListener("click", function () {
-        if (indexNum < 40) {
-          indexNum = indexNum + 5;
-          answerArea.innerHTML = "";
-          displayAlbums(indexNum);
+          prevBtn.addEventListener("click", function () {
+            if (indexNum > 0) {
+              indexNum = indexNum - 5;
+              answerArea.innerHTML = "";
+              displayAlbums(indexNum);
+            }
+          });
+          const prevNext = document.getElementById("prevNext");
+          prevNext.classList.add("col", "s6");
+          prevNext.innerHTML = "";
+          prevNext.append(btnArea);
+          btnArea.append(prevBtn);
+          btnArea.append(nextBtn);
         }
       });
-      prevBtn.addEventListener("click", function () {
-        if (indexNum > 0) {
-          indexNum = indexNum - 5;
-          answerArea.innerHTML = "";
-          displayAlbums(indexNum);
-        }
-      });
-      const prevNext = document.getElementById("prevNext");
-      prevNext.classList.add("col", "s6");
-      prevNext.innerHTML = "";
-      prevNext.append(btnArea);
-      btnArea.append(prevBtn);
-      btnArea.append(nextBtn);
-    });
+  }
+  else {
+    console.log("Stop breaking our crap John");
+  }
 }
 
 //gets list of tracks in an album and their lengths
@@ -367,6 +393,15 @@ function convertTime(time) {
   sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
   sec_min += "" + sec;
   return sec_min;
+}
+
+function checkAlbum(artist) {
+  if (artist.indexOf("#") !== -1) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }
 
 //-----------------------triggers the search for search by artist ------------------
