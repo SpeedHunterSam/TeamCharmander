@@ -423,6 +423,7 @@ function updatePlaylist(track) {
   localforage.setItem("playlist-data", playlistData);
 }
 
+// function to get the tracks from the array:
 function getPlaylistData() {
   var data = localforage.getItem("playlist-data").then(function(value) {
     if (value === null) {
@@ -440,6 +441,7 @@ function getPlaylistData() {
   });
 }
 
+// function that render every element of playlist array into the table in HTML:
 function renderPlaylist() {
   const playlistTableBody = document.getElementById("playlist-table-body");
   playlistTableBody.innerHTML = "";
