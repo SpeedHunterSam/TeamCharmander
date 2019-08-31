@@ -11,7 +11,7 @@
          rel="stylesheet"
          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"
       />
-      <link rel="stylesheet" href="./assets/index.css">
+      <link rel="stylesheet" href="./assets/index.css" />
       <script
          type="text/javascript"
          src="https://code.jquery.com/jquery-2.1.1.min.js"
@@ -29,6 +29,14 @@
                   </li>
                   <li class="tab col s3">
                      <a href="#playlist-tab">Build a Playlist</a>
+                  </li>
+                  <li class="tab col s3">
+                     <a
+                        class="active"
+                        href="#final-playlist-tab"
+                        onclick="getPlaylistData()"
+                        >See your playlist</a
+                     >
                   </li>
                </ul>
             </div>
@@ -91,16 +99,16 @@
                            />
                            <label for="song-title">Song</label>
                         </div>
-                           <div class="col s6">
-                              <button
-                                 id="submit-btn-song"
-                                 class="btn waves-effect waves-light green lighten-1 center-align"
-                                 type="button"
-                                 name="action"
-                              >
-                                 Submit
-                              </button>
-                           </div>
+                        <div class="col s6">
+                           <button
+                              id="submit-btn-song"
+                              class="btn waves-effect waves-light green lighten-1 center-align"
+                              type="button"
+                              name="action"
+                           >
+                              Submit
+                           </button>
+                        </div>
                         <div id="albums"></div>
                      </div>
                   </form>
@@ -179,20 +187,54 @@
                               </button>
                            </div>
                         </div>
+                     </div>
                   </form>
                   <div id="prevNext"></div>
                </div>
                <div class="row">
-                  <div id="answer" class="col s12">
-                  </div>
+                  <div id="answer" class="col s12"></div>
                </div>
                <div class="row">
                   <div id="selectalltracks" class="col s12"></div>
                </div>
             </div>
+            <div id="final-playlist-tab" class="col s12">
+               <div class="row">
+                  <div id="playlistTime" class="col s12"></div>
+               </div>
+               <div class="row">
+                  <!-- table for input datas-->
+                  <div class="col-12">
+                     <div class="card mb-3" style="width: 100%;">
+                        <div class="card-body">
+                           <table class="centered" id="playlist-table">
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Artist</th>
+                                    <th scope="col">Album</th>
+                                    <th scope="col">Track</th>
+                                    <th scope="col">Duration</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="playlist-table-body">
+                                 <!-- playslist goes here -->
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
-            <!-- Create html for taking in movie input(s) -->
       </div>
-    <script src="./assets/app.js"></script>
-  </body>
+
+      <!-- Create html for taking in movie input(s) -->
+      <!-- local forage cdn -->
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.js"
+         integrity="sha256-3NP4l3uenVxIZ0vLGnUjjObImjaJltaSzAHaGUr+yDA="
+         crossorigin="anonymous"
+      ></script>
+      <script src="./assets/app.js"></script>
+   </body>
 </html>
