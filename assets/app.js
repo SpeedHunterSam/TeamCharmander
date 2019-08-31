@@ -4,6 +4,9 @@ const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
 let trackTreckNum; //track length @ global scope for easy reference
 
+//variable to check and unccheck all the tracks for the playlist:
+let checkAll = true;
+
 //M.Tabs.init(document.querySelector('.tabs'))
 //Allows materialize tabs to actually appear
 
@@ -286,12 +289,23 @@ function getTrackLength(artist, album, artistToSave) {
       backBtn.innerText = "< Back";
       answerDiv.prepend(backBtn);
 
+      const selectallDiv = document.getElementById("selectalltracks");
+      selectallDiv.innerHTML = "";
+
+      // creates a button to select/unselect all tracks from album:
+      const checkBoxAll = document.createElement("button");
+      checkBoxAll.classList.add("btn");
+      checkBoxAll.innerText = "Select all tracks";
+      checkBoxAll.setAttribute("onclick", "selectAllTracks()");
+      selectallDiv.append(checkBoxAll);
+
       const answerUL = document.createElement("ul");
       answerDiv.append(answerUL);
 
       //displays the tracks on the page
       for (i = 0; i < trackArray.length; i++) {
         console.log(trackArray[i].name);
+
         let checkBox = document.createElement("input");
         checkBox.setAttribute("type", "checkbox");
         checkBox.setAttribute("id", "0" + i);
@@ -319,6 +333,15 @@ function getTrackLength(artist, album, artistToSave) {
       console.log(trackTimes);
       console.log(trackTimes.reduce((a, b) => a + b, 0));
     });
+}
+
+// function for select/unselect all the tracks from the album:
+function selectAllTracks() {
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = checkAll;
+  }
+  checkAll = !checkAll;
 }
 
 function convertTime(time) {
