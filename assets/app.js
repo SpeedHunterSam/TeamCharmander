@@ -1,4 +1,4 @@
-//-------------------------------------------------------------------------------------- basic search functionality
+//-------------------------- basic search functionality ----------------------
 
 const submitButtonSong = document.getElementById("submit-btn-song");
 const outputDisplayP = document.getElementById("output");
@@ -6,6 +6,10 @@ let trackTreckNum; //track length @ global scope for easy reference
 
 //variable to check and unccheck all the tracks for the playlist:
 let checkAll = true;
+
+// array for playlist:
+let playlistArray = [];
+let totalDuration = 0;
 
 //M.Tabs.init(document.querySelector('.tabs'))
 //Allows materialize tabs to actually appear
@@ -283,103 +287,112 @@ function searchAlbums(artist) {
 
 //gets list of tracks in an album and their lengths
 function getTrackLength(artist, album, artistToSave) {
-    const artistBack = artistToSave;
-    //perform the query
-    const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
-    const queryURL =
-        "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
-        apiKey +
-        "&artist=" +
-        artist +
-        "&album=" +
-        album +
-        "&format=json";
+  const artistBack = artistToSave;
+  //perform the query
+  const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
+  const queryURL =
+    "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
+    apiKey +
+    "&artist=" +
+    artist +
+    "&album=" +
+    album +
+    "&format=json";
 
-    fetch(queryURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (responseJson) {
-            console.log(responseJson);
-            let trackArray = responseJson.album.tracks.track;
+  fetch(queryURL)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(responseJson) {
+      console.log(responseJson);
+      let trackArray = responseJson.album.tracks.track;
 
-            let trackTimes = [];
+      let trackTimes = [];
 
-            const answerDiv = document.getElementById("answer");
-            answerDiv.innerHTML = "";
+      const answerDiv = document.getElementById("answer");
+      answerDiv.innerHTML = "";
 
-            //create back button
-            const backBtn = document.createElement("button");
-            backBtn.classList.add("btn");
-            backBtn.innerText = "< Back";
-            answerDiv.prepend(backBtn);
+      //create back button
+      const backBtn = document.createElement("button");
+      backBtn.classList.add("btn");
+      backBtn.innerText = "< Back";
+      answerDiv.prepend(backBtn);
 
-            const selectallDiv = document.getElementById("selectalltracks");
-            selectallDiv.innerHTML = "";
+      const selectallDiv = document.getElementById("selectalltracks");
+      selectallDiv.innerHTML = "";
 
-            // creates a button to select/unselect all tracks from album:
-            const checkBoxAll = document.createElement("button");
-            checkBoxAll.classList.add("btn");
-            checkBoxAll.innerText = "Select all tracks";
-            checkBoxAll.setAttribute("onclick", "selectAllTracks()");
-            selectallDiv.append(checkBoxAll);
+      // creates a button to select/unselect ALL tracks from album:
+      const checkBoxAll = document.createElement("button");
+      checkBoxAll.classList.add("btn");
+      checkBoxAll.innerText = "Select all tracks";
+      checkBoxAll.setAttribute("onclick", "selectAllTracks()");
+      checkBoxAll.setAttribute("id", "checkBoxAll");
+      selectallDiv.append(checkBoxAll);
+      const answerUL = document.createElement("ul");
+      answerDiv.append(answerUL);
 
-            const answerUL = document.createElement("ul");
-            answerDiv.append(answerUL);
+      //displays the tracks on the page
+      for (i = 0; i < trackArray.length; i++) {
+        console.log(trackArray[i].name);
 
-            //displays the tracks on the page
-            for (i = 0; i < trackArray.length; i++) {
-                console.log(trackArray[i].name);
+        let checkBox = document.createElement("input");
+        checkBox.setAttribute("type", "checkbox");
+        checkBox.setAttribute("id", "0" + i);
+        checkBox.setAttribute("class", "filled-in");
+        checkBox.setAttribute("data-album", responseJson.album.name);
+        checkBox.setAttribute("data-artist", responseJson.album.artist);
+        checkBox.setAttribute("data-track", trackArray[i].name);
+        checkBox.setAttribute("data-duration", trackArray[i].duration);
+        checkBox.setAttribute("onclick", "updatePlaylist(this)");
 
-                let checkBox = document.createElement("input");
-                checkBox.setAttribute("type", "checkbox");
-                checkBox.setAttribute("id", "0" + i);
-                checkBox.setAttribute("class", "filled-in");
-                let checkBoxLabel = document.createElement("label");
-                checkBoxLabel.setAttribute("for", "0" + i);
-                checkBoxLabel.innerText = "";
-                answerLI = document.createElement("li");
-                answerLI.append(checkBox);
-                answerLI.append(checkBoxLabel);
-                answerLI.append(trackArray[i].name);
-                answerLI.append(" - ");
-                answerLI.append(convertTime(trackArray[i].duration));
-                answerUL.append(answerLI);
-                trackTimes.push(parseInt(trackArray[i].duration));
-            }
+        let checkBoxLabel = document.createElement("label");
+        checkBoxLabel.setAttribute("for", "0" + i);
+        checkBoxLabel.innerText = "";
+        answerLI = document.createElement("li");
+        answerLI.append(checkBox);
+        answerLI.append(checkBoxLabel);
+        answerLI.append(trackArray[i].name);
+        answerLI.append(" - ");
+        answerLI.append(convertTime(trackArray[i].duration));
+        answerUL.append(answerLI);
+        trackTimes.push(parseInt(trackArray[i].duration));
+      }
 
-            backBtn.addEventListener("click", function () {
-                answerDiv.innerHTML = "";
-                document.getElementById("playlist-form").style.display = "block";
-                console.log(artistBack);
-                searchAlbums(artistBack);
-            });
+      backBtn.addEventListener("click", function() {
+        answerDiv.innerHTML = "";
+        document.getElementById("playlist-form").style.display = "block";
+        document.getElementById("checkBoxAll").style.display = "none";
+        console.log(artistBack);
+        searchAlbums(artistBack);
+      });
 
-            console.log(trackTimes);
-            console.log(trackTimes.reduce((a, b) => a + b, 0));
-        });
+      console.log(trackTimes);
+      console.log(trackTimes.reduce((a, b) => a + b, 0));
+    });
 }
 
-// function for select/unselect all the tracks from the album:
+// function for select/unselect ALL the tracks from the album:
 function selectAllTracks() {
-    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = checkAll;
-    }
-    checkAll = !checkAll;
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = checkAll;
+    // update the playlist with the new state of checkbox:
+    updatePlaylist(checkboxes[i]);
+  }
+  checkAll = !checkAll;
 }
 
 function convertTime(time) {
-    const hr = ~~(time / 3600);
-    const min = ~~((time % 3600) / 60);
-    const sec = time % 60;
-    let sec_min = "";
-    if (hr > 0) {
-        sec_min += "" + hrs + ":" + (min < 10 ? "0" : "");
-    }
-    sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
-    sec_min += "" + sec;
-    return sec_min;
+  const hr = ~~(time / 3600);
+  const min = ~~((time % 3600) / 60);
+  const sec = time % 60;
+  let sec_min = "";
+  if (hr > 0) {
+    sec_min += "" + hr + ":" + (min < 10 ? "0" : "");
+  }
+  sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+  sec_min += "" + sec;
+  return sec_min;
 }
 
 function checkAlbum(artist) {
@@ -391,15 +404,106 @@ function checkAlbum(artist) {
     }
 }
 
-//---------------------------------------------------------------------------triggers the search for search by artist
+//-----------------------triggers the search for search by artist ------------------
 document
-    .getElementById("submit-btn-artist")
-    .addEventListener("click", function () {
-        const artistInput = document.getElementById("artist").value;
-        console.log(artistInput);
+  .getElementById("submit-btn-artist")
+  .addEventListener("click", function() {
+    const artistInput = document.getElementById("artist").value;
+    console.log(artistInput);
 
-        searchAlbums(artistInput);
-        //reset the playlist form
-        const playlistForm = document.getElementById("playlist-form");
-        playlistForm.reset();
-    });
+    searchAlbums(artistInput);
+    //reset the playlist form
+    const playlistForm = document.getElementById("playlist-form");
+    playlistForm.reset();
+  });
+
+// ----------------- the playlist and localforage start here: ---------------------
+
+// function to add and remove tracks to playlist by the checked checkbox:
+function updatePlaylist(track) {
+  const item = {
+    album: track.getAttribute("data-album"),
+    artist: track.getAttribute("data-artist"),
+    track: track.getAttribute("data-track"),
+    duration: track.getAttribute("data-duration")
+  };
+  if (track.checked) {
+    // track was selected:
+    playlistArray.push(item);
+    totalDuration += parseInt(item.duration);
+  } else {
+    // this variable creates a temporary playlist without the removed track that was unchecked;
+    // we are creating a variable to receive the itens that still remain checked, looks inefficient, but it works!
+    let tmpPlaylist = [];
+    totalDuration = 0;
+    for (arrayitem of playlistArray) {
+      if (
+        item.album != arrayitem.album ||
+        item.artist != arrayitem.artist ||
+        item.track != arrayitem.track ||
+        item.duration != arrayitem.duration
+      ) {
+        tmpPlaylist.push(arrayitem);
+        totalDuration += parseInt(item.duration);
+      }
+    }
+    playlistArray = tmpPlaylist;
+  }
+  let playlistData = {
+    totalTime: totalDuration,
+    finalPlaylist: playlistArray
+  };
+
+  localforage.setItem("playlist-data", playlistData);
+}
+
+// function to get the tracks from the array:
+function getPlaylistData() {
+  var data = localforage.getItem("playlist-data").then(function(value) {
+    if (value === null) {
+      totalDuration = 0;
+      playlistArray = [];
+    } else {
+      totalDuration = value.totalTime;
+      playlistArray = value.finalPlaylist;
+    }
+    document.getElementById("playlistTime").innerHTML =
+      "<strong>Your playlist duration is " +
+      convertTime(totalDuration) +
+      "</strong>.";
+    renderPlaylist();
+  });
+}
+
+// function that render every element of playlist array into the table in HTML:
+function renderPlaylist() {
+  const playlistTableBody = document.getElementById("playlist-table-body");
+  playlistTableBody.innerHTML = "";
+  for (let i = 0; i < playlistArray.length; i++) {
+    const trackTR = document.createElement("tr");
+    const artistTD = document.createElement("td");
+    const albumTD = document.createElement("td");
+    const trackTD = document.createElement("td");
+    const durationTD = document.createElement("td");
+    let track = playlistArray[i];
+
+    // Showing the datas into the HTML table:
+    artistTD.innerText = track.artist;
+    albumTD.innerText = track.album;
+    trackTD.innerText = track.track;
+    durationTD.innerText = convertTime(parseInt(track.duration));
+
+    // Appending all the td to tr:
+    trackTR.append(artistTD);
+    trackTR.append(albumTD);
+    trackTR.append(trackTD);
+    trackTR.append(durationTD);
+
+    // Appending all the tr to table body:
+    playlistTableBody.append(trackTR);
+  }
+}
+
+// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
+// TODO: change the titles of tabs for icons - to be visible in mobile-first.
+// TODO: include the album URL to see the album image with the playlist.
