@@ -132,7 +132,7 @@ function searchAlbums(artist) {
         fetch(queryURL).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
-            if (responseJson.error || !responseJson.album) {
+            if (responseJson.error || responseJson.topalbums.album.length === 0) {
                 console.log("Stop breaking our crap John.");
                 console.log(responseJson);
             }
