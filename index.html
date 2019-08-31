@@ -16,6 +16,7 @@
          src="https://code.jquery.com/jquery-2.1.1.min.js"
       ></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+      <script src="https://use.fontawesome.com/bc04ba9073.js"></script>
    </head>
    <body>
       <div class="container">
@@ -33,7 +34,7 @@
             <!-- song tab -->
             <div id="song-tab" class="col s12">
                <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" id="song-form">
                      <div class="row">
                         <!-- starting city -->
                         <div class="input-field col s9">
@@ -89,16 +90,17 @@
                            />
                            <label for="song-title">Song</label>
                         </div>
-                        <div class="col s6">
-                           <button
-                              id="submit-btn-song"
-                              class="btn btn-large waves-effect waves-light green lighten-1 center-align"
-                              type="button"
-                              name="action"
-                           >
-                              Submit
-                           </button>
-                        </div>
+                           <div class="col s6">
+                              <button
+                                 id="submit-btn-song"
+                                 class="btn waves-effect waves-light green lighten-1 center-align"
+                                 type="button"
+                                 name="action"
+                              >
+                                 Submit
+                              </button>
+                           </div>
+                        <div id="albums"></div>
                      </div>
                   </form>
                </div>
@@ -112,7 +114,7 @@
             <!-- playlist -->
             <div id="playlist-tab" class="col s12">
                <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" id="playlist-form">
                      <div class="row">
                         <!-- starting city -->
                         <div class="input-field col s9">
@@ -164,26 +166,32 @@
                            />
                            <label for="artist">Artist</label>
                         </div>
-                        <div class="col s6">
-                           <button
-                              id="submit-btn-artist"
-                              class="btn waves-effect waves-light green lighten-1 center-align"
-                              type="button"
-                              name="action"
-                           >
-                              Submit
-                           </button>
+                        <div id="buttons">
+                           <div class="col s6" id="artist-btn-area">
+                              <button
+                                 id="submit-btn-artist"
+                                 class="btn waves-effect waves-light green lighten-1 center-align"
+                                 type="button"
+                                 name="action"
+                              >
+                                 Submit
+                              </button>
+                           </div>
                         </div>
-                     </div>
-                     <div class="row">
-                        <div id="answer"></div>
-                     </div>
                   </form>
+                  <div id="prevNext"></div>
+               </div>
+               <div class="row">
+                  <div id="answer" class="col s12">
+                  </div>
+               </div>
+               <div class="row">
+                  <div id="selectalltracks" class="col s12"></div>
                </div>
             </div>
-            <!-- Create html for taking in movie input(s) -->
          </div>
+            <!-- Create html for taking in movie input(s) -->
       </div>
-      <script src="./assets/app.js"></script>
-   </body>
+    <script src="./assets/app.js"></script>
+  </body>
 </html>
