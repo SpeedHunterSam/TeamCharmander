@@ -217,23 +217,17 @@ function searchAlbums(artist) {
           let indexNum = 0;
           function displayAlbums(index) {
             //displays the i + 4 albums
-            j = index + 4;
+            j = index + 6;
             for (i = index; i < j; i++) {
               if (albumArray[i].name !== "(null)") {
-                // answerLI = document.createElement("li");
                 answerImg = document.createElement("img");
 
                 answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
                 answerImg.setAttribute("data-album", albumArray[i].name);
                 answerImg.setAttribute("data-artist", artist);
-                answerImg.classList.add("col", "s6");
+                answerImg.classList.add("col", "s6", "album-art");
                 answerArea.append(answerImg);
 
-                // answerLI.innerText = albumArray[i].name;
-                // answerLI.setAttribute("data-album", albumArray[i].name);
-                // answerLI.setAttribute("data-artist", artist);
-                // answerLI.classList.add("album")
-                // answerUL.append(answerLI);
                 answerImg.addEventListener("click", function (event) {
                   albumSearch = event.target.getAttribute("data-album");
                   //runs the get track length function
@@ -251,32 +245,49 @@ function searchAlbums(artist) {
           displayAlbums(indexNum);
           const nextBtn = document.createElement("button");
           const prevBtn = document.createElement("button");
-          const btnArea = document.createElement("div");
-          btnArea.classList.add("col", "s12");
+          const backToSearchBtn = document.createElement("btn");
+          const backBtnArea = document.createElement("div");
+          backBtnArea.classList.add("col", "s6");
+          const prevNextArea = document.createElement("div");
+          prevNextArea.classList.add("col", "s6");
+          //next button
           nextBtn.innerText = ">";
           nextBtn.classList.add("btn");
+          //previous button
           prevBtn.innerText = "<";
           prevBtn.classList.add("btn");
+          //backToSearch button
+          backToSearchBtn.innerText = "< Back";
+          backToSearchBtn.classList.add("btn");
+
+          //previous/next button event listeners
           nextBtn.addEventListener("click", function () {
             if (indexNum < 40) {
-              indexNum = indexNum + 5;
+              indexNum = indexNum + 7;
               answerArea.innerHTML = "";
               displayAlbums(indexNum);
             }
           });
           prevBtn.addEventListener("click", function () {
             if (indexNum > 0) {
-              indexNum = indexNum - 5;
+              indexNum = indexNum - 7;
               answerArea.innerHTML = "";
               displayAlbums(indexNum);
             }
           });
+          backToSearchBtn.addEventListener("click", function () {
+            document.getElementById("playlist-form").style.display = "block";
+            document.getElementById("prevNext").style.display = "none";
+            document.getElementById("answer").style.display = "none";
+          })
           const prevNext = document.getElementById("prevNext");
-          prevNext.classList.add("col", "s6");
+          prevNext.classList.add("col", "s12");
           prevNext.innerHTML = "";
-          prevNext.append(btnArea);
-          btnArea.append(prevBtn);
-          btnArea.append(nextBtn);
+          prevNext.append(backBtnArea);
+          prevNext.append(prevNextArea);
+          backBtnArea.append(backToSearchBtn);
+          prevNextArea.append(prevBtn);
+          prevNextArea.append(nextBtn);
         }
       });
   }
@@ -311,6 +322,8 @@ function getTrackLength(artist, album, artistToSave) {
 
       const answerDiv = document.getElementById("answer");
       answerDiv.innerHTML = "";
+
+      document.getElementById("prevNext").style.display = "none";
 
       //create back button
       const backBtn = document.createElement("button");
@@ -348,7 +361,8 @@ function getTrackLength(artist, album, artistToSave) {
         let checkBoxLabel = document.createElement("label");
         checkBoxLabel.setAttribute("for", "0" + i);
         checkBoxLabel.innerText = "";
-        answerLI = document.createElement("li");
+        const answerLI = document.createElement("li");
+        answerLI.classList.add("valign-wrapper");
         answerLI.append(checkBox);
         answerLI.append(checkBoxLabel);
         answerLI.append(trackArray[i].name);
@@ -360,7 +374,8 @@ function getTrackLength(artist, album, artistToSave) {
 
       backBtn.addEventListener("click", function () {
         answerDiv.innerHTML = "";
-        document.getElementById("playlist-form").style.display = "block";
+        document.getElementById("answer").style.display = "block";
+        document.getElementById("prevNext").style.display = "block";
         document.getElementById("checkBoxAll").style.display = "none";
         console.log(artistBack);
         searchAlbums(artistBack);
@@ -410,11 +425,12 @@ document
   .addEventListener("click", function () {
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
-
     searchAlbums(artistInput);
     //reset the playlist form
-    const playlistForm = document.getElementById("playlist-form");
-    playlistForm.reset();
+    document.getElementById("playlist-form").style.display = "none";
+    document.getElementById("prevNext").style.display = "block";
+    document.getElementById("answer").style.display = "block";
+
   });
 
 // ----------------- the playlist and localforage start here: ---------------------

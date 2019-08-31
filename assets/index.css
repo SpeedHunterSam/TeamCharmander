@@ -31,5 +31,9 @@
 }
 
 .album-art {
-   margin-bottom: 4px;
+   margin-bottom: 15px;
+}
+
+#prevNext {
+   margin-top: 8px;
 }
