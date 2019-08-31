@@ -168,7 +168,7 @@ function searchAlbums(artist) {
   let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
   let queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
     apiKey +
     "&artist=" +
     artist +
@@ -196,15 +196,20 @@ function searchAlbums(artist) {
         j = index + 4;
         for (i = index; i < j; i++) {
           if (albumArray[i].name !== "(null)") {
-            //image
-            const answerImg = document.createElement("img");
+            // answerLI = document.createElement("li");
+            answerImg = document.createElement("img");
+
             answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
             answerImg.setAttribute("data-album", albumArray[i].name);
-            answerImg.setAttribute("alt", albumArray[i].name);
             answerImg.setAttribute("data-artist", artist);
-            answerImg.classList.add("col", "s6", "album-art");
+            answerImg.classList.add("col", "s6");
             answerArea.append(answerImg);
 
+            // answerLI.innerText = albumArray[i].name;
+            // answerLI.setAttribute("data-album", albumArray[i].name);
+            // answerLI.setAttribute("data-artist", artist);
+            // answerLI.classList.add("album")
+            // answerUL.append(answerLI);
             answerImg.addEventListener("click", function (event) {
               albumSearch = event.target.getAttribute("data-album");
               //runs the get track length function
@@ -257,7 +262,7 @@ function getTrackLength(artist, album, artistToSave) {
   //perform the query
   const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
   const queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
     apiKey +
     "&artist=" +
     artist +
@@ -320,7 +325,6 @@ function getTrackLength(artist, album, artistToSave) {
 
       backBtn.addEventListener("click", function () {
         answerDiv.innerHTML = "";
-        document.getElementById("selectalltracks").innerHTML = "";
         document.getElementById("playlist-form").style.display = "block";
         console.log(artistBack);
         searchAlbums(artistBack);
@@ -353,7 +357,7 @@ function convertTime(time) {
   return sec_min;
 }
 
-//-----------------------------------------------------------------click triggers the search for search by artist
+//---------------------------------------------------------------------------triggers the search for search by artist
 document
   .getElementById("submit-btn-artist")
   .addEventListener("click", function () {
