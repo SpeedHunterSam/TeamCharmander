@@ -11,7 +11,7 @@ let checkAll = true;
 //Allows materialize tabs to actually appear
 
 //click submit button on song tab
-submitButtonSong.addEventListener("click", function() {
+submitButtonSong.addEventListener("click", function () {
   //get values of inputs
   const startState = document.getElementById("starting-state").value;
   const startCity = document.getElementById("starting-city").value;
@@ -56,10 +56,10 @@ submitButtonSong.addEventListener("click", function() {
       "&format=json"; // queryURL to be used in fetch
     if (checkValues(artist, track)) {
       fetch(queryURL)
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(responseJson) {
+        .then(function (responseJson) {
           if (responseJson.error || responseJson.track.duration === "0") {
             console.log("Stop breaking our crap John.");
             console.log(responseJson);
@@ -121,10 +121,10 @@ submitButtonSong.addEventListener("click", function() {
       "&unit=m";
     console.log(queryURL);
     fetch(queryURL)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(responseJson) {
+      .then(function (responseJson) {
         if (
           !responseJson.route.distance ||
           responseJson.route.locations[0].adminArea3 !== fromState ||
@@ -175,10 +175,10 @@ function searchAlbums(artist) {
     "&format=json";
 
   fetch(queryURL)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(responseJson) {
+    .then(function (responseJson) {
       console.log(responseJson);
 
       const artistSave = responseJson.topalbums["@attr"].artist;
@@ -196,21 +196,16 @@ function searchAlbums(artist) {
         j = index + 4;
         for (i = index; i < j; i++) {
           if (albumArray[i].name !== "(null)") {
-            // answerLI = document.createElement("li");
-            answerImg = document.createElement("img");
-
+            //image
+            const answerImg = document.createElement("img");
             answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
             answerImg.setAttribute("data-album", albumArray[i].name);
+            answerImg.setAttribute("alt", albumArray[i].name);
             answerImg.setAttribute("data-artist", artist);
-            answerImg.classList.add("col", "s6");
+            answerImg.classList.add("col", "s6", "album-art");
             answerArea.append(answerImg);
 
-            // answerLI.innerText = albumArray[i].name;
-            // answerLI.setAttribute("data-album", albumArray[i].name);
-            // answerLI.setAttribute("data-artist", artist);
-            // answerLI.classList.add("album")
-            // answerUL.append(answerLI);
-            answerImg.addEventListener("click", function(event) {
+            answerImg.addEventListener("click", function (event) {
               albumSearch = event.target.getAttribute("data-album");
               //runs the get track length function
               getTrackLength(artist, albumSearch, artistSave);
@@ -233,14 +228,14 @@ function searchAlbums(artist) {
       nextBtn.classList.add("btn");
       prevBtn.innerText = "<";
       prevBtn.classList.add("btn");
-      nextBtn.addEventListener("click", function() {
+      nextBtn.addEventListener("click", function () {
         if (indexNum < 40) {
           indexNum = indexNum + 5;
           answerArea.innerHTML = "";
           displayAlbums(indexNum);
         }
       });
-      prevBtn.addEventListener("click", function() {
+      prevBtn.addEventListener("click", function () {
         if (indexNum > 0) {
           indexNum = indexNum - 5;
           answerArea.innerHTML = "";
@@ -271,10 +266,10 @@ function getTrackLength(artist, album, artistToSave) {
     "&format=json";
 
   fetch(queryURL)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(responseJson) {
+    .then(function (responseJson) {
       console.log(responseJson);
       let trackArray = responseJson.album.tracks.track;
 
@@ -323,8 +318,9 @@ function getTrackLength(artist, album, artistToSave) {
         trackTimes.push(parseInt(trackArray[i].duration));
       }
 
-      backBtn.addEventListener("click", function() {
+      backBtn.addEventListener("click", function () {
         answerDiv.innerHTML = "";
+        document.getElementById("selectalltracks").innerHTML = "";
         document.getElementById("playlist-form").style.display = "block";
         console.log(artistBack);
         searchAlbums(artistBack);
@@ -360,7 +356,7 @@ function convertTime(time) {
 //---------------------------------------------------------------------------triggers the search for search by artist
 document
   .getElementById("submit-btn-artist")
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     const artistInput = document.getElementById("artist").value;
     console.log(artistInput);
 
