@@ -353,7 +353,7 @@ function convertTime(time) {
   return sec_min;
 }
 
-//---------------------------------------------------------------------------triggers the search for search by artist
+//-----------------------------------------------------------------click triggers the search for search by artist
 document
   .getElementById("submit-btn-artist")
   .addEventListener("click", function () {
