@@ -245,11 +245,13 @@ function searchAlbums(artist) {
           displayAlbums(indexNum);
           const nextBtn = document.createElement("button");
           const prevBtn = document.createElement("button");
-          const backToSearchBtn = document.createElement("btn");
+          const backToSearchBtn = document.createElement("button");
           const backBtnArea = document.createElement("div");
           backBtnArea.classList.add("col", "s6");
+          backBtnArea.setAttribute("id", "back-btn-area");
           const prevNextArea = document.createElement("div");
           prevNextArea.classList.add("col", "s6");
+          prevNextArea.setAttribute("id", "prev-next-area")
           //next button
           nextBtn.innerText = ">";
           nextBtn.classList.add("btn");
@@ -323,13 +325,14 @@ function getTrackLength(artist, album, artistToSave) {
       const answerDiv = document.getElementById("answer");
       answerDiv.innerHTML = "";
 
-      document.getElementById("prevNext").style.display = "none";
+      document.getElementById("prev-next-area").style.display = "none";
+      document.getElementById("back-btn-area").style.display = "none";
 
       //create back button
       const backBtn = document.createElement("button");
       backBtn.classList.add("btn");
       backBtn.innerText = "< Back";
-      answerDiv.prepend(backBtn);
+      prevNext.prepend(backBtn);
 
       const selectallDiv = document.getElementById("selectalltracks");
       selectallDiv.innerHTML = "";
