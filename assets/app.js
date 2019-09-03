@@ -468,11 +468,23 @@ function updatePlaylist(track) {
     totalDuration = 0;
     for (arrayitem of playlistArray) {
       if (
-        item.album != arrayitem.album ||
-        item.artist != arrayitem.artist ||
-        item.track != arrayitem.track ||
-        item.duration != arrayitem.duration
+        item.album === arrayitem.album &&
+        item.artist === arrayitem.artist &&
+        item.track === arrayitem.track &&
+        item.duration === arrayitem.duration
       ) {
+        console.log(
+          "Removing " +
+            arrayitem.album +
+            "," +
+            arrayitem.artist +
+            "," +
+            arrayitem.track +
+            "," +
+            item.duration +
+            "."
+        );
+      } else {
         tmpPlaylist.push(arrayitem);
         totalDuration += parseInt(item.duration);
       }
@@ -533,6 +545,7 @@ function clearPlaylist() {
     };
     // erase the db and update the playlist on display:
     localforage.setItem("playlist-data", playlistData).then(getPlaylistData);
+    checkAll = true;
   }
 }
 
