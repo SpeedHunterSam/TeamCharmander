@@ -277,6 +277,19 @@ document
     document.getElementById("prevNext").style.display = "block";
     document.getElementById("answer").style.display = "block";
 
+    function convertTime(time) {
+      const hr = ~~(time / 3600);
+      const min = ~~((time % 3600) / 60);
+      const sec = time % 60;
+      let sec_min = "";
+      if (hr > 0) {
+        sec_min += "" + hr + ":" + (min < 10 ? "0" : "");
+      }
+      sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+      sec_min += "" + sec;
+      return sec_min;
+    };
+
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
       const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
       const queryURL =
@@ -345,7 +358,8 @@ document
                 "<br/> Distance in km: " +
                 distanceInKm.toFixed(2);
               driveAndTime.append(driveAndTimeText);
-              document.getElementById("timeRemain").innerHTML = driveTimeMin;
+              let driveTimeBuild = parseFloat(convertTime(driveTimeMin));
+              document.getElementById("timeRemain").innerHTML = driveTimeBuild.toFixed(2);
             }
           });
       } else {
