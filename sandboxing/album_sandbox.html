@@ -1,190 +1,84 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>ALBUM SANDBOX</title>
-      <meta name="viewport" content="width = device-width, initial-scale = 1" />
       <link
          rel="stylesheet"
-         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
       />
+
       <link
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
          rel="stylesheet"
-         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"
       />
       <script
          type="text/javascript"
          src="https://code.jquery.com/jquery-2.1.1.min.js"
       ></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
    </head>
+
    <body>
       <div class="container">
-         <div class="row">
-            <div class="col s12">
-               <ul class="tabs">
-                  <li class="tab col s3">
-                     <a class="active" href="#song-tab">Search By Song</a>
-                  </li>
-                  <li class="tab col s3">
-                     <a href="#playlist-tab">Build a Playlist</a>
-                  </li>
-               </ul>
-            </div>
-            <!-- song tab -->
-            <div id="song-tab" class="col s12">
-               <div class="row">
-                  <form class="col s12">
-                     <div class="row">
-                        <!-- starting city -->
-                        <div class="input-field col s9">
-                           <input
-                              id="starting-city"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="starting-city">Starting City</label>
-                        </div>
-                        <!-- starting state -->
-                        <div class="input-field col s3">
-                           <input
-                              id="starting-state"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="starting-state">State</label>
-                        </div>
-                        <!-- ending city -->
-                        <div class="input-field col s9">
-                           <input
-                              id="ending-city"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="ending-city">Ending City</label>
-                        </div>
-                        <!-- ending state -->
-                        <div class="input-field col s3">
-                           <input
-                              id="ending-state"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="ending-state">State</label>
-                        </div>
-                        <!-- artist -->
-                        <div class="input-field col s12">
-                           <input
-                              id="artist-name"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="artist-name">Artist</label>
-                        </div>
-                        <!-- song -->
-                        <div class="input-field col s12">
-                           <input
-                              id="song-title"
-                              type="text"
-                              class="validate"
-                           />
-                           <label for="song-title">Song</label>
-                        </div>
+         <h3>A Demo of Modal</h3>
+         <!-- Modal Trigger -->
+         <a
+            class="waves-effect waves-light btn pink darken-1 modal-trigger"
+            href="#demo-modal-fixed-footer"
+            >Launch Fixed Footer Modal</a
+         >
 
-                        <div class="col s6">
-                           <button
-                              id="submit-btn-song"
-                              class="btn btn-large waves-effect waves-light green lighten-1 center-align"
-                              type="button"
-                              name="action"
-                           >
-                              Submit
-                           </button>
-                        </div>
-                     </div>
-                  </form>
-               </div>
-               <div class="row">
-                  <div id="output"></div>
-               </div>
-               <div class="row">
-                  <div id="driveAndTime"></div>
-               </div>
+         <!-- Modal Structure -->
+         <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+            <div class="modal-content">
+               <h4>Modal with Fixed Footer</h4>
+               <p>
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+               </p>
+               <p>
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+                  Content of the modal goes here. Place marketing text or other
+                  information here. Content of the modal goes here. Place
+                  marketing text or other information here. Content of the modal
+                  goes here. Place marketing text or other information here.
+               </p>
             </div>
-            <!-- playlist -->
-            <div id="playlist-tab" class="col s12">
-               <div class="row">
-                  <form class="col s12">
-                     <div class="row">
-                        <!-- starting city -->
-                        <div class="input-field col s9">
-                           <input
-                              id="starting-city2"
-                              type="text"
-                              class="validate"
-                              required
-                           />
-                           <label for="starting-city2">Starting City</label>
-                        </div>
-                        <!-- starting state -->
-                        <div class="input-field col s3">
-                           <input
-                              id="starting-state2"
-                              type="text"
-                              class="validate"
-                              required
-                           />
-                           <label for="starting-state2">State</label>
-                        </div>
-                        <!-- ending city -->
-                        <div class="input-field col s9">
-                           <input
-                              id="ending-city2"
-                              type="text"
-                              class="validate"
-                              required
-                           />
-                           <label for="ending-city2">Ending City</label>
-                        </div>
-                        <!-- ending state -->
-                        <div class="input-field col s3">
-                           <input
-                              id="ending-state2"
-                              type="text"
-                              class="validate"
-                              required
-                           />
-                           <label for="ending-state2">State</label>
-                        </div>
-                        <!-- artist -->
-                        <div class="input-field col s12">
-                           <input
-                              id="artist"
-                              type="text"
-                              class="validate"
-                              required
-                           />
-                           <label for="artist">Artist</label>
-                        </div>
-                        <div class="col s6">
-                           <button
-                              id="submit-btn-artist"
-                              class="btn waves-effect waves-light green lighten-1 center-align"
-                              type="button"
-                              name="action"
-                           >
-                              Submit
-                           </button>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div id="answer"></div>
-                     </div>
-                  </form>
-               </div>
+            <div class="modal-footer">
+               <a href="#!" class="modal-action modal-close btn teal lighten-1"
+                  >Yes</a
+               >
+               <a href="#!" class="modal-action modal-close btn orange darken-1"
+                  >No</a
+               >
+               <a
+                  href="#!"
+                  class="modal-action modal-close btn deep-orange darken-2"
+                  >Cancel</a
+               >
             </div>
-            <!-- Create html for taking in movie input(s) -->
          </div>
       </div>
-      <script src="./album_sandbox.js"></script>
+      <script>
+         $(document).ready(function() {
+            $(".modal").modal();
+         });
+      </script>
    </body>
 </html>
