@@ -204,6 +204,32 @@ function searchAlbums(artist) {
       })
       .then(function (responseJson) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
+          // Add back button code here so user can easily go back to previous page
+
+        //work on removing code to elimiate forward and back buttons
+
+          const backToSearchBtn = document.createElement("button");
+          const backBtnArea = document.createElement("div");
+          backBtnArea.classList.add("col", "s6");
+          backBtnArea.setAttribute("id", "back-btn-area");
+
+          //backToSearch button
+          backToSearchBtn.innerText = "< Back";
+          backToSearchBtn.classList.add("btn");
+
+          
+          backToSearchBtn.addEventListener("click", function () {
+            document.getElementById("playlist-form").style.display = "block";
+            document.getElementById("prevNext").style.display = "none";
+            document.getElementById("answer").style.display = "none";
+          });
+          const prevNext = document.getElementById("prevNext");
+          prevNext.classList.add("col", "s12");
+          prevNext.innerHTML = "";
+          prevNext.append(backBtnArea);
+          backBtnArea.append(backToSearchBtn);
+ 
+
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
         } else {
@@ -436,7 +462,6 @@ function checkAlbum(artist) {
     return true;
   }
 }
-
 
 //-----------------------triggers the search for search by artist ------------------
 document
