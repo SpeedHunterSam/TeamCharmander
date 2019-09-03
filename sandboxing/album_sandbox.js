@@ -159,7 +159,7 @@ function searchAlbums(artist) {
                     answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
                     answerImg.setAttribute("data-album", albumArray[i].name);
                     answerImg.setAttribute("data-artist", artist);
-                    answerImg.classList.add("col", "s6");
+                    answerImg.classList.add("col", "s6", "hoverable");
                     answerArea.append(answerImg);
 
                     // answerLI.innerText = albumArray[i].name;
