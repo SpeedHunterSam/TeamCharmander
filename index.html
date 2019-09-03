@@ -37,7 +37,7 @@
                      <a
                         class="active"
                         href="#final-playlist-tab"
-                        onclick="getPlaylistData()"
+                        onclick="getPlaylistData(), getTreck()"
                         >Playlist</a
                      >
                   </li>
@@ -203,9 +203,10 @@
             </div>
             <div id="final-playlist-tab" class="col s12">
                <div class="row">
+                  <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>
                   <div id="playlistTime" class="col s12"></div>
                   <!--TODO: div for the remain time / Shane or Jackson-->
-                  <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>
+
                   <div id="clearPlaylist" class="col s12"></div>
                </div>
                <div class="row">
