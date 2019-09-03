@@ -192,7 +192,7 @@ function searchAlbums(artist) {
   let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
   let queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
     apiKey +
     "&artist=" +
     artist +
@@ -333,7 +333,7 @@ function getTrackLength(artist, album, artistToSave) {
   //perform the query
   const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
   const queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
     apiKey +
     "&artist=" +
     artist +
