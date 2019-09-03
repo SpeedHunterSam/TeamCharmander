@@ -436,6 +436,7 @@ document
 // ----------------- the playlist and localforage start here: ---------------------
 
 // function to add and remove tracks to playlist by the checked checkbox:
+// NOTE: "track" is the checkbox that was clicked!
 function updatePlaylist(track) {
   const item = {
     album: track.getAttribute("data-album"),
@@ -465,15 +466,18 @@ function updatePlaylist(track) {
     }
     playlistArray = tmpPlaylist;
   }
+
+  // create Json structure with total time and playlist:
   let playlistData = {
     totalTime: totalDuration,
     finalPlaylist: playlistArray
   };
 
+  // save the playlist and total time:
   localforage.setItem("playlist-data", playlistData);
 }
 
-// function to get the tracks from the array:
+// function to get the tracks from the localForage:
 function getPlaylistData() {
   var data = localforage.getItem("playlist-data").then(function(value) {
     if (value === null) {
