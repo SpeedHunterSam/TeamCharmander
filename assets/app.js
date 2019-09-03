@@ -204,22 +204,6 @@ function searchAlbums(artist) {
       })
       .then(function (responseJson) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
-          // const backBtnArea = document.createElement("div");
-          // backBtnArea.classList.add("col", "s6");
-          // backBtnArea.setAttribute("id", "back-btn-area");
-          // document.getElementById("prevNext").append(backBtnArea);
-
-          // const backToSearchBtn = document.createElement("button");
-          // backToSearchBtn.innerText = "< Back";
-          // backToSearchBtn.classList.add("btn");
-          // backBtnArea.append(backToSearchBtn);
-
-          // backToSearchBtn.addEventListener("click", function () {
-          //   document.getElementById("playlist-form").style.display = "block";
-          //   document.getElementById("prevNext").style.display = "none";
-          //   document.getElementById("answer").style.display = "none";
-          // });
-
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
         } else {
@@ -456,7 +440,7 @@ function checkAlbum(artist) {
 //-----------------------triggers the search for search by artist ------------------
 document
   .getElementById("submit-btn-artist")
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     const startState = document.getElementById("starting-state2").value;
     const startCity = document.getElementById("starting-city2").value;
     const endState = document.getElementById("ending-state2").value;
@@ -512,16 +496,16 @@ document
       }
       if (checkDirections(fromState, fromCity, toState, toCity)) {
         fetch(queryURL)
-          .then(function(response) {
+          .then(function (response) {
             return response.json();
           })
-          .then(function(responseJson) {
+          .then(function (responseJson) {
             if (
               !responseJson.route.distance ||
               responseJson.route.locations[0].adminArea3 !==
-                fromState.toUpperCase() ||
+              fromState.toUpperCase() ||
               responseJson.route.locations[1].adminArea3 !==
-                toState.toUpperCase() ||
+              toState.toUpperCase() ||
               responseJson.route.locations[0].adminArea5 === "" ||
               responseJson.route.locations[1].adminArea5 === ""
             ) {
@@ -533,7 +517,7 @@ document
               distanceInKm = distanceInMiles * 1.609344;
               driveTime = responseJson.route.time; //returns drive time in minutes
               driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
-  
+
               console.log("drive time: ", driveTime);
               console.log("distance in miles: ", distanceInMiles);
               console.log("distance in km: ", distanceInKm.toFixed(2));
