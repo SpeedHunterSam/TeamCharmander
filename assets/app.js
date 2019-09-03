@@ -358,9 +358,9 @@ function getTrackLength(artist, album, artistToSave) {
         checkBox.setAttribute("data-artist", responseJson.album.artist);
         checkBox.setAttribute("data-track", trackArray[i].name);
         checkBox.setAttribute("data-duration", trackArray[i].duration);
+        checkBox.setAttribute("onclick", "updatePlaylist(this)");
 
         // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
-        checkBox.setAttribute("onclick", "updatePlaylist(this)");
         for (let j = 0; j < playlistArray.length; j++) {
           if (
             playlistArray[j].album === responseJson.album.name &&
@@ -580,5 +580,4 @@ function renderPlaylist() {
 
 // ----------------- the playlist and localforage finish here: ---------------------
 
-// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
 // TODO: include the album URL to see the album image with the playlist.
