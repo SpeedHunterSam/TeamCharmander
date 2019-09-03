@@ -15,7 +15,7 @@ let totalDuration = 0;
 //Allows materialize tabs to actually appear
 
 //click submit button on song tab
-submitButtonSong.addEventListener("click", function() {
+submitButtonSong.addEventListener("click", function () {
   //get values of inputs
   const startState = document.getElementById("starting-state").value;
   const startCity = document.getElementById("starting-city").value;
@@ -73,10 +73,10 @@ submitButtonSong.addEventListener("click", function() {
       "&format=json"; // queryURL to be used in fetch
     if (checkValues(artist, track)) {
       fetch(queryURL)
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(responseJson) {
+        .then(function (responseJson) {
           if (responseJson.error || responseJson.track.duration === "0") {
             console.log("Stop breaking our crap John.");
             console.log(responseJson);
@@ -139,16 +139,16 @@ submitButtonSong.addEventListener("click", function() {
     console.log(queryURL);
     if (checkDirections(fromState, fromCity, toState, toCity)) {
       fetch(queryURL)
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(responseJson) {
+        .then(function (responseJson) {
           if (
             !responseJson.route.distance ||
             responseJson.route.locations[0].adminArea3 !==
-              fromState.toUpperCase() ||
+            fromState.toUpperCase() ||
             responseJson.route.locations[1].adminArea3 !==
-              toState.toUpperCase() ||
+            toState.toUpperCase() ||
             responseJson.route.locations[0].adminArea5 === "" ||
             responseJson.route.locations[1].adminArea5 === ""
           ) {
@@ -199,10 +199,10 @@ function searchAlbums(artist) {
     "&format=json";
   if (checkAlbum(artist)) {
     fetch(queryURL)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(responseJson) {
+      .then(function (responseJson) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
@@ -232,7 +232,7 @@ function searchAlbums(artist) {
                 answerImg.classList.add("col", "s6", "album-art");
                 answerArea.append(answerImg);
 
-                answerImg.addEventListener("click", function(event) {
+                answerImg.addEventListener("click", function (event) {
                   albumSearch = event.target.getAttribute("data-album");
                   //runs the get track length function
                   getTrackLength(artist, albumSearch, artistSave);
@@ -249,11 +249,13 @@ function searchAlbums(artist) {
           displayAlbums(indexNum);
           const nextBtn = document.createElement("button");
           const prevBtn = document.createElement("button");
-          const backToSearchBtn = document.createElement("btn");
+          const backToSearchBtn = document.createElement("button");
           const backBtnArea = document.createElement("div");
           backBtnArea.classList.add("col", "s6");
+          backBtnArea.setAttribute("id", "back-btn-area");
           const prevNextArea = document.createElement("div");
           prevNextArea.classList.add("col", "s6");
+          prevNextArea.setAttribute("id", "prev-next-area")
           //next button
           nextBtn.innerText = ">";
           nextBtn.classList.add("btn");
@@ -265,21 +267,21 @@ function searchAlbums(artist) {
           backToSearchBtn.classList.add("btn");
 
           //previous/next button event listeners
-          nextBtn.addEventListener("click", function() {
+          nextBtn.addEventListener("click", function () {
             if (indexNum < 40) {
               indexNum = indexNum + 7;
               answerArea.innerHTML = "";
               displayAlbums(indexNum);
             }
           });
-          prevBtn.addEventListener("click", function() {
+          prevBtn.addEventListener("click", function () {
             if (indexNum > 0) {
               indexNum = indexNum - 7;
               answerArea.innerHTML = "";
               displayAlbums(indexNum);
             }
           });
-          backToSearchBtn.addEventListener("click", function() {
+          backToSearchBtn.addEventListener("click", function () {
             document.getElementById("playlist-form").style.display = "block";
             document.getElementById("prevNext").style.display = "none";
             document.getElementById("answer").style.display = "none";
@@ -314,10 +316,10 @@ function getTrackLength(artist, album, artistToSave) {
     "&format=json";
 
   fetch(queryURL)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(responseJson) {
+    .then(function (responseJson) {
       console.log(responseJson);
       let trackArray = responseJson.album.tracks.track;
 
@@ -326,13 +328,14 @@ function getTrackLength(artist, album, artistToSave) {
       const answerDiv = document.getElementById("answer");
       answerDiv.innerHTML = "";
 
-      document.getElementById("prevNext").style.display = "none";
+      document.getElementById("prev-next-area").style.display = "none";
+      document.getElementById("back-btn-area").style.display = "none";
 
       //create back button
       const backBtn = document.createElement("button");
       backBtn.classList.add("btn");
       backBtn.innerText = "< Back";
-      answerDiv.prepend(backBtn);
+      prevNext.prepend(backBtn);
 
       const selectallDiv = document.getElementById("selectalltracks");
       selectallDiv.innerHTML = "";
@@ -388,7 +391,7 @@ function getTrackLength(artist, album, artistToSave) {
         trackTimes.push(parseInt(trackArray[i].duration));
       }
 
-      backBtn.addEventListener("click", function() {
+      backBtn.addEventListener("click", function () {
         answerDiv.innerHTML = "";
         document.getElementById("answer").style.display = "block";
         document.getElementById("prevNext").style.display = "block";
@@ -571,14 +574,14 @@ function updatePlaylist(track) {
       ) {
         console.log(
           "Removing " +
-            arrayitem.album +
-            "," +
-            arrayitem.artist +
-            "," +
-            arrayitem.track +
-            "," +
-            item.duration +
-            "."
+          arrayitem.album +
+          "," +
+          arrayitem.artist +
+          "," +
+          arrayitem.track +
+          "," +
+          item.duration +
+          "."
         );
       } else {
         tmpPlaylist.push(arrayitem);
@@ -600,7 +603,7 @@ function updatePlaylist(track) {
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
-  var data = localforage.getItem("playlist-data").then(function(value) {
+  var data = localforage.getItem("playlist-data").then(function (value) {
     if (value === null) {
       totalDuration = 0;
       playlistArray = [];
@@ -619,10 +622,10 @@ function getPlaylistData() {
 
     if (playlistArray.length > 0) {
       // creates a button to clear all the tracks from the playlist/localForage:
-      const clearPlaylist = document.createElement("button");
-      clearPlaylist.classList.add("btn");
+      const clearPlaylist = document.createElement("a");
+      clearPlaylist.classList.add("waves-effect", "btn", "waves-light", "btn", "modal-trigger");
       clearPlaylist.innerText = "Clear Playlist";
-      clearPlaylist.setAttribute("onclick", "clearPlaylist()");
+      clearPlaylist.setAttribute("href", "#clear-playlist-modal");
       clearPlaylistDiv.append(clearPlaylist);
     }
     renderPlaylist();
@@ -631,18 +634,16 @@ function getPlaylistData() {
 
 // function to clear the playlist/localForage content by clicking button:
 function clearPlaylist() {
-  const clearAllTracks = confirm("Do you really want to clear the playlist?");
-  if (clearAllTracks) {
-    totalDuration = 0;
-    playlistArray = [];
-    let playlistData = {
-      totalTime: totalDuration,
-      finalPlaylist: playlistArray
-    };
-    // erase the db and update the playlist on display:
-    localforage.setItem("playlist-data", playlistData).then(getPlaylistData);
-    checkAll = true;
-  }
+  totalDuration = 0;
+  playlistArray = [];
+  let playlistData = {
+    totalTime: totalDuration,
+    finalPlaylist: playlistArray
+  };
+  // erase the db and update the playlist on display:
+  localforage.setItem("playlist-data", playlistData).then(getPlaylistData);
+  checkAll = true;
+
 }
 
 // function that render every element of playlist array into the table in HTML:
