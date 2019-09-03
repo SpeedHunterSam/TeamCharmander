@@ -1,10 +1,38 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>The Materialize Tabs Example</title>
+      <meta name="viewport" content="width = device-width, initial-scale = 1" />
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"
+      />
+      <script
+         type="text/javascript"
+         src="https://code.jquery.com/jquery-2.1.1.min.js"
+      ></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+   </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>TracTrek</title>
+   <body class="container">
+      <h3>Tabs Demo</h3>
+      <div class="row">
+         <div class="col s12">
+            <ul class="tabs">
+               <li class="tab col s3"><a href="#inbox">Inbox</a></li>
+               <li class="tab col s3">
+                  <a class="active" href="#unread"> Unread</a>
+               </li>
+               <li class="tab col s3 disabled">
+                  <a href="#outbox"> Outbox (Disabled)</a>
+               </li>
+               <li class="tab col s3"><a href="#sent">Sent</a></li>
+            </ul>
+         </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <!-- Compiled and minified JavaScript -->
@@ -96,8 +124,8 @@
                         </div>
                         <!-- artist -->
                         <div class="input-field col s12">
-                            <input id="movie-name2" type="text" class="validate" required />
-                            <label for="movie-name2">Movie</label>
+                            <input id="movie-name" type="text" class="validate" required />
+                            <label for="movie-name">Movie</label>
                         </div>
                         <!-- year? -->
                         <!-- <div class="input-field col s12">
@@ -123,7 +151,7 @@
         </div>
         <!-- Create html for taking in movie input(s) -->
     </div>
-    <script src="./assets/app.js"></script>
+    <script src="OMDB_sandbox.js"></script>
 </body>
 
 </html>

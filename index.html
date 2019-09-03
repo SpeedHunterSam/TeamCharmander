@@ -1,112 +1,273 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <title>TracTrek</title>
-
+      <title>TrackTrek</title>
+      <meta name="viewport" content="width = device-width, initial-scale = 1" />
       <link
          rel="stylesheet"
-         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
       />
-      <!-- Compiled and minified JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-      <!-- customCSS -->
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+      />
       <link rel="stylesheet" href="./assets/index.css" />
+      <script
+         type="text/javascript"
+         src="https://code.jquery.com/jquery-2.1.1.min.js"
+      ></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <script src="https://use.fontawesome.com/bc04ba9073.js"></script>
    </head>
-
    <body>
       <div class="container">
          <div class="row">
             <div class="col s12">
-               <div class="card green lighten-1">
-                  <div class="card-content white-text">
-                     <span class="card-title center-align">Results</span>
-                     <p id="output"></p>
+               <ul class="tabs">
+                  <li class="tab col s3">
+                     <a class="active" href="#song-tab">Song</a>
+                  </li>
+                  <!-- added onclick function to load playlist from localForage when clicking TAB BUILD-->
+                  <li class="tab col s3">
+                     <a href="#playlist-tab" onclick="getPlaylistData()"
+                        >Build</a
+                     >
+                  </li>
+                  <li class="tab col s3">
+                     <a
+                        class="active"
+                        href="#final-playlist-tab"
+                        onclick="getPlaylistData(), getTreck()"
+                        >Playlist</a
+                     >
+                  </li>
+               </ul>
+            </div>
+            <!-- song tab -->
+            <div id="song-tab" class="col s12">
+               <div class="row">
+                  <form class="col s12" id="song-form">
+                     <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="starting-city"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="starting-city">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="starting-state"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="starting-state">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="ending-city"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="ending-city">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="ending-state"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="ending-state">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                           <input
+                              id="artist-name"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="artist-name">Artist</label>
+                        </div>
+                        <!-- song -->
+                        <div class="input-field col s12">
+                           <input
+                              id="song-title"
+                              type="text"
+                              class="validate"
+                           />
+                           <label for="song-title">Song</label>
+                        </div>
+                        <div class="col s6">
+                           <button
+                              id="submit-btn-song"
+                              class="btn waves-effect waves-light green lighten-1 center-align"
+                              type="button"
+                              name="action"
+                           >
+                              Submit
+                           </button>
+                        </div>
+                        <div id="albums"></div>
+                     </div>
+                  </form>
+               </div>
+               <div class="row">
+                  <div id="output"></div>
+               </div>
+               <div class="row">
+                  <div id="driveAndTime"></div>
+               </div>
+            </div>
+            <!-- playlist -->
+            <div id="playlist-tab" class="col s12">
+               <div class="row">
+                  <form class="col s12" id="playlist-form">
+                     <div class="row">
+                        <!-- starting city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="starting-city2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="starting-city2">Starting City</label>
+                        </div>
+                        <!-- starting state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="starting-state2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="starting-state2">State</label>
+                        </div>
+                        <!-- ending city -->
+                        <div class="input-field col s9">
+                           <input
+                              id="ending-city2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="ending-city2">Ending City</label>
+                        </div>
+                        <!-- ending state -->
+                        <div class="input-field col s3">
+                           <input
+                              id="ending-state2"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="ending-state2">State</label>
+                        </div>
+                        <!-- artist -->
+                        <div class="input-field col s12">
+                           <input
+                              id="artist"
+                              type="text"
+                              class="validate"
+                              required
+                           />
+                           <label for="artist">Artist</label>
+                        </div>
+                        <div id="buttons">
+                           <div class="col s6" id="artist-btn-area">
+                              <button
+                                 id="submit-btn-artist"
+                                 class="btn waves-effect waves-light green lighten-1 center-align"
+                                 type="button"
+                                 name="action"
+                              >
+                                 Submit
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+                  <div id="prevNext"></div>
+               </div>
+               <div class="row">
+                  <div id="answer" class="col s12"></div>
+               </div>
+               <div class="row">
+                  <div id="selectalltracks" class="col s12"></div>
+               </div>
+            </div>
+            <div id="final-playlist-tab" class="col s12">
+               <div class="row">
+                  <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>
+                  <div id="playlistTime" class="col s12"></div>
+                  <!--TODO: div for the remain time / Shane or Jackson-->
+
+                  <div id="clearPlaylist" class="col s12"></div>
+               </div>
+               <div class="row">
+                  <!-- table for input datas-->
+                  <div class="col-12">
+                     <div class="card mb-3" style="width: 100%;">
+                        <div class="card-body">
+                           <table class="centered" id="playlist-table">
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Artist</th>
+                                    <th scope="col">Album</th>
+                                    <th scope="col">Track</th>
+                                    <th scope="col">Duration</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="playlist-table-body">
+                                 <!-- playslist goes here -->
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-         <div class="row">
-            <form class="col s12">
-               <div class="row">
-                  <!-- starting city -->
-                  <div class="input-field col s9">
-                     <input
-                        id="starting-city"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="starting-city">Starting City</label>
-                  </div>
-                  <!-- starting state -->
-                  <div class="input-field col s3">
-                     <input
-                        id="starting-state"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="starting-state">State</label>
-                  </div>
-                  <!-- ending city -->
-                  <div class="input-field col s9">
-                     <input
-                        id="ending-city"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="ending-city">Ending City</label>
-                  </div>
-                  <!-- ending state -->
-                  <div class="input-field col s3">
-                     <input
-                        id="ending-state"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="ending-state">State</label>
-                  </div>
-                  <!-- artist -->
-                  <div class="input-field col s12">
-                     <input
-                        id="artist-name"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="artist-name">Artist</label>
-                  </div>
-                  <!-- song -->
-                  <div class="input-field col s12">
-                     <input
-                        id="song-title"
-                        type="text"
-                        class="validate"
-                        required
-                     />
-                     <label for="song-title">Song</label>
-                  </div>
-
-                  <div class="col s6">
-                     <button
-                        id="submit-btn"
-                        class="btn btn-large waves-effect waves-light green lighten-1 center-align"
-                        type="button"
-                        name="action"
-                     >
-                        Submit
-                     </button>
-                     <i id="driveAndTime"></i>
-                  </div>
-               </div>
-            </form>
+         <!-- modal -->
+         <div id="clear-playlist-modal" class="modal">
+            <div class="modal-content">
+               <h4>Are you sure you want to clear your playlist?</h4>
+            </div>
+            <div class="modal-footer">
+               <button
+                  href="#!"
+                  class="modal-action modal-close btn teal lighten-1"
+                  onclick="clearPlaylist()"
+               >
+                  Yes
+               </button>
+               <button
+                  href="#!"
+                  class="modal-action modal-close btn orange darken-1"
+               >
+                  No
+               </button>
+            </div>
          </div>
       </div>
+
+      <!-- Create html for taking in movie input(s) -->
+      <!-- local forage cdn -->
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.js"
+         integrity="sha256-3NP4l3uenVxIZ0vLGnUjjObImjaJltaSzAHaGUr+yDA="
+         crossorigin="anonymous"
+      ></script>
       <script src="./assets/app.js"></script>
+      <script>
+         $(document).ready(function() {
+            $(".modal").modal();
+         });
+      </script>
    </body>
 </html>
