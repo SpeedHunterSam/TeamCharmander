@@ -358,7 +358,20 @@ function getTrackLength(artist, album, artistToSave) {
         checkBox.setAttribute("data-artist", responseJson.album.artist);
         checkBox.setAttribute("data-track", trackArray[i].name);
         checkBox.setAttribute("data-duration", trackArray[i].duration);
+
+        // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
         checkBox.setAttribute("onclick", "updatePlaylist(this)");
+        for (let j = 0; j < playlistArray.length; j++) {
+          if (
+            playlistArray[j].album === responseJson.album.name &&
+            playlistArray[j].artist === responseJson.album.artist &&
+            playlistArray[j].track === trackArray[i].name &&
+            playlistArray[j].duration === trackArray[i].duration
+          ) {
+            checkBox.setAttribute("checked", "true");
+            break;
+          }
+        }
 
         let checkBoxLabel = document.createElement("label");
         checkBoxLabel.setAttribute("for", "0" + i);
