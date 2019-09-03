@@ -358,7 +358,20 @@ function getTrackLength(artist, album, artistToSave) {
         checkBox.setAttribute("data-artist", responseJson.album.artist);
         checkBox.setAttribute("data-track", trackArray[i].name);
         checkBox.setAttribute("data-duration", trackArray[i].duration);
+
+        // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
         checkBox.setAttribute("onclick", "updatePlaylist(this)");
+        for (let j = 0; j < playlistArray.length; j++) {
+          if (
+            playlistArray[j].album === responseJson.album.name &&
+            playlistArray[j].artist === responseJson.album.artist &&
+            playlistArray[j].track === trackArray[i].name &&
+            playlistArray[j].duration === trackArray[i].duration
+          ) {
+            checkBox.setAttribute("checked", "true");
+            break;
+          }
+        }
 
         let checkBoxLabel = document.createElement("label");
         checkBoxLabel.setAttribute("for", "0" + i);
@@ -436,6 +449,7 @@ document
 // ----------------- the playlist and localforage start here: ---------------------
 
 // function to add and remove tracks to playlist by the checked checkbox:
+// NOTE: "track" is the checkbox that was clicked!
 function updatePlaylist(track) {
   const item = {
     album: track.getAttribute("data-album"),
@@ -454,26 +468,41 @@ function updatePlaylist(track) {
     totalDuration = 0;
     for (arrayitem of playlistArray) {
       if (
-        item.album != arrayitem.album ||
-        item.artist != arrayitem.artist ||
-        item.track != arrayitem.track ||
-        item.duration != arrayitem.duration
+        item.album === arrayitem.album &&
+        item.artist === arrayitem.artist &&
+        item.track === arrayitem.track &&
+        item.duration === arrayitem.duration
       ) {
+        console.log(
+          "Removing " +
+            arrayitem.album +
+            "," +
+            arrayitem.artist +
+            "," +
+            arrayitem.track +
+            "," +
+            item.duration +
+            "."
+        );
+      } else {
         tmpPlaylist.push(arrayitem);
         totalDuration += parseInt(item.duration);
       }
     }
     playlistArray = tmpPlaylist;
   }
+
+  // create Json structure with total time and playlist:
   let playlistData = {
     totalTime: totalDuration,
     finalPlaylist: playlistArray
   };
 
+  // save the playlist and total time:
   localforage.setItem("playlist-data", playlistData);
 }
 
-// function to get the tracks from the array:
+// function to get the tracks from the localForage:
 function getPlaylistData() {
   var data = localforage.getItem("playlist-data").then(function(value) {
     if (value === null) {
@@ -516,6 +545,7 @@ function clearPlaylist() {
     };
     // erase the db and update the playlist on display:
     localforage.setItem("playlist-data", playlistData).then(getPlaylistData);
+    checkAll = true;
   }
 }
 
