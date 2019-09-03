@@ -548,6 +548,7 @@ function renderPlaylist() {
   }
 }
 
-// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
+// ----------------- the playlist and localforage finish here: ---------------------
 
+// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
 // TODO: include the album URL to see the album image with the playlist.
