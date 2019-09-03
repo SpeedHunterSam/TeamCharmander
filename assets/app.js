@@ -203,6 +203,22 @@ function searchAlbums(artist) {
       })
       .then(function (responseJson) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
+          // const backBtnArea = document.createElement("div");
+          // backBtnArea.classList.add("col", "s6");
+          // backBtnArea.setAttribute("id", "back-btn-area");
+          // document.getElementById("prevNext").append(backBtnArea);
+
+          // const backToSearchBtn = document.createElement("button");
+          // backToSearchBtn.innerText = "< Back";
+          // backToSearchBtn.classList.add("btn");
+          // backBtnArea.append(backToSearchBtn);
+
+          // backToSearchBtn.addEventListener("click", function () {
+          //   document.getElementById("playlist-form").style.display = "block";
+          //   document.getElementById("prevNext").style.display = "none";
+          //   document.getElementById("answer").style.display = "none";
+          // });
+
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
         } else {
