@@ -437,68 +437,6 @@ function checkAlbum(artist) {
   }
 }
 
-function checkDirections(fromState, fromCity, toState, toCity) {
-  if (
-    fromState === "" ||
-    fromCity === "" ||
-    toState === "" ||
-    toCity === ""
-  ) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function getDirectionInfo2(fromState, fromCity, toState, toCity) {
-  const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
-  const queryURL =
-    "https://www.mapquestapi.com/directions/v2/route?key=" +
-    apiKey +
-    "&from=" +
-    fromCity +
-    ", " +
-    fromState +
-    "&to=" +
-    toCity +
-    ", " +
-    toState +
-    "&unit=m";
-  console.log(queryURL);
-  if (checkDirections(fromState, fromCity, toState, toCity)) {
-    fetch(queryURL)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(responseJson) {
-        if (
-          !responseJson.route.distance ||
-          responseJson.route.locations[0].adminArea3 !==
-            fromState.toUpperCase() ||
-          responseJson.route.locations[1].adminArea3 !==
-            toState.toUpperCase() ||
-          responseJson.route.locations[0].adminArea5 === "" ||
-          responseJson.route.locations[1].adminArea5 === ""
-        ) {
-          console.log(responseJson);
-          console.log("Stop breaking our crap John.");
-        } else {
-          console.log(responseJson);
-          distanceInMiles = responseJson.route.distance;
-          distanceInKm = distanceInMiles * 1.609344;
-          driveTime = responseJson.route.time; //returns drive time in minutes
-          driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
-
-          console.log("drive time: ", driveTime);
-          console.log("distance in miles: ", distanceInMiles);
-          console.log("distance in km: ", distanceInKm.toFixed(2));
-          setTreck(fromState, fromCity, toState, toCity, driveTime);
-        }
-      });
-  } else {
-    console.log("Stop breaking our crap John.");
-  }
-}
 
 //-----------------------triggers the search for search by artist ------------------
 document
@@ -509,16 +447,11 @@ document
     const endState = document.getElementById("ending-state2").value;
     const endCity = document.getElementById("ending-city2").value;
     const artistInput = document.getElementById("artist").value;
-    const fromStateInput = document.getElementById("starting-state2").value;
-    const fromCityInput = document.getElementById("starting-city2").value;
-    const toStateInput = document.getElementById("ending-state2").value;
-    const toCityInput = document.getElementById("ending-city2").value;
+
 
     console.log("Heres the artist:" + artistInput);
-    console.log(fromCityInput + " " + fromStateInput + " " + toCityInput + " " + toStateInput);
     searchAlbums(artistInput);
-    getDirectionInfo2(fromStateInput, fromCityInput, toStateInput, toCityInput);
-
+  
     //reset the playlist form
     document.getElementById("playlist-form").style.display = "none";
     document.getElementById("prevNext").style.display = "block";
@@ -593,20 +526,8 @@ document
               console.log("distance in miles: ", distanceInMiles);
               console.log("distance in km: ", distanceInKm.toFixed(2));
               // getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-              const driveAndTime = document.getElementById("driveAndTime");
-              driveAndTime.innerHTML = "";
-              const driveAndTimeText = document.createElement("div");
-              driveAndTimeText.classList.add("col", "s12");
-              driveAndTimeText.innerHTML =
-                "<br/>Drive time in minutes: " +
-                driveTimeMin.toFixed(2) +
-                "</br>Distance in miles: " +
-                distanceInMiles.toFixed(2) +
-                "<br/> Distance in km: " +
-                distanceInKm.toFixed(2);
-              driveAndTime.append(driveAndTimeText);
-              let driveTimeBuild = parseFloat(convertTime(driveTimeMin));
-              document.getElementById("timeRemain").innerHTML = driveTimeBuild.toFixed(2);
+              setTreck(fromState, fromCity, toState, toCity, driveTime);
+
             }
           });
       } else {
@@ -622,8 +543,8 @@ function setTreck(fromState, fromCity, toState, toCity, duration){
   const treck = {
     treckFromState : fromState,
     treckFromCity : fromCity,
-    trecktoState : toState,
-    trecktoCity : toCity,
+    treckToState : toState,
+    treckToCity : toCity,
     treckDuration : duration
   };
 
@@ -631,6 +552,27 @@ function setTreck(fromState, fromCity, toState, toCity, duration){
   localforage.setItem("treck-data", treck);
 }
 
+function getTreck(){
+  let data = localforage.getItem("treck-data").then(function (value) {
+    if (value === null) {
+      treckFromState = "";
+      treckFromCity = "";
+      treckToState = "";
+      treckToCity = "";
+      treckDuration = 0;
+    } else {
+      treckFromState = value.treckFromState;
+      treckFromCity = value.treckFromCity;
+      treckToState = value.treckToState;
+      treckToCity = value.treckToCity;
+      treckDuration = value.treckDuration;
+    }
+    document.getElementById("timeRemain").innerHTML =
+    "<strong>Your trip duration is " +
+    convertTime(treckDuration) +
+    "</strong>.";
+  });
+}
 
 // ----------------- the playlist and localforage start here: ---------------------
 
@@ -690,7 +632,7 @@ function updatePlaylist(track) {
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
-  var data = localforage.getItem("playlist-data").then(function (value) {
+  let data = localforage.getItem("playlist-data").then(function (value) {
     if (value === null) {
       totalDuration = 0;
       playlistArray = [];
