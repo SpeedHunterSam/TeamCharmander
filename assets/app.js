@@ -555,6 +555,7 @@ function updatePlaylist(track) {
     artist: track.getAttribute("data-artist"),
     track: track.getAttribute("data-track"),
     duration: track.getAttribute("data-duration")
+    
   };
   if (track.checked) {
     // track was selected:
@@ -599,7 +600,16 @@ function updatePlaylist(track) {
 
   // save the playlist and total time:
   localforage.setItem("playlist-data", playlistData);
-}
+
+  function updateProg () {
+    let progSong = totalDuration;
+    let progTrip = driveTimeMin
+    progPercent = Math.round((progSong / progTrip) * 100);
+    document.getElementById("progBar").style.width = progPercent + "%";
+    console.log(progPercent);
+    };
+updateProg();
+  }
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
