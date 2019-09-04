@@ -1,5 +1,7 @@
 # CharmanderApp
 
+## Collaborators: Sean D'Amico, Eli Gorniak, Shane Nelson, Jackson Oppenheim, Brian Samuels
+
 ---
 
 ### Deployed App
@@ -28,9 +30,14 @@ This allows you to plan out your Treck's Tracks!
 
 ### Images
 
+#### Song Tab
+---
 ![picture alt](assets/images/Img1.png "Song Tab")
 
+#### Build Tab
+---
 ![picture alt](assets/images/Img2.png "Build Tab")
 
-![picture alt](assets/images/Img3.png "Song Tab")
+#### Playlist Tab
+![picture alt](assets/images/Img3.png "Playlist Tab")
 
