@@ -11,35 +11,39 @@
          rel="stylesheet"
          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
       />
-      <link rel="stylesheet" href="./assets/index.css" />
       <script
          type="text/javascript"
          src="https://code.jquery.com/jquery-2.1.1.min.js"
       ></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
       <script src="https://use.fontawesome.com/bc04ba9073.js"></script>
-      <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
+      <link
+         rel="shortcut icon"
+         href="./assets/favicon.png"
+         type="image/x-icon"
+      />
+      <link rel="stylesheet" href="./assets/index.css" />
    </head>
    <body>
       <div class="container">
          <div class="row">
             <div class="col s12">
                <ul class="tabs">
-                  <li class="tab col s3">
+                  <li class="tab col s4">
                      <a class="active" href="#song-tab">Song</a>
                   </li>
                   <!-- added onclick function to load playlist from localForage when clicking TAB BUILD-->
-                  <li class="tab col s3">
+                  <li class="tab col s4">
                      <a
                         href="#playlist-tab"
                         onclick="getPlaylistData()"
-                        class="active"
+                        class=""
                         >Build</a
                      >
                   </li>
-                  <li class="tab col s3">
+                  <li class="tab col s4">
                      <a
-                        class="active"
+                        class=""
                         href="#final-playlist-tab"
                         onclick="getPlaylistData(), getTreck()"
                         >Playlist</a
@@ -58,6 +62,7 @@
                               id="starting-city"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="starting-city">Starting City</label>
                         </div>
@@ -67,6 +72,7 @@
                               id="starting-state"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="starting-state">State</label>
                         </div>
@@ -76,6 +82,7 @@
                               id="ending-city"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="ending-city">Ending City</label>
                         </div>
@@ -85,6 +92,7 @@
                               id="ending-state"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="ending-state">State</label>
                         </div>
@@ -94,6 +102,7 @@
                               id="artist-name"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="artist-name">Artist</label>
                         </div>
@@ -103,13 +112,14 @@
                               id="song-title"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="song-title">Song</label>
                         </div>
                         <div class="col s6">
                            <button
                               id="submit-btn-song"
-                              class="btn waves-effect waves-light green lighten-1 center-align"
+                              class="btn waves-effect waves-light lighten-1 center-align"
                               type="button"
                               name="action"
                            >
@@ -186,7 +196,7 @@
                            <div class="col s6" id="artist-btn-area">
                               <button
                                  id="submit-btn-artist"
-                                 class="btn waves-effect waves-light green lighten-1 center-align"
+                                 class="btn waves-effect waves-light lighten-1 center-align"
                                  type="button"
                                  name="action"
                               >

@@ -206,7 +206,7 @@ function searchAlbums(artist) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
           // Add back button code here so user can easily go back to previous page
 
-        //work on removing code to elimiate forward and back buttons
+          //work on removing code to elimiate forward and back buttons
 
           const backToSearchBtn = document.createElement("button");
           const backBtnArea = document.createElement("div");
@@ -217,7 +217,7 @@ function searchAlbums(artist) {
           backToSearchBtn.innerText = "< Back";
           backToSearchBtn.classList.add("btn");
 
-          
+
           backToSearchBtn.addEventListener("click", function () {
             document.getElementById("playlist-form").style.display = "block";
             document.getElementById("prevNext").style.display = "none";
@@ -228,7 +228,7 @@ function searchAlbums(artist) {
           prevNext.innerHTML = "";
           prevNext.append(backBtnArea);
           backBtnArea.append(backToSearchBtn);
- 
+
 
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
@@ -248,17 +248,26 @@ function searchAlbums(artist) {
           function displayAlbums(index) {
             //displays the i + 4 albums
             j = index + 6;
+            const answerUL = document.createElement("ul");
+            answerArea.append(answerUL);
             for (i = index; i < j; i++) {
               if (albumArray[i].name !== "(null)") {
-                answerImg = document.createElement("img");
+                const answerLI = document.createElement("li");
+                answerLI.setAttribute("data-album", albumArray[i].name);
+                answerLI.setAttribute("data-artist", artist);
+                answerLI.classList.add("valign-wrapper")
 
-                answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
-                answerImg.setAttribute("data-album", albumArray[i].name);
-                answerImg.setAttribute("data-artist", artist);
-                answerImg.classList.add("col", "s6", "album-art");
-                answerArea.append(answerImg);
+                const answerImg = document.createElement("img");
+                answerImg.setAttribute("src", albumArray[i].image[1]["#text"]);
+                answerImg.classList.add("album-art");
 
-                answerImg.addEventListener("click", function (event) {
+                answerLI.prepend(answerImg);
+                answerLI.append("      ");
+                answerLI.append(albumArray[i].name);
+
+                answerUL.append(answerLI);
+
+                answerLI.addEventListener("click", function (event) {
                   albumSearch = event.target.getAttribute("data-album");
                   //runs the get track length function
                   getTrackLength(artist, albumSearch, artistSave);
@@ -476,7 +485,7 @@ document
 
     console.log("Heres the artist:" + artistInput);
     searchAlbums(artistInput);
-  
+
     //reset the playlist form
     document.getElementById("playlist-form").style.display = "none";
     document.getElementById("prevNext").style.display = "block";
@@ -564,20 +573,20 @@ document
 
 // ----------------- the trip duration localforage starts here: -----------------------
 
-function setTreck(fromState, fromCity, toState, toCity, duration){
+function setTreck(fromState, fromCity, toState, toCity, duration) {
   const treck = {
-    treckFromState : fromState,
-    treckFromCity : fromCity,
-    treckToState : toState,
-    treckToCity : toCity,
-    treckDuration : duration
+    treckFromState: fromState,
+    treckFromCity: fromCity,
+    treckToState: toState,
+    treckToCity: toCity,
+    treckDuration: duration
   };
 
   // save the starting & ending location and trip duration
   localforage.setItem("treck-data", treck);
 }
 
-function getTreck(){
+function getTreck() {
   let data = localforage.getItem("treck-data").then(function (value) {
     if (value === null) {
       treckFromState = "";
@@ -593,9 +602,9 @@ function getTreck(){
       treckDuration = value.treckDuration;
     }
     document.getElementById("timeRemain").innerHTML =
-    "<strong>Your trip duration is " +
-    convertTime(treckDuration) +
-    "</strong>.";
+      "<strong>Your trip duration is " +
+      convertTime(treckDuration) +
+      "</strong>.";
   });
 }
 
