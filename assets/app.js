@@ -72,17 +72,24 @@ submitButtonSong.addEventListener("click", function() {
       track +
       "&format=json"; // queryURL to be used in fetch
     if (checkValues(artist, track)) {
+<<<<<<< HEAD
       fetch(queryURL)
         .then(function(response) {
           return response.json();
         })
         .then(function(responseJson) {
           if (responseJson.error || responseJson.track.duration === "0") {
+=======
+      axios.get(queryURL)
+        .then(function (responseJson) {
+          console.log(responseJson);
+          if (responseJson.data.error || responseJson.data.track.duration === "0") {
+>>>>>>> d55de953ce197851c4e204ec0618e2d18f263e92
             console.log("Stop breaking our crap John.");
             console.log(responseJson);
           } else {
             console.log(responseJson); // console log json to check integrity
-            const songLength = responseJson.track.duration; //this returns the song length
+            const songLength = responseJson.data.track.duration; //this returns the song length
             console.log("song length:", songLength);
             convertTrecktoTrack(distanceTime, songLength);
             //writes the answer to output
@@ -96,7 +103,7 @@ submitButtonSong.addEventListener("click", function() {
               " is " +
               trackTreckNum +
               " " +
-              responseJson.track.name +
+              responseJson.data.track.name +
               "'s by " +
               artist +
               " away from " +
@@ -106,7 +113,7 @@ submitButtonSong.addEventListener("click", function() {
             document.getElementById("albums").innerHTML = "";
             const albumArtDiv = document.createElement("div");
             albumArtDiv.classList.add("col", "s6");
-            const aArtURL = responseJson.track.album.image[1]["#text"];
+            const aArtURL = responseJson.data.track.album.image[1]["#text"];
             console.log(aArtURL);
             //Print album art img to screen
             const image = document.createElement("img"); //creaing image elements
@@ -138,6 +145,7 @@ submitButtonSong.addEventListener("click", function() {
       "&unit=m";
     console.log(queryURL);
     if (checkDirections(fromState, fromCity, toState, toCity)) {
+<<<<<<< HEAD
       fetch(queryURL)
         .then(function(response) {
           return response.json();
@@ -151,14 +159,27 @@ submitButtonSong.addEventListener("click", function() {
               toState.toUpperCase() ||
             responseJson.route.locations[0].adminArea5 === "" ||
             responseJson.route.locations[1].adminArea5 === ""
+=======
+      axios.get(queryURL)
+        .then(function (responseJson) {
+          console.log(responseJson);
+          if (
+            !responseJson.data.route.distance ||
+            responseJson.data.route.locations[0].adminArea3 !==
+            fromState.toUpperCase() ||
+            responseJson.data.route.locations[1].adminArea3 !==
+            toState.toUpperCase() ||
+            responseJson.data.route.locations[0].adminArea5 === "" ||
+            responseJson.data.route.locations[1].adminArea5 === ""
+>>>>>>> d55de953ce197851c4e204ec0618e2d18f263e92
           ) {
             console.log(responseJson);
             console.log("Stop breaking our crap John.");
           } else {
             console.log(responseJson);
-            distanceInMiles = responseJson.route.distance;
+            distanceInMiles = responseJson.data.route.distance;
             distanceInKm = distanceInMiles * 1.609344;
-            driveTime = responseJson.route.time; //returns drive time in minutes
+            driveTime = responseJson.data.route.time; //returns drive time in minutes
             driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
             console.log("drive time: ", driveTime);
@@ -191,25 +212,57 @@ function searchAlbums(artist) {
   let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
   let queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
     apiKey +
     "&artist=" +
     artist +
     "&format=json";
   if (checkAlbum(artist)) {
+<<<<<<< HEAD
     fetch(queryURL)
       .then(function(response) {
         return response.json();
       })
       .then(function(responseJson) {
         if (responseJson.error || responseJson.topalbums.album.length === 0) {
+=======
+    axios.get(queryURL)
+      .then(function (responseJson) {
+        if (responseJson.data.error || responseJson.data.topalbums.album.length === 0) {
+          // Add back button code here so user can easily go back to previous page
+
+        //work on removing code to elimiate forward and back buttons
+
+          const backToSearchBtn = document.createElement("button");
+          const backBtnArea = document.createElement("div");
+          backBtnArea.classList.add("col", "s6");
+          backBtnArea.setAttribute("id", "back-btn-area");
+
+          //backToSearch button
+          backToSearchBtn.innerText = "< Back";
+          backToSearchBtn.classList.add("btn");
+
+          
+          backToSearchBtn.addEventListener("click", function () {
+            document.getElementById("playlist-form").style.display = "block";
+            document.getElementById("prevNext").style.display = "none";
+            document.getElementById("answer").style.display = "none";
+          });
+          const prevNext = document.getElementById("prevNext");
+          prevNext.classList.add("col", "s12");
+          prevNext.innerHTML = "";
+          prevNext.append(backBtnArea);
+          backBtnArea.append(backToSearchBtn);
+ 
+
+>>>>>>> d55de953ce197851c4e204ec0618e2d18f263e92
           console.log("Stop breaking our crap John.");
           console.log(responseJson);
         } else {
           console.log(responseJson);
 
-          const artistSave = responseJson.topalbums["@attr"].artist;
-          const albumArray = responseJson.topalbums.album;
+          const artistSave = responseJson.data.topalbums["@attr"].artist;
+          const albumArray = responseJson.data.topalbums.album;
 
           const answerDiv = document.getElementById("answer");
           answerDiv.innerHTML = "";
@@ -306,7 +359,7 @@ function getTrackLength(artist, album, artistToSave) {
   //perform the query
   const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
   const queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
     apiKey +
     "&artist=" +
     artist +
@@ -314,13 +367,18 @@ function getTrackLength(artist, album, artistToSave) {
     album +
     "&format=json";
 
+<<<<<<< HEAD
   fetch(queryURL)
     .then(function(response) {
       return response.json();
     })
     .then(function(responseJson) {
+=======
+  axios.get(queryURL)
+    .then(function (responseJson) {
+>>>>>>> d55de953ce197851c4e204ec0618e2d18f263e92
       console.log(responseJson);
-      let trackArray = responseJson.album.tracks.track;
+      let trackArray = responseJson.data.album.tracks.track;
 
       let trackTimes = [];
 
@@ -357,17 +415,17 @@ function getTrackLength(artist, album, artistToSave) {
         checkBox.setAttribute("type", "checkbox");
         checkBox.setAttribute("id", "0" + i);
         checkBox.setAttribute("class", "filled-in");
-        checkBox.setAttribute("data-album", responseJson.album.name);
-        checkBox.setAttribute("data-artist", responseJson.album.artist);
+        checkBox.setAttribute("data-album", responseJson.data.album.name);
+        checkBox.setAttribute("data-artist", responseJson.data.album.artist);
         checkBox.setAttribute("data-track", trackArray[i].name);
         checkBox.setAttribute("data-duration", trackArray[i].duration);
-        checkBox.setAttribute("onclick", "updatePlaylist(this)");
 
         // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
+        checkBox.setAttribute("onclick", "updatePlaylist(this)");
         for (let j = 0; j < playlistArray.length; j++) {
           if (
-            playlistArray[j].album === responseJson.album.name &&
-            playlistArray[j].artist === responseJson.album.artist &&
+            playlistArray[j].album === responseJson.data.album.name &&
+            playlistArray[j].artist === responseJson.data.album.artist &&
             playlistArray[j].track === trackArray[i].name &&
             playlistArray[j].duration === trackArray[i].duration
           ) {
@@ -496,27 +554,24 @@ document
         }
       }
       if (checkDirections(fromState, fromCity, toState, toCity)) {
-        fetch(queryURL)
-          .then(function(response) {
-            return response.json();
-          })
+        axios.get(queryURL)
           .then(function(responseJson) {
             if (
-              !responseJson.route.distance ||
-              responseJson.route.locations[0].adminArea3 !==
+              !responseJson.data.route.distance ||
+              responseJson.data.route.locations[0].adminArea3 !==
                 fromState.toUpperCase() ||
-              responseJson.route.locations[1].adminArea3 !==
+              responseJson.data.route.locations[1].adminArea3 !==
                 toState.toUpperCase() ||
-              responseJson.route.locations[0].adminArea5 === "" ||
-              responseJson.route.locations[1].adminArea5 === ""
+              responseJson.data.route.locations[0].adminArea5 === "" ||
+              responseJson.data.route.locations[1].adminArea5 === ""
             ) {
               console.log(responseJson);
               console.log("Stop breaking our crap John.");
             } else {
               console.log(responseJson);
-              distanceInMiles = responseJson.route.distance;
+              distanceInMiles = responseJson.data.route.distance;
               distanceInKm = distanceInMiles * 1.609344;
-              driveTime = responseJson.route.time; //returns drive time in minutes
+              driveTime = responseJson.data.route.time; //returns drive time in minutes
               driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
               console.log("drive time: ", driveTime);
@@ -707,4 +762,5 @@ function renderPlaylist() {
 
 // ----------------- the playlist and localforage finish here: ---------------------
 
+// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
 // TODO: include the album URL to see the album image with the playlist.
