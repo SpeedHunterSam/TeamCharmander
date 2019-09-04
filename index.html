@@ -46,7 +46,7 @@
                      <a
                         class=""
                         href="#final-playlist-tab"
-                        onclick="getPlaylistData(), getTreck()"
+                        onclick="getPlaylistData(), getTreck(), renderDifference()"
                         >Playlist</a
                      >
                   </li>
@@ -219,8 +219,12 @@
             <!-- final playlist -->
             <div id="final-playlist-tab" class="col s12 page">
                <div class="row">
-                  <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>
-                  <div id="playlistTime" class="col s12"></div>
+                  <div id="timeRemain" class="col s6"></div>
+                  <div id="playlistTime" class="col s6"></div>
+                  <hr />
+                  <div id="result" class="center-align col s12">
+                     REMAINING TIME DIV
+                  </div>
                   <!--TODO: div for the remain time / Shane or Jackson-->
 <<<<<<< HEAD
                   <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>

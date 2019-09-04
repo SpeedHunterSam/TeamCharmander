@@ -694,6 +694,7 @@ function getPlaylistData() {
       clearPlaylistDiv.append(clearPlaylist);
     }
     renderPlaylist();
+    renderDifference();
   });
 }
 
@@ -743,3 +744,22 @@ function renderPlaylist() {
 
 // TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
 // TODO: include the album URL to see the album image with the playlist.
+
+function renderDifference() {
+  const remainingTimeDiv = document.getElementById("result");
+  let data = localforage.getItem("playlist-data").then(function (playlist) {
+    let data2 = localforage.getItem("treck-data").then(function (treck) {
+      console.log(playlist.totalTime, typeof playlist.totalTime);
+      console.log(treck.treckDuration, typeof treck.treckDuration);
+      if (playlist === null || treck === null) {
+        remainingTimeDiv.innerHTML = "No playlist or trip data";
+      }
+      else {
+        let remainingTime = treck.treckDuration - playlist.totalTime;
+        remainingTime = convertTime(remainingTime);
+        console.log(remainingTime);
+        remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
+      }
+    })
+  })
+}
