@@ -604,6 +604,7 @@ function updatePlaylist(track) {
     artist: track.getAttribute("data-artist"),
     track: track.getAttribute("data-track"),
     duration: track.getAttribute("data-duration")
+    
   };
   if (track.checked) {
     // track was selected:
@@ -648,7 +649,16 @@ function updatePlaylist(track) {
 
   // save the playlist and total time:
   localforage.setItem("playlist-data", playlistData);
-}
+
+  function updateProg () {
+    let progSong = totalDuration;
+    let progTrip = driveTimeMin
+    progPercent = Math.round((progSong / progTrip) * 100);
+    document.getElementById("progBar").style.width = progPercent + "%";
+    console.log(progPercent);
+    };
+updateProg();
+  }
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
@@ -736,7 +746,7 @@ function renderPlaylist() {
 // TODO: include the album URL to see the album image with the playlist.
 
 function renderDifference() {
-  const remainingTimeDiv = document.getElementById("result");
+  // const remainingTimeDiv = document.getElementById("timeRemain");
   let data = localforage.getItem("playlist-data").then(function (playlist) {
     let data2 = localforage.getItem("treck-data").then(function (treck) {
       console.log(playlist.totalTime, typeof playlist.totalTime);
@@ -748,7 +758,9 @@ function renderDifference() {
         let remainingTime = treck.treckDuration - playlist.totalTime;
         remainingTime = convertTime(remainingTime);
         console.log(remainingTime);
-        remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
+        let remainingPercent =  Math.round((playlist.totalTime / treck.treckDuration) * 100);
+        document.getElementById("progBar").style.width = remainingPercent + "%";
+        // remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
       }
     })
   })
