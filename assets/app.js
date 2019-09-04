@@ -262,7 +262,7 @@ function searchAlbums(artist) {
               answerUL.append(answerLI);
 
 
-              answerUL.addEventListener("click", function (event) {
+              answerLI.addEventListener("click", function (event) {
                 albumSearch = event.target.getAttribute("data-album");
                 //runs the get track length function
                 getTrackLength(artist, albumSearch, artistSave);
