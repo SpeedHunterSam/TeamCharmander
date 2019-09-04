@@ -1,84 +1,24 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Document</title>
+      <!-- Compiled and minified CSS -->
       <link
          rel="stylesheet"
-         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       />
 
-      <link
-         href="https://fonts.googleapis.com/icon?family=Material+Icons"
-         rel="stylesheet"
-      />
-      <script
-         type="text/javascript"
-         src="https://code.jquery.com/jquery-2.1.1.min.js"
-      ></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
    </head>
-
    <body>
-      <div class="container">
-         <h3>A Demo of Modal</h3>
-         <!-- Modal Trigger -->
-         <a
-            class="waves-effect waves-light btn pink darken-1 modal-trigger"
-            href="#demo-modal-fixed-footer"
-            >Launch Fixed Footer Modal</a
-         >
-
-         <!-- Modal Structure -->
-         <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
-            <div class="modal-content">
-               <h4>Modal with Fixed Footer</h4>
-               <p>
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-               </p>
-               <p>
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-                  Content of the modal goes here. Place marketing text or other
-                  information here. Content of the modal goes here. Place
-                  marketing text or other information here. Content of the modal
-                  goes here. Place marketing text or other information here.
-               </p>
-            </div>
-            <div class="modal-footer">
-               <a href="#!" class="modal-action modal-close btn teal lighten-1"
-                  >Yes</a
-               >
-               <a href="#!" class="modal-action modal-close btn orange darken-1"
-                  >No</a
-               >
-               <a
-                  href="#!"
-                  class="modal-action modal-close btn deep-orange darken-2"
-                  >Cancel</a
-               >
-            </div>
-         </div>
+      <div class="progress" id="progress"></div>
+      <div class="progress">
+         <div class="determinate" style="width: 70%"></div>
       </div>
-      <script>
-         $(document).ready(function() {
-            $(".modal").modal();
-         });
-      </script>
+
+      <script src="./sandbox.js"></script>
    </body>
 </html>
