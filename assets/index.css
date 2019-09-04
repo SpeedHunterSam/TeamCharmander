@@ -27,6 +27,8 @@
 
 .album-art {
    margin-bottom: 15px;
+   margin-right: 15px;
+   border-radius: 5px;
 }
 
 #prevNext {
@@ -50,4 +52,21 @@
 
 button {
    background-color: #2692a6;
+}
+
+.tabs {
+   position: fixed;
+   right: -0.5%;
+   background: white;
+   z-index: 2;
+}
+
+.page {
+   position: relative;
+   top: 50px;
+   z-index: 1;
+}
+
+.prev-btn {
+   margin-right: 3px;
 }

@@ -259,15 +259,15 @@ function searchAlbums(artist) {
 
                 const answerImg = document.createElement("img");
                 answerImg.setAttribute("src", albumArray[i].image[1]["#text"]);
-                answerImg.classList.add("album-art");
+                answerImg.classList.add("album-art", "z-depth-2");
 
                 answerLI.prepend(answerImg);
-                answerLI.append("      ");
                 answerLI.append(albumArray[i].name);
 
                 answerUL.append(answerLI);
 
                 answerLI.addEventListener("click", function (event) {
+                  console.log("data album", event.target.getAttribute("data-album"));
                   albumSearch = event.target.getAttribute("data-album");
                   //runs the get track length function
                   getTrackLength(artist, albumSearch, artistSave);
@@ -293,10 +293,10 @@ function searchAlbums(artist) {
           prevNextArea.setAttribute("id", "prev-next-area")
           //next button
           nextBtn.innerText = ">";
-          nextBtn.classList.add("btn");
+          nextBtn.classList.add("btn", "next-btn");
           //previous button
           prevBtn.innerText = "<";
-          prevBtn.classList.add("btn");
+          prevBtn.classList.add("btn", "prev-btn");
           //backToSearch button
           backToSearchBtn.innerText = "< Back";
           backToSearchBtn.classList.add("btn");
