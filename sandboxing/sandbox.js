@@ -19,7 +19,7 @@ let progPercent = "";
 function updateProg () {
 let progSong = totalDuration;
 let progTrip = driveTimeMin
-progPercent = Math.round((progSong / progTrip) * 100);
+progPercent = Math.round((progSong / progTrip * 60) * 100);
 document.getElementById("progBar").style.width = progPercent + "%";
 };
 // HTML to be inserted
