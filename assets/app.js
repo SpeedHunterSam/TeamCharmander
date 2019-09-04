@@ -260,6 +260,7 @@ function searchAlbums(artist) {
                 const answerImg = document.createElement("img");
                 answerImg.setAttribute("src", albumArray[i].image[1]["#text"]);
                 answerImg.classList.add("album-art", "z-depth-2");
+                answerImg.setAttribute("data-album", albumArray[i].name);
 
                 answerLI.prepend(answerImg);
                 answerLI.append(albumArray[i].name);
