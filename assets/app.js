@@ -72,51 +72,51 @@ submitButtonSong.addEventListener("click", function () {
       track +
       "&format=json"; // queryURL to be used in fetch
     if (checkValues(artist, track)) {
-      fetch(queryURL)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (responseJson) {
-          if (responseJson.error || responseJson.track.duration === "0") {
-            console.log("Stop breaking our crap John.");
-            console.log(responseJson);
-          } else {
-            console.log(responseJson); // console log json to check integrity
-            const songLength = responseJson.track.duration; //this returns the song length
-            console.log("song length:", songLength);
-            convertTrecktoTrack(distanceTime, songLength);
-            //writes the answer to output
-            const output = document.getElementById("output");
-            output.innerHTML = "";
-            const outputDiv = document.createElement("div");
-            outputDiv.classList.add("col", "s12");
-            output.append(outputDiv);
-            outputDiv.innerText =
-              cityStart +
-              " is " +
-              trackTreckNum +
-              " " +
-              responseJson.track.name +
-              "'s by " +
-              artist +
-              " away from " +
-              cityEnd;
+      axios.get(queryURL).then(function (responseJson) {
+        console.log(responseJson);
+        if (
+          responseJson.data.error ||
+          responseJson.data.track.duration === "0"
+        ) {
+          console.log("Stop breaking our crap John.");
+          console.log(responseJson);
+        } else {
+          console.log(responseJson); // console log json to check integrity
+          const songLength = responseJson.data.track.duration; //this returns the song length
+          console.log("song length:", songLength);
+          convertTrecktoTrack(distanceTime, songLength);
+          //writes the answer to output
+          const output = document.getElementById("output");
+          output.innerHTML = "";
+          const outputDiv = document.createElement("div");
+          outputDiv.classList.add("col", "s12");
+          output.append(outputDiv);
+          outputDiv.innerText =
+            cityStart +
+            " is " +
+            trackTreckNum +
+            " " +
+            responseJson.data.track.name +
+            "'s by " +
+            artist +
+            " away from " +
+            cityEnd;
 
-            //Get Album art url and save it to a variable
-            document.getElementById("albums").innerHTML = "";
-            const albumArtDiv = document.createElement("div");
-            albumArtDiv.classList.add("col", "s6");
-            const aArtURL = responseJson.track.album.image[1]["#text"];
-            console.log(aArtURL);
-            //Print album art img to screen
-            const image = document.createElement("img"); //creaing image elements
-            image.setAttribute("id", "aArt");
-            image.setAttribute("src", aArtURL);
-            image.classList.add("center-align");
-            albumArtDiv.append(image);
-            document.getElementById("albums").append(albumArtDiv);
-          }
-        });
+          //Get Album art url and save it to a variable
+          document.getElementById("albums").innerHTML = "";
+          const albumArtDiv = document.createElement("div");
+          albumArtDiv.classList.add("col", "s6");
+          const aArtURL = responseJson.data.track.album.image[1]["#text"];
+          console.log(aArtURL);
+          //Print album art img to screen
+          const image = document.createElement("img"); //creaing image elements
+          image.setAttribute("id", "aArt");
+          image.setAttribute("src", aArtURL);
+          image.classList.add("center-align");
+          albumArtDiv.append(image);
+          document.getElementById("albums").append(albumArtDiv);
+        }
+      });
     } else {
       console.log("Stop breaking our crap John.");
     }
@@ -138,47 +138,44 @@ submitButtonSong.addEventListener("click", function () {
       "&unit=m";
     console.log(queryURL);
     if (checkDirections(fromState, fromCity, toState, toCity)) {
-      fetch(queryURL)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (responseJson) {
-          if (
-            !responseJson.route.distance ||
-            responseJson.route.locations[0].adminArea3 !==
-            fromState.toUpperCase() ||
-            responseJson.route.locations[1].adminArea3 !==
-            toState.toUpperCase() ||
-            responseJson.route.locations[0].adminArea5 === "" ||
-            responseJson.route.locations[1].adminArea5 === ""
-          ) {
-            console.log(responseJson);
-            console.log("Stop breaking our crap John.");
-          } else {
-            console.log(responseJson);
-            distanceInMiles = responseJson.route.distance;
-            distanceInKm = distanceInMiles * 1.609344;
-            driveTime = responseJson.route.time; //returns drive time in minutes
-            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+      axios.get(queryURL).then(function (responseJson) {
+        console.log(responseJson);
+        if (
+          !responseJson.data.route.distance ||
+          responseJson.data.route.locations[0].adminArea3 !==
+          fromState.toUpperCase() ||
+          responseJson.data.route.locations[1].adminArea3 !==
+          toState.toUpperCase() ||
+          responseJson.data.route.locations[0].adminArea5 === "" ||
+          responseJson.data.route.locations[1].adminArea5 === ""
+        ) {
+          console.log(responseJson);
+          console.log("Stop breaking our crap John.");
+        } else {
+          console.log(responseJson);
+          distanceInMiles = responseJson.data.route.distance;
+          distanceInKm = distanceInMiles * 1.609344;
+          driveTime = responseJson.data.route.time; //returns drive time in minutes
+          driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
-            console.log("drive time: ", driveTime);
-            console.log("distance in miles: ", distanceInMiles);
-            console.log("distance in km: ", distanceInKm.toFixed(2));
-            getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-            const driveAndTime = document.getElementById("driveAndTime");
-            driveAndTime.innerHTML = "";
-            const driveAndTimeText = document.createElement("div");
-            driveAndTimeText.classList.add("col", "s12");
-            driveAndTimeText.innerHTML =
-              "<br/>Drive time in minutes: " +
-              driveTimeMin.toFixed(2) +
-              "</br>Distance in miles: " +
-              distanceInMiles.toFixed(2) +
-              "<br/> Distance in km: " +
-              distanceInKm.toFixed(2);
-            driveAndTime.append(driveAndTimeText);
-          }
-        });
+          console.log("drive time: ", driveTime);
+          console.log("distance in miles: ", distanceInMiles);
+          console.log("distance in km: ", distanceInKm.toFixed(2));
+          getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+          const driveAndTime = document.getElementById("driveAndTime");
+          driveAndTime.innerHTML = "";
+          const driveAndTimeText = document.createElement("div");
+          driveAndTimeText.classList.add("col", "s12");
+          driveAndTimeText.innerHTML =
+            "<br/>Drive time in minutes: " +
+            driveTimeMin.toFixed(2) +
+            "</br>Distance in miles: " +
+            distanceInMiles.toFixed(2) +
+            "<br/> Distance in km: " +
+            distanceInKm.toFixed(2);
+          driveAndTime.append(driveAndTimeText);
+        }
+      });
     } else {
       console.log("Stop breaking our crap John.");
     }
@@ -186,116 +183,149 @@ submitButtonSong.addEventListener("click", function () {
   getDirectionInfo(startState, startCity, endState, endCity); //runs the get direction info
 });
 
-
 //gets top album from an artist
 function searchAlbums(artist) {
   let apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
 
   let queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=" +
     apiKey +
     "&artist=" +
     artist +
     "&format=json";
   if (checkAlbum(artist)) {
-    fetch(queryURL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (responseJson) {
-        if (responseJson.error || responseJson.topalbums.album.length === 0) {
-          console.log("Stop breaking our crap John.");
-          console.log(responseJson);
-        } else {
-          console.log(responseJson);
+    axios.get(queryURL).then(function (responseJson) {
+      if (
+        responseJson.data.error ||
+        responseJson.data.topalbums.album.length === 0
+      ) {
+        // Add back button code here so user can easily go back to previous page
 
-          const artistSave = responseJson.topalbums["@attr"].artist;
-          const albumArray = responseJson.topalbums.album;
+        //work on removing code to elimiate forward and back buttons
 
-          const answerDiv = document.getElementById("answer");
-          answerDiv.innerHTML = "";
-          answerArea = document.createElement("div");
-          answerDiv.append(answerArea);
+        const backToSearchBtn = document.createElement("button");
+        const backBtnArea = document.createElement("div");
+        backBtnArea.classList.add("col", "s6");
+        backBtnArea.setAttribute("id", "back-btn-area");
 
-          //sets up function to displays the list of albums
-          let indexNum = 0;
-          function displayAlbums(index) {
-            //displays the i + 4 albums
-            j = index + 6;
-            for (i = index; i < j; i++) {
-              if (albumArray[i].name !== "(null)") {
-                answerImg = document.createElement("img");
+        //backToSearch button
+        backToSearchBtn.innerText = "< Back";
+        backToSearchBtn.classList.add("btn");
 
-                answerImg.setAttribute("src", albumArray[i].image[2]["#text"]);
-                answerImg.setAttribute("data-album", albumArray[i].name);
-                answerImg.setAttribute("data-artist", artist);
-                answerImg.classList.add("col", "s6", "album-art");
-                answerArea.append(answerImg);
+        backToSearchBtn.addEventListener("click", function () {
+          document.getElementById("playlist-form").style.display = "block";
+          document.getElementById("prevNext").style.display = "none";
+          document.getElementById("answer").style.display = "none";
+        });
+        const prevNext = document.getElementById("prevNext");
+        prevNext.classList.add("col", "s12");
+        prevNext.innerHTML = "";
+        prevNext.append(backBtnArea);
+        backBtnArea.append(backToSearchBtn);
 
-                answerImg.addEventListener("click", function (event) {
-                  albumSearch = event.target.getAttribute("data-album");
-                  //runs the get track length function
-                  getTrackLength(artist, albumSearch, artistSave);
+        console.log("Stop breaking our crap John.");
+        console.log(responseJson);
+      } else {
+        console.log(responseJson);
 
-                  //hide the form
-                  const playlistFormHideSelector = document.getElementById(
-                    "playlist-form"
-                  );
-                  playlistFormHideSelector.style.display = "none";
-                });
-              }
+        const artistSave = responseJson.data.topalbums["@attr"].artist;
+        const albumArray = responseJson.data.topalbums.album;
+
+        const answerDiv = document.getElementById("answer");
+        answerDiv.innerHTML = "";
+        answerArea = document.createElement("div");
+        answerDiv.append(answerArea);
+
+        //sets up function to displays the list of albums
+        let indexNum = 0;
+        function displayAlbums(index) {
+          //displays the i + 4 albums
+          j = index + 6;
+
+          const answerUL = document.createElement("ul");
+          answerArea.append(answerUL)
+          for (i = index; i < j; i++) {
+            if (albumArray[i].name !== "(null)") {
+              const answerLI = document.createElement("li");
+              answerLI.setAttribute("dta-album", albumArray[i].name);
+              answerLI.classList.add("valign-wrapper");
+              const answerImg = document.createElement("img");
+
+              answerImg.setAttribute("src", albumArray[i].image[1]["#text"]);
+              answerImg.setAttribute("data-album", albumArray[i].name);
+              answerImg.setAttribute("data-artist", artist);
+              answerImg.classList.add("album-art", "z-depth-2");
+
+              answerLI.prepend(answerImg);
+              answerLI.append(albumArray[i].name);
+
+              answerUL.append(answerLI);
+
+
+              answerLI.addEventListener("click", function (event) {
+                albumSearch = event.target.getAttribute("data-album");
+                //runs the get track length function
+                getTrackLength(artist, albumSearch, artistSave);
+
+                //hide the form
+                const playlistFormHideSelector = document.getElementById(
+                  "playlist-form"
+                );
+                playlistFormHideSelector.style.display = "none";
+              });
             }
           }
-          displayAlbums(indexNum);
-          const nextBtn = document.createElement("button");
-          const prevBtn = document.createElement("button");
-          const backToSearchBtn = document.createElement("button");
-          const backBtnArea = document.createElement("div");
-          backBtnArea.classList.add("col", "s6");
-          backBtnArea.setAttribute("id", "back-btn-area");
-          const prevNextArea = document.createElement("div");
-          prevNextArea.classList.add("col", "s6");
-          prevNextArea.setAttribute("id", "prev-next-area")
-          //next button
-          nextBtn.innerText = ">";
-          nextBtn.classList.add("btn");
-          //previous button
-          prevBtn.innerText = "<";
-          prevBtn.classList.add("btn");
-          //backToSearch button
-          backToSearchBtn.innerText = "< Back";
-          backToSearchBtn.classList.add("btn");
-
-          //previous/next button event listeners
-          nextBtn.addEventListener("click", function () {
-            if (indexNum < 40) {
-              indexNum = indexNum + 7;
-              answerArea.innerHTML = "";
-              displayAlbums(indexNum);
-            }
-          });
-          prevBtn.addEventListener("click", function () {
-            if (indexNum > 0) {
-              indexNum = indexNum - 7;
-              answerArea.innerHTML = "";
-              displayAlbums(indexNum);
-            }
-          });
-          backToSearchBtn.addEventListener("click", function () {
-            document.getElementById("playlist-form").style.display = "block";
-            document.getElementById("prevNext").style.display = "none";
-            document.getElementById("answer").style.display = "none";
-          });
-          const prevNext = document.getElementById("prevNext");
-          prevNext.classList.add("col", "s12");
-          prevNext.innerHTML = "";
-          prevNext.append(backBtnArea);
-          prevNext.append(prevNextArea);
-          backBtnArea.append(backToSearchBtn);
-          prevNextArea.append(prevBtn);
-          prevNextArea.append(nextBtn);
         }
-      });
+        displayAlbums(indexNum);
+        const nextBtn = document.createElement("button");
+        const prevBtn = document.createElement("button");
+        const backToSearchBtn = document.createElement("button");
+        const backBtnArea = document.createElement("div");
+        backBtnArea.classList.add("col", "s6");
+        backBtnArea.setAttribute("id", "back-btn-area");
+        const prevNextArea = document.createElement("div");
+        prevNextArea.classList.add("col", "s6");
+        prevNextArea.setAttribute("id", "prev-next-area");
+        //next button
+        nextBtn.innerText = ">";
+        nextBtn.classList.add("btn");
+        //previous button
+        prevBtn.innerText = "<";
+        prevBtn.classList.add("btn");
+        //backToSearch button
+        backToSearchBtn.innerText = "< Back";
+        backToSearchBtn.classList.add("btn");
+
+        //previous/next button event listeners
+        nextBtn.addEventListener("click", function () {
+          if (indexNum < 40) {
+            indexNum = indexNum + 7;
+            answerArea.innerHTML = "";
+            displayAlbums(indexNum);
+          }
+        });
+        prevBtn.addEventListener("click", function () {
+          if (indexNum > 0) {
+            indexNum = indexNum - 7;
+            answerArea.innerHTML = "";
+            displayAlbums(indexNum);
+          }
+        });
+        backToSearchBtn.addEventListener("click", function () {
+          document.getElementById("playlist-form").style.display = "block";
+          document.getElementById("prevNext").style.display = "none";
+          document.getElementById("answer").style.display = "none";
+        });
+        const prevNext = document.getElementById("prevNext");
+        prevNext.classList.add("col", "s12");
+        prevNext.innerHTML = "";
+        prevNext.append(backBtnArea);
+        prevNext.append(prevNextArea);
+        backBtnArea.append(backToSearchBtn);
+        prevNextArea.append(prevBtn);
+        prevNextArea.append(nextBtn);
+      }
+    });
   } else {
     console.log("Stop breaking our crap John");
   }
@@ -307,7 +337,7 @@ function getTrackLength(artist, album, artistToSave) {
   //perform the query
   const apiKey = "c7c92f78a10b96b8086988432a4f4cf5";
   const queryURL =
-    "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
+    "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" +
     apiKey +
     "&artist=" +
     artist +
@@ -315,94 +345,91 @@ function getTrackLength(artist, album, artistToSave) {
     album +
     "&format=json";
 
-  fetch(queryURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (responseJson) {
-      console.log(responseJson);
-      let trackArray = responseJson.album.tracks.track;
+  axios.get(queryURL).then(function (responseJson) {
+    console.log(responseJson);
+    let trackArray = responseJson.data.album.tracks.track;
 
-      let trackTimes = [];
+    let trackTimes = [];
 
-      const answerDiv = document.getElementById("answer");
-      answerDiv.innerHTML = "";
+    const answerDiv = document.getElementById("answer");
+    answerDiv.innerHTML = "";
 
-      document.getElementById("prev-next-area").style.display = "none";
-      document.getElementById("back-btn-area").style.display = "none";
+    document.getElementById("prev-next-area").style.display = "none";
+    document.getElementById("back-btn-area").style.display = "none";
 
-      //create back button
-      const backBtn = document.createElement("button");
-      backBtn.classList.add("btn");
-      backBtn.innerText = "< Back";
-      prevNext.prepend(backBtn);
+    //create back button
+    const backBtn = document.createElement("button");
+    backBtn.classList.add("btn");
+    backBtn.innerText = "< Back";
+    prevNext.prepend(backBtn);
 
-      const selectallDiv = document.getElementById("selectalltracks");
-      selectallDiv.innerHTML = "";
+    const selectallDiv = document.getElementById("selectalltracks");
+    selectallDiv.innerHTML = "";
 
-      // creates a button to select/unselect ALL tracks from album:
-      const checkBoxAll = document.createElement("button");
-      checkBoxAll.classList.add("btn");
-      checkBoxAll.innerText = "Select all tracks";
-      checkBoxAll.setAttribute("onclick", "selectAllTracks()");
-      checkBoxAll.setAttribute("id", "checkBoxAll");
-      selectallDiv.append(checkBoxAll);
-      const answerUL = document.createElement("ul");
-      answerDiv.append(answerUL);
+    // creates a button to select/unselect ALL tracks from album:
+    const checkBoxAll = document.createElement("button");
+    checkBoxAll.classList.add("btn");
+    checkBoxAll.innerText = "Select all tracks";
+    checkBoxAll.setAttribute("onclick", "selectAllTracks()");
+    checkBoxAll.setAttribute("id", "checkBoxAll");
+    selectallDiv.append(checkBoxAll);
+    const answerUL = document.createElement("ul");
+    answerDiv.append(answerUL);
 
-      //displays the tracks on the page
-      for (i = 0; i < trackArray.length; i++) {
-        console.log(trackArray[i].name);
+    //displays the tracks on the page
+    for (i = 0; i < trackArray.length; i++) {
+      console.log(trackArray[i].name);
 
-        let checkBox = document.createElement("input");
-        checkBox.setAttribute("type", "checkbox");
-        checkBox.setAttribute("id", "0" + i);
-        checkBox.setAttribute("class", "filled-in");
-        checkBox.setAttribute("data-album", responseJson.album.name);
-        checkBox.setAttribute("data-artist", responseJson.album.artist);
-        checkBox.setAttribute("data-track", trackArray[i].name);
-        checkBox.setAttribute("data-duration", trackArray[i].duration);
+      let checkBox = document.createElement("input");
+      checkBox.setAttribute("type", "checkbox");
+      checkBox.setAttribute("id", "0" + i);
+      checkBox.setAttribute("class", "filled-in");
+      checkBox.setAttribute("data-album", responseJson.data.album.name);
+      checkBox.setAttribute("data-artist", responseJson.data.album.artist);
+      checkBox.setAttribute("data-track", trackArray[i].name);
+      checkBox.setAttribute("data-duration", trackArray[i].duration);
 
-        // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
-        checkBox.setAttribute("onclick", "updatePlaylist(this)");
-        for (let j = 0; j < playlistArray.length; j++) {
-          if (
-            playlistArray[j].album === responseJson.album.name &&
-            playlistArray[j].artist === responseJson.album.artist &&
-            playlistArray[j].track === trackArray[i].name &&
-            playlistArray[j].duration === trackArray[i].duration
-          ) {
-            checkBox.setAttribute("checked", "true");
-            break;
-          }
+      // check if the music is already in the playlist, if it is, the ckeckbox will appear marked:
+      checkBox.setAttribute("onclick", "updatePlaylist(this)");
+      for (let j = 0; j < playlistArray.length; j++) {
+        if (
+          playlistArray[j].album === responseJson.data.album.name &&
+          playlistArray[j].artist === responseJson.data.album.artist &&
+          playlistArray[j].track === trackArray[i].name &&
+          playlistArray[j].duration === trackArray[i].duration
+        ) {
+          checkBox.setAttribute("checked", "true");
+          break;
         }
-
-        let checkBoxLabel = document.createElement("label");
-        checkBoxLabel.setAttribute("for", "0" + i);
-        checkBoxLabel.innerText = "";
-        const answerLI = document.createElement("li");
-        answerLI.classList.add("valign-wrapper");
-        answerLI.append(checkBox);
-        answerLI.append(checkBoxLabel);
-        answerLI.append(trackArray[i].name);
-        answerLI.append(" - ");
-        answerLI.append(convertTime(trackArray[i].duration));
-        answerUL.append(answerLI);
-        trackTimes.push(parseInt(trackArray[i].duration));
       }
 
-      backBtn.addEventListener("click", function () {
-        answerDiv.innerHTML = "";
-        document.getElementById("answer").style.display = "block";
-        document.getElementById("prevNext").style.display = "block";
-        document.getElementById("checkBoxAll").style.display = "none";
-        console.log(artistBack);
-        searchAlbums(artistBack);
-      });
+      let checkBoxLabel = document.createElement("label");
+      checkBoxLabel.setAttribute("for", "0" + i);
+      checkBoxLabel.innerText = "";
 
-      console.log(trackTimes);
-      console.log(trackTimes.reduce((a, b) => a + b, 0));
+      const answerLI = document.createElement("li");
+      answerLI.classList.add("valign-wrapper");
+      answerLI.append(checkBox);
+      answerLI.append(checkBoxLabel);
+      answerLI.append(trackArray[i].name);
+      answerLI.append(" - ");
+      answerLI.append(convertTime(trackArray[i].duration));
+      answerUL.append(answerLI);
+      trackTimes.push(parseInt(trackArray[i].duration));
+    }
+
+    backBtn.addEventListener("click", function () {
+      answerDiv.innerHTML = "";
+      document.getElementById("answer").style.display = "block";
+      document.getElementById("prevNext").style.display = "block";
+      document.getElementById("checkBoxAll").style.display = "none";
+      console.log(artistBack);
+      searchAlbums(artistBack);
     });
+
+    console.log(trackTimes);
+    console.log(trackTimes.reduce((a, b) => a + b, 0));
+  });
 }
 
 // function for select/unselect ALL the tracks from the album:
@@ -437,21 +464,19 @@ function checkAlbum(artist) {
   }
 }
 
-
 //-----------------------triggers the search for search by artist ------------------
 document
   .getElementById("submit-btn-artist")
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     const startState = document.getElementById("starting-state2").value;
     const startCity = document.getElementById("starting-city2").value;
     const endState = document.getElementById("ending-state2").value;
     const endCity = document.getElementById("ending-city2").value;
     const artistInput = document.getElementById("artist").value;
 
-
     console.log("Heres the artist:" + artistInput);
     searchAlbums(artistInput);
-  
+
     //reset the playlist form
     document.getElementById("playlist-form").style.display = "none";
     document.getElementById("prevNext").style.display = "block";
@@ -468,7 +493,7 @@ document
       sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
       sec_min += "" + sec;
       return sec_min;
-    };
+    }
 
     function getDirectionInfo(fromState, fromCity, toState, toCity) {
       const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
@@ -499,37 +524,32 @@ document
         }
       }
       if (checkDirections(fromState, fromCity, toState, toCity)) {
-        fetch(queryURL)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(responseJson) {
-            if (
-              !responseJson.route.distance ||
-              responseJson.route.locations[0].adminArea3 !==
-                fromState.toUpperCase() ||
-              responseJson.route.locations[1].adminArea3 !==
-                toState.toUpperCase() ||
-              responseJson.route.locations[0].adminArea5 === "" ||
-              responseJson.route.locations[1].adminArea5 === ""
-            ) {
-              console.log(responseJson);
-              console.log("Stop breaking our crap John.");
-            } else {
-              console.log(responseJson);
-              distanceInMiles = responseJson.route.distance;
-              distanceInKm = distanceInMiles * 1.609344;
-              driveTime = responseJson.route.time; //returns drive time in minutes
-              driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
-  
-              console.log("drive time: ", driveTime);
-              console.log("distance in miles: ", distanceInMiles);
-              console.log("distance in km: ", distanceInKm.toFixed(2));
-              // getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
-              setTreck(fromState, fromCity, toState, toCity, driveTime);
+        axios.get(queryURL).then(function (responseJson) {
+          if (
+            !responseJson.data.route.distance ||
+            responseJson.data.route.locations[0].adminArea3 !==
+            fromState.toUpperCase() ||
+            responseJson.data.route.locations[1].adminArea3 !==
+            toState.toUpperCase() ||
+            responseJson.data.route.locations[0].adminArea5 === "" ||
+            responseJson.data.route.locations[1].adminArea5 === ""
+          ) {
+            console.log(responseJson);
+            console.log("Stop breaking our crap John.");
+          } else {
+            console.log(responseJson);
+            distanceInMiles = responseJson.data.route.distance;
+            distanceInKm = distanceInMiles * 1.609344;
+            driveTime = responseJson.data.route.time; //returns drive time in minutes
+            driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
-            }
-          });
+            console.log("drive time: ", driveTime);
+            console.log("distance in miles: ", distanceInMiles);
+            console.log("distance in km: ", distanceInKm.toFixed(2));
+            // getTrackLength(artistName, trackName, driveTime, fromCity, toCity); //runs the trackLength function
+            setTreck(fromState, fromCity, toState, toCity, driveTime);
+          }
+        });
       } else {
         console.log("Stop breaking our crap John.");
       }
@@ -539,20 +559,20 @@ document
 
 // ----------------- the trip duration localforage starts here: -----------------------
 
-function setTreck(fromState, fromCity, toState, toCity, duration){
+function setTreck(fromState, fromCity, toState, toCity, duration) {
   const treck = {
-    treckFromState : fromState,
-    treckFromCity : fromCity,
-    treckToState : toState,
-    treckToCity : toCity,
-    treckDuration : duration
+    treckFromState: fromState,
+    treckFromCity: fromCity,
+    treckToState: toState,
+    treckToCity: toCity,
+    treckDuration: duration
   };
 
   // save the starting & ending location and trip duration
   localforage.setItem("treck-data", treck);
 }
 
-function getTreck(){
+function getTreck() {
   let data = localforage.getItem("treck-data").then(function (value) {
     if (value === null) {
       treckFromState = "";
@@ -568,9 +588,9 @@ function getTreck(){
       treckDuration = value.treckDuration;
     }
     document.getElementById("timeRemain").innerHTML =
-    "<strong>Your trip duration is " +
-    convertTime(treckDuration) +
-    "</strong>.";
+      "<strong>Your trip duration is " +
+      convertTime(treckDuration) +
+      "</strong>.";
   });
 }
 
@@ -662,7 +682,13 @@ function getPlaylistData() {
     if (playlistArray.length > 0) {
       // creates a button to clear all the tracks from the playlist/localForage:
       const clearPlaylist = document.createElement("a");
-      clearPlaylist.classList.add("waves-effect", "btn", "waves-light", "btn", "modal-trigger");
+      clearPlaylist.classList.add(
+        "waves-effect",
+        "btn",
+        "waves-light",
+        "btn",
+        "modal-trigger"
+      );
       clearPlaylist.innerText = "Clear Playlist";
       clearPlaylist.setAttribute("href", "#clear-playlist-modal");
       clearPlaylistDiv.append(clearPlaylist);
@@ -682,7 +708,6 @@ function clearPlaylist() {
   // erase the db and update the playlist on display:
   localforage.setItem("playlist-data", playlistData).then(getPlaylistData);
   checkAll = true;
-
 }
 
 // function that render every element of playlist array into the table in HTML:

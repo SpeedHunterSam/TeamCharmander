@@ -18,24 +18,33 @@
       ></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
       <script src="https://use.fontawesome.com/bc04ba9073.js"></script>
+      <link
+         rel="shortcut icon"
+         href="./assets/favicon.png"
+         type="image/x-icon"
+      />
+      <link rel="stylesheet" href="./assets/index.css" />
    </head>
    <body>
       <div class="container">
          <div class="row">
             <div class="col s12">
-               <ul class="tabs">
-                  <li class="tab col s3">
+               <ul class="tabs tabs-fixer">
+                  <li class="tab col s4">
                      <a class="active" href="#song-tab">Song</a>
                   </li>
                   <!-- added onclick function to load playlist from localForage when clicking TAB BUILD-->
-                  <li class="tab col s3">
-                     <a href="#playlist-tab" onclick="getPlaylistData()"
+                  <li class="tab col s4">
+                     <a
+                        href="#playlist-tab"
+                        onclick="getPlaylistData()"
+                        class=""
                         >Build</a
                      >
                   </li>
-                  <li class="tab col s3">
+                  <li class="tab col s4">
                      <a
-                        class="active"
+                        class=""
                         href="#final-playlist-tab"
                         onclick="getPlaylistData(), getTreck()"
                         >Playlist</a
@@ -44,7 +53,7 @@
                </ul>
             </div>
             <!-- song tab -->
-            <div id="song-tab" class="col s12">
+            <div id="song-tab" class="col s12 page">
                <div class="row">
                   <form class="col s12" id="song-form">
                      <div class="row">
@@ -54,6 +63,7 @@
                               id="starting-city"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="starting-city">Starting City</label>
                         </div>
@@ -63,6 +73,7 @@
                               id="starting-state"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="starting-state">State</label>
                         </div>
@@ -72,6 +83,7 @@
                               id="ending-city"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="ending-city">Ending City</label>
                         </div>
@@ -81,6 +93,7 @@
                               id="ending-state"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="ending-state">State</label>
                         </div>
@@ -90,6 +103,7 @@
                               id="artist-name"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="artist-name">Artist</label>
                         </div>
@@ -99,13 +113,14 @@
                               id="song-title"
                               type="text"
                               class="validate"
+                              required
                            />
                            <label for="song-title">Song</label>
                         </div>
                         <div class="col s6">
                            <button
                               id="submit-btn-song"
-                              class="btn waves-effect waves-light green lighten-1 center-align"
+                              class="btn waves-effect waves-light lighten-1 center-align"
                               type="button"
                               name="action"
                            >
@@ -124,7 +139,7 @@
                </div>
             </div>
             <!-- playlist -->
-            <div id="playlist-tab" class="col s12">
+            <div id="playlist-tab" class="col s12 page">
                <div class="row">
                   <form class="col s12" id="playlist-form">
                      <div class="row">
@@ -182,7 +197,7 @@
                            <div class="col s6" id="artist-btn-area">
                               <button
                                  id="submit-btn-artist"
-                                 class="btn waves-effect waves-light green lighten-1 center-align"
+                                 class="btn waves-effect waves-light lighten-1 center-align"
                                  type="button"
                                  name="action"
                               >
@@ -201,7 +216,8 @@
                   <div id="selectalltracks" class="col s12"></div>
                </div>
             </div>
-            <div id="final-playlist-tab" class="col s12">
+            <!-- final playlist -->
+            <div id="final-playlist-tab" class="col s12 page">
                <div class="row">
                   <div id="timeRemain" class="col s12">REMAINING TIME DIV</div>
                   <div id="playlistTime" class="col s12"></div>
@@ -243,7 +259,7 @@
          <!-- modal -->
          <div id="clear-playlist-modal" class="modal">
             <div class="modal-content">
-               <h4>Are you sure you want to clear your playlist?</h4>
+               <p>Are you sure you want to clear your playlist?</p>
             </div>
             <div class="modal-footer">
                <button
@@ -268,6 +284,11 @@
       <script
          src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.js"
          integrity="sha256-3NP4l3uenVxIZ0vLGnUjjObImjaJltaSzAHaGUr+yDA="
+         crossorigin="anonymous"
+      ></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"
+         integrity="sha256-XmdRbTre/3RulhYk/cOBUMpYlaAp2Rpo/s556u0OIKk="
          crossorigin="anonymous"
       ></script>
       <script src="./assets/app.js"></script>

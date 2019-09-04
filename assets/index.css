@@ -1,39 +1,72 @@
-/* label color */
-/* .input-field label {
-     color: #000;
-   } */
-/* label focus color */
 .input-field input[type="text"]:focus + label {
    color: #000;
 }
 
 /* label underline focus color */
 .input-field input[type="text"]:focus {
-   border-bottom: 1px solid #66bb6a;
-   box-shadow: 0 1px 0 0 #1b5e20;
+   border-bottom: 1px solid #2692a6 !important;
+   box-shadow: 0 1px 0 0 #2692a6 !important;
 }
 
 /* valid color */
 .input-field input[type="text"].valid {
-   border-bottom: 1px solid #66bb6a;
-   box-shadow: 0 1px 0 0 #1b5e20;
+   border-bottom: 1px solid #2692a6 !important;
+   box-shadow: 0 1px 0 0 #2692a6 !important;
 }
 
 /* invalid color */
 .input-field input[type="text"].invalid {
-   border-bottom: 1px solid #e53935;
+   border-bottom: 1px solid #e53935 !important;
    box-shadow: 0 1px 0 0 #b71c1c;
 }
 
 /* icon prefix focus color */
 .input-field .prefix.active {
-   color: #66bb6a;
+   color: #2692a6;
 }
 
 .album-art {
    margin-bottom: 15px;
+   margin-right: 15px;
+   border-radius: 5px;
 }
 
 #prevNext {
    margin-top: 8px;
+}
+
+.tabs .tab a {
+   color: #2692a6 !important;
+   /*Custom Text Color*/
+}
+
+.tabs .tab a:hover {
+   color: #2692a6;
+   /*Custom Color On Hover*/
+}
+
+.tabs .indicator {
+   background-color: #2692a6;
+   /*Custom Color Of Indicator*/
+}
+
+button {
+   background-color: #2692a6;
+}
+
+.tabs {
+   position: fixed;
+   right: -0.5%;
+   background: white;
+   z-index: 2;
+}
+
+.page {
+   position: relative;
+   top: 50px;
+   z-index: 1;
+}
+
+.prev-btn {
+   margin-right: 3px;
 }
