@@ -15,7 +15,7 @@ let totalDuration = 0;
 //Allows materialize tabs to actually appear
 
 //click submit button on song tab
-submitButtonSong.addEventListener("click", function () {
+submitButtonSong.addEventListener("click", function() {
   //get values of inputs
   const startState = document.getElementById("starting-state").value;
   const startCity = document.getElementById("starting-city").value;
@@ -72,7 +72,7 @@ submitButtonSong.addEventListener("click", function () {
       track +
       "&format=json"; // queryURL to be used in fetch
     if (checkValues(artist, track)) {
-      axios.get(queryURL).then(function (responseJson) {
+      axios.get(queryURL).then(function(responseJson) {
         console.log(responseJson);
         if (
           responseJson.data.error ||
@@ -138,14 +138,14 @@ submitButtonSong.addEventListener("click", function () {
       "&unit=m";
     console.log(queryURL);
     if (checkDirections(fromState, fromCity, toState, toCity)) {
-      axios.get(queryURL).then(function (responseJson) {
+      axios.get(queryURL).then(function(responseJson) {
         console.log(responseJson);
         if (
           !responseJson.data.route.distance ||
           responseJson.data.route.locations[0].adminArea3 !==
-          fromState.toUpperCase() ||
+            fromState.toUpperCase() ||
           responseJson.data.route.locations[1].adminArea3 !==
-          toState.toUpperCase() ||
+            toState.toUpperCase() ||
           responseJson.data.route.locations[0].adminArea5 === "" ||
           responseJson.data.route.locations[1].adminArea5 === ""
         ) {
@@ -194,7 +194,7 @@ function searchAlbums(artist) {
     artist +
     "&format=json";
   if (checkAlbum(artist)) {
-    axios.get(queryURL).then(function (responseJson) {
+    axios.get(queryURL).then(function(responseJson) {
       if (
         responseJson.data.error ||
         responseJson.data.topalbums.album.length === 0
@@ -212,7 +212,7 @@ function searchAlbums(artist) {
         backToSearchBtn.innerText = "< Back";
         backToSearchBtn.classList.add("btn");
 
-        backToSearchBtn.addEventListener("click", function () {
+        backToSearchBtn.addEventListener("click", function() {
           document.getElementById("playlist-form").style.display = "block";
           document.getElementById("prevNext").style.display = "none";
           document.getElementById("answer").style.display = "none";
@@ -243,7 +243,7 @@ function searchAlbums(artist) {
           j = index + 6;
 
           const answerUL = document.createElement("ul");
-          answerArea.append(answerUL)
+          answerArea.append(answerUL);
           for (i = index; i < j; i++) {
             if (albumArray[i].name !== "(null)") {
               const answerLI = document.createElement("li");
@@ -261,8 +261,7 @@ function searchAlbums(artist) {
 
               answerUL.append(answerLI);
 
-
-              answerLI.addEventListener("click", function (event) {
+              answerLI.addEventListener("click", function(event) {
                 albumSearch = event.target.getAttribute("data-album");
                 //runs the get track length function
                 getTrackLength(artist, albumSearch, artistSave);
@@ -297,21 +296,21 @@ function searchAlbums(artist) {
         backToSearchBtn.classList.add("btn");
 
         //previous/next button event listeners
-        nextBtn.addEventListener("click", function () {
+        nextBtn.addEventListener("click", function() {
           if (indexNum < 40) {
             indexNum = indexNum + 7;
             answerArea.innerHTML = "";
             displayAlbums(indexNum);
           }
         });
-        prevBtn.addEventListener("click", function () {
+        prevBtn.addEventListener("click", function() {
           if (indexNum > 0) {
             indexNum = indexNum - 7;
             answerArea.innerHTML = "";
             displayAlbums(indexNum);
           }
         });
-        backToSearchBtn.addEventListener("click", function () {
+        backToSearchBtn.addEventListener("click", function() {
           document.getElementById("playlist-form").style.display = "block";
           document.getElementById("prevNext").style.display = "none";
           document.getElementById("answer").style.display = "none";
@@ -345,7 +344,7 @@ function getTrackLength(artist, album, artistToSave) {
     album +
     "&format=json";
 
-  axios.get(queryURL).then(function (responseJson) {
+  axios.get(queryURL).then(function(responseJson) {
     console.log(responseJson);
     let trackArray = responseJson.data.album.tracks.track;
 
@@ -418,7 +417,7 @@ function getTrackLength(artist, album, artistToSave) {
       trackTimes.push(parseInt(trackArray[i].duration));
     }
 
-    backBtn.addEventListener("click", function () {
+    backBtn.addEventListener("click", function() {
       answerDiv.innerHTML = "";
       document.getElementById("answer").style.display = "block";
       document.getElementById("prevNext").style.display = "block";
@@ -467,7 +466,7 @@ function checkAlbum(artist) {
 //-----------------------triggers the search for search by artist ------------------
 document
   .getElementById("submit-btn-artist")
-  .addEventListener("click", function () {
+  .addEventListener("click", function() {
     const startState = document.getElementById("starting-state2").value;
     const startCity = document.getElementById("starting-city2").value;
     const endState = document.getElementById("ending-state2").value;
@@ -524,13 +523,13 @@ document
         }
       }
       if (checkDirections(fromState, fromCity, toState, toCity)) {
-        axios.get(queryURL).then(function (responseJson) {
+        axios.get(queryURL).then(function(responseJson) {
           if (
             !responseJson.data.route.distance ||
             responseJson.data.route.locations[0].adminArea3 !==
-            fromState.toUpperCase() ||
+              fromState.toUpperCase() ||
             responseJson.data.route.locations[1].adminArea3 !==
-            toState.toUpperCase() ||
+              toState.toUpperCase() ||
             responseJson.data.route.locations[0].adminArea5 === "" ||
             responseJson.data.route.locations[1].adminArea5 === ""
           ) {
@@ -573,7 +572,7 @@ function setTreck(fromState, fromCity, toState, toCity, duration) {
 }
 
 function getTreck() {
-  let data = localforage.getItem("treck-data").then(function (value) {
+  let data = localforage.getItem("treck-data").then(function(value) {
     if (value === null) {
       treckFromState = "";
       treckFromCity = "";
@@ -623,14 +622,14 @@ function updatePlaylist(track) {
       ) {
         console.log(
           "Removing " +
-          arrayitem.album +
-          "," +
-          arrayitem.artist +
-          "," +
-          arrayitem.track +
-          "," +
-          item.duration +
-          "."
+            arrayitem.album +
+            "," +
+            arrayitem.artist +
+            "," +
+            arrayitem.track +
+            "," +
+            item.duration +
+            "."
         );
       } else {
         tmpPlaylist.push(arrayitem);
@@ -652,7 +651,7 @@ function updatePlaylist(track) {
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
-  let data = localforage.getItem("playlist-data").then(function (value) {
+  let data = localforage.getItem("playlist-data").then(function(value) {
     if (value === null) {
       totalDuration = 0;
       playlistArray = [];
@@ -730,6 +729,3 @@ function renderPlaylist() {
 }
 
 // ----------------- the playlist and localforage finish here: ---------------------
-
-// TODO: create a function that allows the user see the checkboxes checked, to avoid double selection.
-// TODO: include the album URL to see the album image with the playlist.
