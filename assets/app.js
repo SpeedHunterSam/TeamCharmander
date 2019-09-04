@@ -746,7 +746,7 @@ function renderPlaylist() {
 // TODO: include the album URL to see the album image with the playlist.
 
 function renderDifference() {
-  const remainingTimeDiv = document.getElementById("timeRemain");
+  // const remainingTimeDiv = document.getElementById("timeRemain");
   let data = localforage.getItem("playlist-data").then(function (playlist) {
     let data2 = localforage.getItem("treck-data").then(function (treck) {
       console.log(playlist.totalTime, typeof playlist.totalTime);
@@ -760,7 +760,7 @@ function renderDifference() {
         console.log(remainingTime);
         let remainingPercent =  Math.round((playlist.totalTime / treck.treckDuration) * 100);
         document.getElementById("progBar").style.width = remainingPercent + "%";
-        remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
+        // remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
       }
     })
   })
