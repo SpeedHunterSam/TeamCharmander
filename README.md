@@ -1,5 +1,7 @@
 # CharmanderApp
 
+## Collaborators: Sean D'Amico, Eli Gorniak, Shane Nelson, Jackson Oppenheim, Brian Samuels
+
 ---
 
 ### Deployed App
