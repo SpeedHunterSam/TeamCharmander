@@ -16,7 +16,7 @@ let totalDuration = 0;
 
 //click submit button on song tab
 submitButtonSong.addEventListener("click", function () {
-  //get values of inputs
+  //get values of inputs from user
   const startState = document.getElementById("starting-state").value;
   const startCity = document.getElementById("starting-city").value;
   const endState = document.getElementById("ending-state").value;
@@ -28,7 +28,7 @@ submitButtonSong.addEventListener("click", function () {
   const songForm = document.getElementById("song-form");
   songForm.reset();
 
-  // converts distance into number of songs
+  // does math to convert druve time into number of times song will be played
   function convertTrecktoTrack(distanceTime, trackTime) {
     const convertedDistanceTime = distanceTime;
     const convertedTrackTime = trackTime / 1000;
@@ -44,7 +44,7 @@ submitButtonSong.addEventListener("click", function () {
       return true;
     }
   }
-
+    //input validation to make sure user actually inputs data
   function checkDirections(fromState, fromCity, toState, toCity) {
     if (
       fromState === "" ||
@@ -121,7 +121,7 @@ submitButtonSong.addEventListener("click", function () {
       console.log("Stop breaking our crap John.");
     }
   }
-
+        //function that uses the mapquest API
   function getDirectionInfo(fromState, fromCity, toState, toCity) {
     const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
     const queryURL =
@@ -413,7 +413,7 @@ function getTrackLength(artist, album, artistToSave) {
       answerLI.append(checkBoxLabel);
       answerLI.append(trackArray[i].name);
       answerLI.append(" - ");
-      answerLI.append(convertTime(trackArray[i].duration));
+      answerLI.append(convertTime(trackArray[i].duration));  //run convertTime function to show time in desirable format
       answerUL.append(answerLI);
       trackTimes.push(parseInt(trackArray[i].duration));
     }
@@ -442,7 +442,7 @@ function selectAllTracks() {
   }
   checkAll = !checkAll;
 }
-
+          
 function convertTime(time) {
   const hr = ~~(time / 3600);
   const min = ~~((time % 3600) / 60);
