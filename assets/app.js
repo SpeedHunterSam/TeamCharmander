@@ -44,7 +44,7 @@ submitButtonSong.addEventListener("click", function () {
       return true;
     }
   }
-    //input validation to make sure user actually inputs data
+  //input validation to make sure user actually inputs data
   function checkDirections(fromState, fromCity, toState, toCity) {
     if (
       fromState === "" ||
@@ -121,7 +121,7 @@ submitButtonSong.addEventListener("click", function () {
       console.log("Stop breaking our crap John.");
     }
   }
-        //function that uses the mapquest API
+  //function that uses the mapquest API
   function getDirectionInfo(fromState, fromCity, toState, toCity) {
     const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
     const queryURL =
@@ -442,7 +442,7 @@ function selectAllTracks() {
   }
   checkAll = !checkAll;
 }
-          
+
 function convertTime(time) {
   const hr = ~~(time / 3600);
   const min = ~~((time % 3600) / 60);
@@ -661,7 +661,7 @@ function updatePlaylist(track) {
     document.getElementById("progBar").style.width = progPercent + "%";
     console.log(progPercent);
   };
-  updateProg();
+  update();
 }
 
 // function to get the tracks from the localForage:
