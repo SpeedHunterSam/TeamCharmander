@@ -16,7 +16,7 @@ let totalDuration = 0;
 
 //click submit button on song tab
 submitButtonSong.addEventListener("click", function () {
-  //get values of inputs from user
+  //get values of inputs
   const startState = document.getElementById("starting-state").value;
   const startCity = document.getElementById("starting-city").value;
   const endState = document.getElementById("ending-state").value;
@@ -28,7 +28,7 @@ submitButtonSong.addEventListener("click", function () {
   const songForm = document.getElementById("song-form");
   songForm.reset();
 
-  // does math to convert druve time into number of times song will be played
+  // converts distance into number of songs
   function convertTrecktoTrack(distanceTime, trackTime) {
     const convertedDistanceTime = distanceTime;
     const convertedTrackTime = trackTime / 1000;
@@ -44,7 +44,7 @@ submitButtonSong.addEventListener("click", function () {
       return true;
     }
   }
-  //input validation to make sure user actually inputs data
+
   function checkDirections(fromState, fromCity, toState, toCity) {
     if (
       fromState === "" ||
@@ -121,7 +121,7 @@ submitButtonSong.addEventListener("click", function () {
       console.log("Stop breaking our crap John.");
     }
   }
-  //function that uses the mapquest API
+
   function getDirectionInfo(fromState, fromCity, toState, toCity) {
     const apiKey = "1ar8EgSpyQGUCgm8HV9dyZhG7AWbPq7a";
     const queryURL =
@@ -156,7 +156,7 @@ submitButtonSong.addEventListener("click", function () {
           distanceInMiles = responseJson.data.route.distance;
           distanceInKm = distanceInMiles * 1.609344;
           driveTime = responseJson.data.route.time; //returns drive time in minutes
-          const driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
+          driveTimeMin = driveTime / 60; //converting drive time to minutes from seconds
 
           console.log("drive time: ", driveTime);
           console.log("distance in miles: ", distanceInMiles);
@@ -413,7 +413,7 @@ function getTrackLength(artist, album, artistToSave) {
       answerLI.append(checkBoxLabel);
       answerLI.append(trackArray[i].name);
       answerLI.append(" - ");
-      answerLI.append(convertTime(trackArray[i].duration));  //run convertTime function to show time in desirable format
+      answerLI.append(convertTime(trackArray[i].duration));
       answerUL.append(answerLI);
       trackTimes.push(parseInt(trackArray[i].duration));
     }
@@ -581,19 +581,21 @@ function getTreck() {
       treckToCity = "";
       treckDuration = 0;
     } else {
-      treckFromState = value.treckFromState;
-      treckFromCity = value.treckFromCity;
+      const treckFromState = value.treckFromState;
+      const treckFromCity = value.treckFromCity;
       const treckFromCityToLower = treckFromCity.toLowerCase();
       const lowerTreckFromCity = treckFromCityToLower.charAt(0).toUpperCase() + treckFromCityToLower.substring(1);
-      treckToState = value.treckToState;
-      treckToCity = value.treckToCity;
+      const treckToState = value.treckToState;
+      const treckToCity = value.treckToCity;
       const treckToCityToLower = treckToCity.toLowerCase();
       const lowerTreckToCity = treckToCityToLower.charAt(0).toUpperCase() + treckToCityToLower.substring(1);
-      treckDuration = value.treckDuration;
+      const treckDuration = value.treckDuration;
+
       document.getElementById("timeRemain").innerHTML =
-        "<strong>Your trip from " + lowerTreckFromCity + " " + treckFromState + " to " + lowerTreckToCity + " " + treckToState + " is:" + "<br />" +
+        "<strong>Your trip from " + lowerTreckFromCity + " to " + lowerTreckToCity + " is: " +
         convertTime(treckDuration) +
-        "</strong>." + "<hr />";
+        "</strong>.";
+
     }
   });
 }
@@ -656,12 +658,15 @@ function updatePlaylist(track) {
 
   function updateProg() {
     let progSong = totalDuration;
-    let progTrip = driveTimeMin;
+    let progTrip = driveTimeMin
     progPercent = Math.round((progSong / progTrip) * 100);
     document.getElementById("progBar").style.width = progPercent + "%";
     console.log(progPercent);
   };
-  update();
+  try {
+    updateProg();
+  } catch {
+  }
 }
 
 // function to get the tracks from the localForage:
@@ -675,7 +680,7 @@ function getPlaylistData() {
       playlistArray = value.finalPlaylist;
     }
     document.getElementById("playlistTime").innerHTML =
-      "<strong>Your playlist duration is: <br />" +
+      "<strong>Your playlist duration is: " +
       convertTime(totalDuration) +
       "</strong>.";
 
