@@ -581,16 +581,22 @@ function getTreck() {
       treckToCity = "";
       treckDuration = 0;
     } else {
-      treckFromState = value.treckFromState;
-      treckFromCity = value.treckFromCity;
-      treckToState = value.treckToState;
-      treckToCity = value.treckToCity;
-      treckDuration = value.treckDuration;
+      const treckFromState = value.treckFromState;
+      const treckFromCity = value.treckFromCity;
+      const treckFromCityToLower = treckFromCity.toLowerCase();
+      const lowerTreckFromCity = treckFromCityToLower.charAt(0).toUpperCase() + treckFromCityToLower.substring(1);
+      const treckToState = value.treckToState;
+      const treckToCity = value.treckToCity;
+      const treckToCityToLower = treckToCity.toLowerCase();
+      const lowerTreckToCity = treckToCityToLower.charAt(0).toUpperCase() + treckToCityToLower.substring(1);
+      const treckDuration = value.treckDuration;
+
+      document.getElementById("timeRemain").innerHTML =
+        "<strong>Your trip from " + lowerTreckFromCity + " to " + lowerTreckToCity + " is: " +
+        convertTime(treckDuration) +
+        "</strong>.";
+
     }
-    document.getElementById("timeRemain").innerHTML =
-      "<strong>Your trip duration is " +
-      convertTime(treckDuration) +
-      "</strong>.";
   });
 }
 
@@ -604,7 +610,7 @@ function updatePlaylist(track) {
     artist: track.getAttribute("data-artist"),
     track: track.getAttribute("data-track"),
     duration: track.getAttribute("data-duration")
-    
+
   };
   if (track.checked) {
     // track was selected:
@@ -650,15 +656,18 @@ function updatePlaylist(track) {
   // save the playlist and total time:
   localforage.setItem("playlist-data", playlistData);
 
-  function updateProg () {
+  function updateProg() {
     let progSong = totalDuration;
     let progTrip = driveTimeMin
     progPercent = Math.round((progSong / progTrip) * 100);
     document.getElementById("progBar").style.width = progPercent + "%";
     console.log(progPercent);
-    };
-updateProg();
+  };
+  try {
+    updateProg();
+  } catch {
   }
+}
 
 // function to get the tracks from the localForage:
 function getPlaylistData() {
@@ -671,7 +680,7 @@ function getPlaylistData() {
       playlistArray = value.finalPlaylist;
     }
     document.getElementById("playlistTime").innerHTML =
-      "<strong>Your playlist duration is " +
+      "<strong>Your playlist duration is: " +
       convertTime(totalDuration) +
       "</strong>.";
 
@@ -758,7 +767,7 @@ function renderDifference() {
         let remainingTime = treck.treckDuration - playlist.totalTime;
         remainingTime = convertTime(remainingTime);
         console.log(remainingTime);
-        let remainingPercent =  Math.round((playlist.totalTime / treck.treckDuration) * 100);
+        let remainingPercent = Math.round((playlist.totalTime / treck.treckDuration) * 100);
         document.getElementById("progBar").style.width = remainingPercent + "%";
         // remainingTimeDiv.innerHTML = "<strong> Remaining Time: " + remainingTime + "</strong>";
       }
